@@ -1,0 +1,13 @@
+{
+  "name": "brix-base",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "requirejs": "*",
+    "jquery": "*",
+    "underscore": "*"
+  },
+  "devDependencies": {}
+}

@@ -12,6 +12,9 @@
     "test",
     "tests"
   ],
+  "dependencies": {
+    "brix-components": "*"
+  },
   "devDependencies": {
     "requirejs": "~2.1.15",
     "bootstrap": "~3.3.0"
