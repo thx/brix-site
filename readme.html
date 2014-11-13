@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brix</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="bower_components/highlightjs/styles/github.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="bower_components/requirejs/require.js"></script>
+    <script src="http://localhost:4242/config-remote.js"></script>
+    <script src="./config.js"></script>
+</head>
+<body>
+    <div bx-name="components/nprogress"></div>
+    <div bx-name="site/header"></div>
+    <div id="main" class="container"></div>
+    <div bx-name="components/tree" class="container">
+        <hr>
+        <h2>Components Tree ( debug )</h2>
+    </div>
+    <div bx-name="site/footer"></div>
+    <script type="text/javascript">
+        require(['loader'],function (Loader) {
+            // 加载组件
+            Loader.boot(function() {
+                console.log('done!')
+            }, function(error, instance, index, count) {
+                index = index + 1
+                var nprogress = Loader.query('components/nprogress')
+                if (nprogress.length) nprogress.set(index / count)
+            })
+            // 加载组件 components/readme
+            var params = Loader.Util.unparam(location.search.slice(1))
+            var name = params.name.toLowerCase()
+            var url = 'bower_components/' + (params.core ? '' : 'brix-components/') + name + '/README.md'
+            Loader.load(document.getElementById('main'), 'components/readme', {
+                url: url
+            },function(){
+                // 设置锚点，并滚动至 location.hash 指定的位置
+                require(['jquery', 'underscore'], function($, _) {
+                    // 插入锚点
+                    _.each($(':header'), function(item, index){
+                        $('<a>')
+                            .attr('name', $(item).contents().eq(0).text().trim())
+                            .insertBefore(item)
+                    })
+                    setTimeout(function() {
+                        var hash = location.hash.slice(1)
+                        var anchor = $('a[name="' + hash + '"]')[0]
+                        if (hash && anchor && anchor.scrollIntoView) anchor.scrollIntoView()
+                    }, 100)
+                })
+            })
+        })
+    </script>
+</body>
+</html>

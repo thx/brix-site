@@ -1,0 +1,399 @@
+<div class="container">
+    <div bx-name="components/hello"></div>
+    <div bx-name="components/hello-extra"></div>
+    <select bx-name="components/dropdown">
+        <option value="1">Action</option>
+        <option value="2">Another action</option>
+        <option value="3">Something else here</option>
+    </select>
+    <div bx-name="components/pagination" data-total="100" data-cursor="1" data-limit="10"></div>
+    <div bx-name="components/colorpicker" bx-click="toggle" class="btn btn-default">ColorPicker</div>
+    <div bx-name="components/modal" bx-click="toggle" class="btn btn-default">Dialog</div>
+
+    <table bx-name="components/table" class="table table-hover">
+        <thead>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>Id</th>
+                <th>Feature</th>
+                <th>More</th>
+                <th>Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" value="Aatrox"></td>
+                <td>Aatrox</td>
+                <td>全选&amp;反选</td>
+                <td>
+                    <div class="more">
+                        <div class="title">鼠标移入这里</div>
+                        <div class="content">
+                            <h3>卡马克</h3>
+                            <p>29 岁的卡马克是一个计算机程序员，一个清心寡欲并且乐善好施的人，一个在业余时间里建造高能火箭的人，比尔·盖茨（Bill Gates）心目中为数不多的天才之一。程序代码的优雅清晰是他的追求，也是他的游戏。</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="operation">
+                        <a href="#Table">详情</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" value="Ahri"></td>
+                <td>Ahri</td>
+                <td>打开控制台查看选中的值</td>
+                <td>
+                    <div class="more">
+                        <div class="title">鼠标移出这里</div>
+                        <div class="content">
+                            <h3>罗梅洛</h3>
+                            <p>32 岁的罗梅洛是个自大的游戏设计师，他那坏孩子般的形象使他成为了游戏界的明星，为了实现他心目中那些狂野的幻景，他愿意付出一切代价，甚至是他的名望。</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="operation">
+                        <a href="#Table">详情</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" value="Akali"></td>
+                <td>Akali</td>
+                <td>注意到最后一列了吗</td>
+                <td>
+                    <div class="more">
+                        <div class="title">增强了 Table 的样式和事件</div>
+                        <div class="content">
+                            <p>卡马克在他们分手时有过一句简短的描述：“罗梅洛想建立一个帝国，而我只想写出优秀的程序。” </p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="operation">
+                        <a href="#Table">详情</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div bx-name="components/datepicker" data-type="date"></div>
+    <div bx-name="components/datepicker" data-type="time"></div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div bx-name="components/popover" data-placement="top" data-title="Popover on top" data-content="Envy is the ulcer of the soul." class="btn btn-default">Popover on top</div>
+            <div bx-name="components/popover" data-placement="right" data-title="Popover on top" data-content="Envy is the ulcer of the soul." class="
+            btn btn-default">Popover on right</div>
+            <div bx-name="components/popover" data-placement="bottom" data-title="Popover on top" data-content="Envy is the ulcer of the soul." class="
+            btn btn-default">Popover on bottom</div>
+            <div bx-name="components/popover" data-placement="left" data-title="Popover on top" data-content="Envy is the ulcer of the soul." class="btn btn-default">Popover on left</div>    
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div bx-name="components/popover" data-title="<h4>Table</h4>" data-content="
+                <table class='table table-striped'>
+                      <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>First</th>
+                            <th>Last</th>
+                            <th>Twitter</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>1</td>
+                              <td>Mark</td>
+                              <td>Otto</td>
+                              <td>@mdo</td>
+                          </tr>
+                          <tr>
+                              <td>2</td>
+                              <td>Jacob</td>
+                              <td>Thornton</td>
+                              <td>@fat</td>
+                          </tr>
+                          <tr>
+                              <td>3</td>
+                              <td>Larry</td>
+                              <td>the Bird</td>
+                              <td>@twitter</td>
+                          </tr>
+                      </tbody>
+                  </table>" class="btn btn-default">Popover with html</div>
+            <div bx-name="components/popover" data-content="Having the fewest wants, I am nearest to the gods." class="btn btn-default">Popover without title</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div bx-name="components/popover" data-title="placement top + align left" data-placement="top" data-align="left" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement top + align left</div>
+            <div bx-name="components/popover" data-title="placement top + align left" data-placement="top" data-align="right" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement top + align left</div>
+            <div bx-name="components/popover" data-title="placement bottom + align left" data-placement="bottom" data-align="left" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement bottom + align left</div>
+            <div bx-name="components/popover" data-title="placement bottom + align left" data-placement="bottom" data-align="right" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement bottom + align left</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div bx-name="components/popover" data-title="placement right + align top" data-placement="right" data-align="top" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement right + align top</div>
+            <div bx-name="components/popover" data-title="placement right + align bottom" data-placement="right" data-align="bottom" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement right + align bottom</div>
+            <div bx-name="components/popover" data-title="placement left + align top" data-placement="left" data-align="top" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement left + align top</div>
+            <div bx-name="components/popover" data-title="placement left + align bottom" data-placement="left" data-align="bottom" data-content="Remember what is unbecoming to do is also unbecoming to speak of." class="btn btn-default">placement left + align bottom</div>
+        </div>
+    </div>
+    <form class="panel panel-default">
+        <div class="panel-body">
+            <button bx-name="components/uploader" data-action="api/upload.json" class="btn btn-default">选择文件 default</button>
+        </div>
+    </form>
+    <form class="panel panel-default">
+        <div class="panel-body">
+            <button bx-name="components/uploader" data-name="file1" data-action="api/upload.json" data-transport="iframe" type="button" class="btn btn-default"><span class="glyphicon glyphicon-open"></span> 选择文件 iframe</button>
+        </div>
+    </form>
+    <form class="panel panel-default">
+        <div class="panel-body">
+            <button bx-name="components/uploader" data-name="file2" data-action="api/upload.json" data-transport="xhr" type="button" class="btn btn-default"><span class="glyphicon glyphicon-open"></span> 选择文件 xhr</button>
+        </div>
+    </form>
+    
+    <div bx-name="components/editor"></div>
+
+    <h3 bx-name="components/editable">This is a editable title.</h3>
+    <p bx-name="components/editable">This is a editable paragraph. This is a editable paragraph. This is a editable paragraph. This is a editable paragraph. This is a editable paragraph. This is a editable paragraph.</p>
+    <pre bx-name="components/editable">This is a editable predefined.</pre>
+
+    <p bx-name="components/editable" data-type="html"><kbd>This is a editable keyboard input element.</kbd> cool!</p>
+
+    <p><span bx-name="components/editable" data-content="A editable span with content from data-*."></span></p>
+
+    <p>Hello <span bx-name="components/editable">Editable</span>!</p>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div bx-name="components/spin" data-type="rotating-plane" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="double-bounce" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="rectangle-bounce" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="wandering-cubes" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="pulse" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="chasing-dots" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="three-bounce" class="col-xs-3"></div>
+                <div bx-name="components/spin" data-type="circle-spinner" class="col-xs-3"></div>            
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div bx-name="components/countdown"></div>
+            <div bx-name="components/countdown" data-expires="2015-1-1"></div>
+            <div bx-name="components/countdown" data-expires="2015-2-1 1:1:1"></div>            
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div bx-name="components/sidebar"></div>            
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            
+        <div bx-name="components/chart" data-type="Line" data-data="{
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'My First dataset',
+                fillColor: 'rgba(220,220,220,0.2)',
+                strokeColor: 'rgba(220,220,220,1)',
+                pointColor: 'rgba(220,220,220,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data: [65, 59, 80, 81, 56, 55, 40]
+            }, {
+                label: 'My Second dataset',
+                fillColor: 'rgba(151,187,205,0.2)',
+                strokeColor: 'rgba(151,187,205,1)',
+                pointColor: 'rgba(151,187,205,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(151,187,205,1)',
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }]
+        }"></div>
+
+        <div bx-name="components/chart" data-type="Bar" data-data="{
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [
+                {
+                    label: 'My First dataset',
+                    fillColor: 'rgba(220,220,220,0.5)',
+                    strokeColor: 'rgba(220,220,220,0.8)',
+                    highlightFill: 'rgba(220,220,220,0.75)',
+                    highlightStroke: 'rgba(220,220,220,1)',
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: 'My Second dataset',
+                    fillColor: 'rgba(151,187,205,0.5)',
+                    strokeColor: 'rgba(151,187,205,0.8)',
+                    highlightFill: 'rgba(151,187,205,0.75)',
+                    highlightStroke: 'rgba(151,187,205,1)',
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        }"></div>
+
+        <div bx-name="components/chart" data-type="Radar" data-data="{
+            labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+            datasets: [
+                {
+                    label: 'My First dataset',
+                    fillColor: 'rgba(220,220,220,0.2)',
+                    strokeColor: 'rgba(220,220,220,1)',
+                    pointColor: 'rgba(220,220,220,1)',
+                    pointStrokeColor: '#fff',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data: [65, 59, 90, 81, 56, 55, 40]
+                },
+                {
+                    label: 'My Second dataset',
+                    fillColor: 'rgba(151,187,205,0.2)',
+                    strokeColor: 'rgba(151,187,205,1)',
+                    pointColor: 'rgba(151,187,205,1)',
+                    pointStrokeColor: '#fff',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(151,187,205,1)',
+                    data: [28, 48, 40, 19, 96, 27, 100]
+                }
+            ]
+        }"></div>
+
+        <div bx-name="components/chart" data-type="PolarArea" data-data="[
+            {
+                value: 300,
+                color:'#F7464A',
+                highlight: '#FF5A5E',
+                label: 'Red'
+            },
+            {
+                value: 50,
+                color: '#46BFBD',
+                highlight: '#5AD3D1',
+                label: 'Green'
+            },
+            {
+                value: 100,
+                color: '#FDB45C',
+                highlight: '#FFC870',
+                label: 'Yellow'
+            },
+            {
+                value: 40,
+                color: '#949FB1',
+                highlight: '#A8B3C5',
+                label: 'Grey'
+            },
+            {
+                value: 120,
+                color: '#4D5360',
+                highlight: '#616774',
+                label: 'Dark Grey'
+            }
+
+        ]"></div>
+
+        <div bx-name="components/chart" data-type="Pie" data-data="[
+            {
+                value: 300,
+                color: '#F7464A',
+                highlight: '#FF5A5E',
+                label: 'Red'
+            },
+            {
+                value: 50,
+                color: '#46BFBD',
+                highlight: '#5AD3D1',
+                label: 'Green'
+            },
+            {
+                value: 100,
+                color: '#FDB45C',
+                highlight: '#FFC870',
+                label: 'Yellow'
+            }
+        ]"></div>
+
+        <div bx-name="components/chart" data-type="Doughnut" data-data="[
+            {
+                value: 300,
+                color: '#F7464A',
+                highlight: '#FF5A5E',
+                label: 'Red'
+            },
+            {
+                value: 50,
+                color: '#46BFBD',
+                highlight: '#5AD3D1',
+                label: 'Green'
+            },
+            {
+                value: 100,
+                color: '#FDB45C',
+                highlight: '#FFC870',
+                label: 'Yellow'
+            }
+        ]"></div>
+
+        <div bx-name="components/chart" data-type="Doughnut">
+            [
+                {
+                    value: 300,
+                    color: '#F7464A',
+                    highlight: '#FF5A5E',
+                    label: 'Red'
+                },
+                {
+                    value: 50,
+                    color: '#46BFBD',
+                    highlight: '#5AD3D1',
+                    label: 'Green'
+                },
+                {
+                    value: 100,
+                    color: '#FDB45C',
+                    highlight: '#FFC870',
+                    label: 'Yellow'
+                }
+            ]
+        </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            
+        </div>
+    </div>
+
+    <!-- <div bx-name="components/chart"></div> -->
+    <!-- <div bx-name="components/imager"></div> -->
+    <!-- <div bx-name="components/nprogress"></div> -->
+    <!-- <div bx-name="components/validation"></div> -->
+    <!-- <div bx-name="components/validation/i18n"></div> -->
+    <!-- <div bx-name="components/tree"></div> -->
+    <!-- <div bx-name="components/header"></div> -->
+    <!-- <div bx-name="components/footer"></div> -->
+    <!-- <div bx-name="components/sticky"></div> -->
+    <!-- <div bx-name="components/nav"></div> -->
+    <!-- <div bx-name="components/readme"></div> -->
+    <!-- <div bx-name="marked-extra"></div> -->
+    <!-- <div bx-name="components/css-layout-debugger"></div> -->
+    <!-- <div bx-name="components/boilerplate"></div> -->
+</div>

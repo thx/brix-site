@@ -1,0 +1,19 @@
+{
+  "name": "brix-site",
+  "version": "brix-site",
+  "authors": [
+    "墨智 <mozhi.gyy@alibaba-inc.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "requirejs": "~2.1.15",
+    "bootstrap": "~3.3.0"
+  }
+}
