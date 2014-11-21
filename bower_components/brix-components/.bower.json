@@ -1,12 +1,13 @@
 {
   "name": "brix-components",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "ignore": [
     "**/.*"
   ],
   "dependencies": {
     "brix-loader": "*",
     "brix-base": "*",
+    "brix-event": "*",
     "requirejs": "*",
     "requirejs-text": "*",
     "require-less": "*",
@@ -26,15 +27,16 @@
     "nprogress": "*",
     "parsleyjs": "*",
     "log": "*",
-    "colors": "*"
+    "colors": "*",
+    "handlebars": "~2.0.0"
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-components",
-  "_release": "0.0.2",
+  "_release": "0.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.2",
-    "commit": "0b5b5dfb6ea69493c7baad24ab5ae7440b9d6885"
+    "tag": "0.0.3",
+    "commit": "caa437d8434cddec9cf492bb888a1928f9dd9d0a"
   },
   "_source": "git://github.com/nuysoft/brix-components.git",
   "_target": "*",
