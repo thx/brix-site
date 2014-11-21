@@ -1,0 +1,22 @@
+{
+  "name": "brix-event",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "underscore": "*"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/nuysoft/brix-event",
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.1",
+    "commit": "50804068806bca3e5ec397a262cfcf9f686b11c2"
+  },
+  "_source": "git://github.com/nuysoft/brix-event.git",
+  "_target": "*",
+  "_originalSource": "brix-event"
+}

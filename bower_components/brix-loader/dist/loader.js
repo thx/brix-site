@@ -39,8 +39,8 @@
     * `<div data-msg="world">`
 
  */
-define('constant',[],function() {
-    var VERSION = '0.0.1'
+define('brix/loader/constant',[],function() {
+    var VERSION = '0.0.x'
     var EXPANDO = (Math.random() + '').replace(/\D/g, '')
     return {
         VERSION: VERSION,
@@ -85,15 +85,15 @@ define('constant',[],function() {
         PREFIX: 'bx-'
     }
 });
-/* global define        */
-/* global setTimeout, setInterval, clearInterval */
+/* global define */
+/* global location, setTimeout, setInterval, clearInterval */
 
 /*
     Brix Loader Utility Functions
     
     http://underscorejs.org/
 */
-define('util',[],function() {
+define('brix/loader/util',[],function() {
 
     var _ = {}
 
@@ -251,6 +251,29 @@ define('util',[],function() {
     }
 
     /* 非 Underscore 方法 */
+
+    // 解析 hash
+    _.parse = function(fragment) {
+        fragment = fragment || location.hash
+        var rhash = /#?!?([^?]*)\??(.*)?/
+        var parts = rhash.exec(fragment)
+        return {
+            path: parts[1],
+            params: this.unparam(parts[2])
+        }
+    }
+
+    // 解析参数为 string
+    _.param = function(params) {
+        if (!params) return ''
+        var r20 = /%20/g
+        var re = [];
+        _.each(params, function(value, key) {
+            if (value === '') return
+            re.push(encodeURIComponent(key) + "=" + encodeURIComponent(value))
+        })
+        return re.join("&").replace(r20, "+")
+    }
 
     // 解析参数为 object
     _.unparam = function(param) {
@@ -447,9 +470,9 @@ define('util',[],function() {
 });
 /* global define */
 define(
-    'options',[
-        'constant',
-        'util'
+    'brix/loader/options',[
+        './constant',
+        './util'
     ],
     function(
         Constant,
@@ -472,16 +495,15 @@ define(
             var options
             var parent, moduleId, clientId, parentClientId
 
-
             // 如果没有模块标识符，则无需（也无法）加载，立即返回
             moduleId = element.getAttribute(Constant.ATTRS.id)
             if (!moduleId) return {}
 
             // 为组件关联的 DOM 节点分配唯一标识
             clientId = Constant.UUID++
-            if (element.clientId === undefined) element.clientId = clientId
+                if (element.clientId === undefined) element.clientId = clientId
 
-            // 查找父节点
+                // 查找父节点
             parent = element
             do {
                 parent = parent.parentNode
@@ -535,6 +557,9 @@ define(
                 } catch (error) {
                     options[ma[1]] = value
                 }
+                
+                if (options[ma[1]] === 'true') options[ma[1]] = true
+                if (options[ma[1]] === 'false') options[ma[1]] = false
             })
             return options
         }
@@ -662,10 +687,10 @@ define(
             http://gitlab.alibaba-inc.com/limu/brix-central/wikis/BCD
 */
 define(
-    'loader',[
-        'constant',
-        'options',
-        'util'
+    'brix/loader',[
+        './loader/constant',
+        './loader/options',
+        './loader/util'
     ],
     function(
         Constant,
@@ -677,35 +702,59 @@ define(
         var DEBUG = ~location.search.indexOf('debug')
 
         /*
-            ### Loader.boot( [ context ] [, callback( records ) ] [, progress(error, instance, index, count) ] )
+            #### Loader.boot( [ context ] [, complete( records ) ] [, notify( error, instance, index, count ) ] )
+            
+            **初始化节点 `context` 以及节点 `context` 内的所有组件。**当所有组件初始化完成后回调函数 `complete` 被执行，当每个组件初始化完成后回调函数 `notify` 被执行。
 
-            * Loader.boot()
-            * Loader.boot( component )
-            * Loader.boot( component, callback )
-            * Loader.boot( component, callback, progress )
-            * Loader.boot( element )
-            * Loader.boot( element, callback )
-            * Loader.boot( element, callback, progress )
-            * Loader.boot( array{element|component} )
-            * Loader.boot( array{element|component}, callback )
-            * Loader.boot( array{element|component}, callback, progress )
-            * Loader.boot( callback )
-            * Loader.boot( callback, progress )
+            * **Loader.boot( complete, notify )**
+                * Loader.boot()
+                * Loader.boot( complete )
+                * Loader.boot( complete, notify )
+            * **Loader.boot( element, complete, notify )**
+                * Loader.boot( element )
+                * Loader.boot( element, complete )
+                * Loader.boot( element, complete, notify )
+            * **Loader.boot( array{element}, complete, notify )**
+                * Loader.boot( array )
+                * Loader.boot( array, complete )
+                * Loader.boot( array, complete, notify )
 
-            初始化节点 context 以及节点 context 内的所有组件，当所有组件初始化完成后回调函数 callback 被执行。
+            **参数的含义和默认值**如下：
 
-            * **context** 可选。一个 DOM 元素，或一组 DOM 元素。默认为 document.body。
-            * **callback( records )** 可选。一个回调函数，当所有组件初始化完成后被执行。
-                * records 二维数组，记录了组件在初始化过程中的相关信息，包括：异常、实例、在初始化队列中的下标、初始化队列长度。详见参数 progress。
-            * **progress(error, instance, index, count)** 可选。一个回调函数，当每个组件初始化完成后被执行。
-                * error 初始化过程中可能抛出的 Error 对象。如果没有发生任何错误，这为 undefined。
-                * instance 当前组件的实例。
-                * index 当前组件在初始化队列中的下标，即初始化的顺序。
-                * count 初始化队列的长度。
+            * `context` 可选。一个 DOM 元素，或一组 DOM 元素。默认为 `document.body`。
+            * `complete( records )` 可选。一个回调函数，当所有组件初始化完成后被执行。
+                * `records` 二维数组，记录了组件在初始化过程中的相关信息，包括：异常 `error`、组件实例 `instance`、在初始化队列中的下标 `index`、初始化队列的长度 `count`。数据结构为：
+                    
+                    ```js
+                    [
+                        [error, instance, index, count],
+                        [error, instance, index, count],
+                        ...
+                    ]
+                    ```
+
+                    详见下一个参数 `notify`。
+
+            * `notify( error, instance, index, count )` 可选。一个回调函数，当每个组件初始化完成后被执行。
+                * `error` 初始化过程中可能抛出的 `Error` 对象。如果没有发生任何错误，则为 `undefined`。
+                * `instance` 当前组件的实例。
+                * `index` 当前组件在初始化队列中的下标，即初始化的顺序。
+                * `count` 初始化队列的长度。
+
+            私有方法：
+
+            * **Loader.boot( component, complete, notify )**
+                * Loader.boot( component )
+                * Loader.boot( component, complete )
+                * Loader.boot( component, complete, notify )
+            * **Loader.boot( array{component}, complete, notify )**
+                * Loader.boot( array )
+                * Loader.boot( array, complete )
+                * Loader.boot( array, complete, notify )
 
             简：初始化所有组件。
         */
-        function boot(context, callback, extraOptions /* Internal Use Only */ , progress /* Internal Use Only */ ) {
+        function boot(context, complete, extraOptions /* Internal Use Only */ , notify) {
             // boot( component )                    context.element
             // boot( element )                      element
             // boot( array{element|component} )     array
@@ -713,7 +762,7 @@ define(
 
             // 初始化任务队列
             var queue = Util.queue()
-            var callbackArgs = []
+            var completeArgs = []
 
             // 1. 查找组件节点 [bx-name]
             var elements = function() {
@@ -739,9 +788,9 @@ define(
                 queue
                     .queue(function(next) {
                         init(element, function(error, instance) {
-                            callbackArgs.push([error, instance, index, elements.length])
+                            completeArgs.push([error, instance, index, elements.length])
                             if (error) console.error(error.stack)
-                            if (progress) progress(error, instance, index, elements.length)
+                            if (notify) notify(error, instance, index, elements.length)
                             next()
                         }, extraOptions)
                     })
@@ -751,7 +800,7 @@ define(
             // 4. 全部任务执行完成（无论成败）
             queue
                 .queue(function() {
-                    if (callback) callback(callbackArgs)
+                    if (complete) complete(completeArgs)
                 })
                 .dequeue() // 开始出队执行
 
@@ -817,9 +866,9 @@ define(
                     try {
                         // 3. 创建组件实例
                         instance = new BrixImpl(options)
-                        // 设置属性 options
+                            // 设置属性 options
                         instance.options = Util.extend({}, instance.options, options)
-                        // 设置其他公共属性
+                            // 设置其他公共属性
                         Util.extend(instance, Util.pick(options, Constant.OPTIONS))
                         next()
                     } catch (error) {
@@ -855,6 +904,8 @@ define(
                         if (result && result.then) {
                             result.then(function() {
                                 next()
+                            }, function(error) {
+                                throw error
                             })
                         } else {
                             next()
@@ -866,9 +917,9 @@ define(
                 })
                 .queue(function(next) {
                     // 拦截渲染方法
-                    if (instance.wrapper) next()
+                    if (instance._wrapper) next()
 
-                    instance.wrapper = function() {
+                    instance._wrapper = function() {
                         var deferred = Util.defer()
                         var promise = deferred.promise
 
@@ -888,6 +939,8 @@ define(
                             result.then(function() {
                                 renderChildren()
                                 syncClientId()
+                            }, function(error) {
+                                throw error
                             })
                         } else {
                             renderChildren()
@@ -931,7 +984,7 @@ define(
                 .queue(function(next) {
                     // 5. 执行渲染（不存在怎么办？必须有！）
                     try {
-                        var result = instance.wrapper(function(error /*, instance*/ ) {
+                        var result = instance._wrapper(function(error /*, instance*/ ) {
                             if (error) {}
                         })
                         if (DEBUG) console.log(label, 'call  render')
@@ -963,7 +1016,7 @@ define(
                         }
                     })
                     next()
-                    // .delay(100, queueName) // 每个组件之间的渲染间隔 100ms，方便观察
+                        // .delay(100, queueName) // 每个组件之间的渲染间隔 100ms，方便观察
                 })
                 .queue(function(next) {
                     // 6. 绑定事件
@@ -994,13 +1047,13 @@ define(
                     var descendants = element.getElementsByTagName('*')
                     var hasBrixElement = false
                     Util.each(descendants, function(descendant /*, index*/ ) {
-                        if (descendant.nodeType !== 1) return
-                        if (!hasBrixElement &&
-                            descendant.getAttribute(Constant.ATTRS.id)) {
-                            hasBrixElement = true
-                        }
-                    })
-                    // 7. 如果有后代组件，则递归加载
+                            if (descendant.nodeType !== 1) return
+                            if (!hasBrixElement &&
+                                descendant.getAttribute(Constant.ATTRS.id)) {
+                                hasBrixElement = true
+                            }
+                        })
+                        // 7. 如果有后代组件，则递归加载
                     if (hasBrixElement) {
                         boot(instance, function() {
                             next()
@@ -1022,33 +1075,91 @@ define(
         }
 
         /*
-            ### Loader.destroy(component [, callback ] )
-            
-            * Loader.destroy( component )
-            * Loader.destroy( component, callback )
-            * Loader.destroy( element )
-            * Loader.destroy( element, callback )
-            * Loader.destroy( array )
-            * Loader.destroy( array, callback )
-            * Loader.destroy( context )
-            * Loader.destroy( context, callback )
-            
-            私有方法：
+            #### Loader.destroy( component [, complete() ] )
 
-            * Loader.destroy( clientId )
-            * Loader.destroy( clientId, callback )
-            
             销毁某个组件，包括它的后代组件。
 
-            * **component** 某个组件实例。
-            * **element** 一个 DOM 元素。
-            * **array** 一个含有组件实例或 DOM 元素的数组。
-            * **callback** 可选。一个回调函数，当组件销毁后被执行。
+            * **Loader.destroy( component, complete )**
+                * Loader.destroy( component )
+                * Loader.destroy( component, complete )
+            * **Loader.destroy( element, complete )**
+                * Loader.destroy( element )
+                * Loader.destroy( element, complete )
+            * **Loader.destroy( array{element|component}, complete )**
+                * Loader.destroy( array{component} )
+                * Loader.destroy( array{element} )
+                * Loader.destroy( array{component}, complete )
+                * Loader.destroy( array{element}, complete )
+            * **Loader.destroy( context, complete )**
+                * Loader.destroy( context )
+                * Loader.destroy( context, complete )
+
+            **参数的含义和默认值**如下：
+
+            * `component` 某个组件实例。
+            * `element` 一个关联了某个组件的 DOM 元素。
+            * `array{element|component}` 一个含有组件实例或 DOM 元素的数组。
+            * `context` 一个 DOM 元素。
+            * `complete()` 可选。一个回调函数，当组件销毁后被执行。
+            
+            #### Loader.destroy( moduleId [, context] [, complete() ] )
+            
+            * **Loader.destroy( moduleId, complete )**
+                * Loader.destroy( moduleId )
+                * Loader.destroy( moduleId, complete )
+            * **Loader.destroy( moduleId, context, complete )**
+                * Loader.destroy( moduleId, context )
+                    * Loader.destroy( moduleId, parentModuleId )
+                    * Loader.destroy( moduleId, parentComponent )
+                    * Loader.destroy( moduleId, parentElement )
+                    * Loader.destroy( moduleId, array{parentModuleId} )
+                    * Loader.destroy( moduleId, array{parentComponent} )
+                    * Loader.destroy( moduleId, array{parentElement} )
+                * Loader.destroy( moduleId, context, complete )
+            
+            **参数的含义和默认值**如下：
+            
+            * `moduleId` 模块标识符。
+            * `context` 限定销毁的范围。可以是父（祖先）模块标识符 `parentModuleId`、父（祖先）组件实例 `parentComponent`、父（祖先）节点 `parentElement` 或数组 `array{parentModuleId|parentComponent|parentElement}`。
+            * `complete()` 可选。一个回调函数，当组件销毁后被执行。
+            
+            私有方法：
+            
+            * ~~**Loader.destroy()**~~
+            * Loader.destroy( clientId )
+            * Loader.destroy( clientId, complete )
+            
         */
-        function destroy(instance, callback) {
+        function destroy(instance, complete) {
+            // ~~Loader.destroy()~~
             if (instance === undefined) {
-                if (callback) callback()
+                if (complete) complete()
                 return this
+            }
+
+            // destroy( moduleId, context, complete )
+            if (Util.isString(instance)) {
+                switch (arguments.length) {
+                    case 1:
+                        // destroy( moduleId )
+                        instance = query(instance)
+                        break
+                    case 2:
+                        // destroy( moduleId, complete )
+                        if (Util.isFunction(complete)) {
+                            instance = query(instance)
+                        } else {
+                            // destroy( moduleId, context )
+                            instance = query(instance, complete)
+                            complete = undefined
+                        }
+                        break
+                    case 3:
+                        // destroy( moduleId, context, complete )
+                        instance = query(instance, complete)
+                        complete = arguments[2]
+                        break
+                }
             }
 
             // destroy( !component )
@@ -1061,7 +1172,7 @@ define(
                 !instance.nodeType &&
                 !instance.length
             ) {
-                if (callback) callback()
+                if (complete) complete()
                 return this
             }
 
@@ -1069,7 +1180,7 @@ define(
             if (Util.isNumber(instance)) {
                 instance = CACHE[instance]
                 if (!instance) {
-                    if (callback) callback()
+                    if (complete) complete()
                     return this
                 }
             }
@@ -1079,7 +1190,7 @@ define(
                 Util.each(instance, function(item) {
                     destroy(item)
                 })
-                if (callback) callback()
+                if (complete) complete()
                 return this
             }
 
@@ -1095,7 +1206,7 @@ define(
                         if (descendant.nodeType !== 1) return
                         if (descendant.getAttribute(Constant.ATTRS.id)) destroy(descendant)
                     }
-                    if (callback) callback()
+                    if (complete) complete()
                     return this
                 } else {
                     // destroy( element )
@@ -1107,7 +1218,7 @@ define(
 
             // 如果已经被移除，则立即返回
             if (!instance) {
-                if (callback) callback()
+                if (complete) complete()
                 return this
             }
 
@@ -1115,11 +1226,11 @@ define(
             if (DEBUG) {
                 console.group(label)
                 console.time(label)
-                var _callback = callback
-                callback = function(error, instance) {
+                var _complete = complete
+                complete = function(error, instance) {
                     console.timeEnd(label)
                     console.groupEnd(label)
-                    if (_callback) _callback(error, instance)
+                    if (_complete) _complete(error, instance)
                 }
             }
 
@@ -1135,7 +1246,7 @@ define(
                 try {
                     instance._destroy()
                 } catch (error) {
-                    if (callback) callback(error)
+                    if (complete) complete(error)
                     else console.error(error)
                 }
 
@@ -1167,7 +1278,7 @@ define(
 
             if (DEBUG) console.log(label, 'destroy')
 
-            if (callback) callback()
+            if (complete) complete()
 
             return this
         }
@@ -1176,26 +1287,33 @@ define(
         function cache(instance) {
             // 放入缓存
             CACHE[instance.clientId] = instance
-            // 关联父组件
+                // 关联父组件
             var parent = CACHE[instance.parentClientId]
             if (parent) parent.childClientIds.push(instance.clientId)
         }
 
         /*
-            ### Loader.query( moduleId [, context ] )
-            
+            #### Loader.query( moduleId [, context ] )
+
+            根据模块标识符 `moduleId` 查找组件实例。
+
             * Loader.query( moduleId, context )
-            * Loader.query( moduleId )
+                * Loader.query( moduleId )
+                * Loader.query( moduleId, parentModuleId )
+                * Loader.query( moduleId, parentComponent )
+                * Loader.query( moduleId, parentElement )
+                * Loader.query( moduleId, array{parentModuleId} )
+                * Loader.query( moduleId, array{parentComponent} )
+                * Loader.query( moduleId, array{parentElement} )
             * Loader.query( element )
-            * Loader.query( elementArray )
-            
-            // * Loader.query( array{element} )
+                * Loader.query( element )
+                * Loader.query( array{element} )
 
-            根据模块标识符 moduleId 查找组件实例。
+            **参数的含义和默认值**如下：
 
-            * **moduleId** 模块标识符。
-            * **context** 限定参查找的范围，可以是 moduleId、component、element。
-            * **element** 设置了属性 bx-name 的 DOM 元素。
+            * `moduleId` 模块标识符。
+            * `context` 限定查找的范围。可以是父（祖先）模块标识符 `parentModuleId`、父（祖先）组件实例 `parentComponent`、父（祖先）节点 `parentElement` 或数组 `array{parentModuleId|parentComponent|parentElement}`。
+            * `element` 设置了属性 `bx-name` 的节点或节点数组。
 
             > 该方法的返回值是一个数组，包含了一组 Brix 组件实例，并且，数组上含有所有 Brix 组件实例的方法。
          */
@@ -1213,6 +1331,7 @@ define(
                 )
 
             } else if (moduleId.length && !Util.isString(moduleId)) {
+                // 1. 根据 elementArray 逐个查找组件实例
                 // query( elementArray )
                 Util.each(moduleId, function(element /*, index*/ ) {
                     results.push(
@@ -1225,13 +1344,14 @@ define(
                 // 1. 根据 moduleId 查找组件实例
                 // query( moduleId )
                 Util.each(CACHE, function(instance /*, index*/ ) {
+                    // 从右向左查找，免去了去重步骤
                     if (instance.moduleId === moduleId) {
                         // 是否在 context 内
                         if (context === undefined || parents(instance, context).length) {
                             results.push(instance)
-                            // 收集组件方法
+                                // 收集组件方法
                             Util.each(instance.constructor.prototype, function(value, name) {
-                                if (Util.isFunction(value)) methods.push(name)
+                                if (Util.isFunction(value) && (name[0] !== '_')) methods.push(name)
                             })
                         }
                     }
@@ -1241,9 +1361,11 @@ define(
             // 2. 绑定组件方法至 query() 返回的对象上
             Util.each(Util.unique(methods), function(name /*, index*/ ) {
                 results[name] = function() {
+                    // var that = this
                     var args = [].slice.call(arguments)
-                    Util.each(this, function(instance) {
+                    Util.each(this, function(instance /*, index*/ ) {
                         if (!instance[name]) return
+                            // that[index] = 
                         instance[name].apply(instance, args)
                     })
                     return this
@@ -1259,25 +1381,51 @@ define(
                 moduleId  
                 component options render
                 element   nodeType
+                array
          */
         function parents(instance, context) {
             var results = []
-            var parent = instance
+            var parent
             if (context === undefined) return results
+
+            // parents(instance, array)
+            if (!Util.isString(context) && !context.nodeType && context.length) {
+                Util.each(context, function(item /*, index*/ ) {
+                    results = results.concat(parents(instance, item))
+                })
+                return results
+            }
 
             // 从当前组件 instance 开始，逐层向上遍历
 
             // parents(instance, component)
-            // parents(instance, element)
-            if (context.options && context.render || context.nodeType) {
+            if (context.options && context.render) {
+                parent = instance
+
                 // 在 instance 的祖先元素中，查找与 context.clientId 匹配的元素
                 while ((parent = CACHE[parent.parentClientId])) {
                     if (parent.clientId === context.clientId) {
                         results.push(parent)
+                        break
                     }
                 }
+
+            } else if (context.nodeType) {
+                // parents(instance, element)
+                parent = instance.element
+
+                // 在 instance 的祖先元素中，查找与 context 相等的元素
+                while ((parent = parent.parentNode)) {
+                    if (parent === context) {
+                        results.push(parent)
+                        break
+                    }
+                }
+
             } else {
                 // parents(instance, moduleId)    
+                parent = instance
+
                 // 在 instance 的祖先元素中，查找与 context 匹配的元素
                 while ((parent = CACHE[parent.parentClientId])) {
                     if (parent.moduleId === context) {
@@ -1285,24 +1433,35 @@ define(
                     }
                 }
             }
+
             return results
         }
 
         /*
             
-            ### Loader.load( element, moduleId, options [, callback ] )
-            
-            * Loader.load( element, moduleId, options [, callback ] )
-            * Loader.load( elementArray, moduleId, options [, callback ] )
+            #### Loader.load( element, moduleId [, options ] [, complete( records ) ] )
 
-            加载组件 moduleId 到指定的节点 element 中。
+            加载组件 `moduleId` 到指定的节点 `element` 中。
 
-            * **moduleId** 必选。模块标识符。
-            * **element** 必选。目标元素。
-            * **elementArray** 必选。目标元素数组。
-            * **callback** 可选。一个回调函数，当组件加载完成后被执行。
-            
-            > 因为每个组件的行为不可以预测（例如，table 是增强，dropdwon 是替换，pagination 是插入），导致销毁和再次加载的行为也不可预测，所以不能直接在节点 element 上加载，而是在其内新建一个容器元素 `<div>`，在这个容器元素上加载组件 moduleId。
+            * Loader.load( element, moduleId, options, complete )
+                * Loader.load( element, moduleId )
+                * Loader.load( element, moduleId, options )
+                * Loader.load( element, moduleId, complete )
+                * Loader.load( element, moduleId, options, complete )
+            * Loader.load( array{element}, moduleId, options, complete )
+                * Loader.load( array{element}, moduleId)
+                * Loader.load( array{element}, moduleId, options)
+                * Loader.load( array{element}, moduleId, options, complete)
+
+            **参数的含义和默认值**如下：
+
+            * `moduleId` 必选。模块标识符。
+            * `element` 必选。目标节点。
+            * `array` 必选。目标节点数组。
+            * `complete( records )` 可选。一个回调函数，当组件加载完成后被执行。
+                * * `records` 二维数组，记录了组件在初始化过程中的相关信息，包括：异常、实例、在初始化队列中的下标、初始化队列的长度。
+
+            > 因为每个组件的行为不可以预测（例如，`table` 是增强，`dropdwon` 是替换，`pagination` 是插入），导致销毁和再次加载的行为也不可预测，所以不能直接在节点 `element` 上加载，而是在其内新建一个容器元素 `<div>`，在这个容器元素上加载组件 `moduleId`。
 
             #### Examples
             
@@ -1312,9 +1471,15 @@ define(
             Loader.unload(target)
             ```
          */
-        function load(element, moduleId, options, callback) {
-            // load(element, moduleId, options, callback)
+        function load(element, moduleId, options, complete) {
+            // load(element, moduleId, options, complete)
             if (element.nodeType) element = [element]
+
+            // Loader.load( element, moduleId, complete )
+            if (Util.isFunction(options)) {
+                complete = options
+                options = undefined
+            }
 
             // 如果 element 上设置了 bx-name，则先移除掉
             // 因为在 load() 模式下，element 仅仅当做容器元素使用，否则会和 boot() 模式冲突。
@@ -1328,7 +1493,7 @@ define(
             // 1. 销毁已有组件
             destroy(element)
 
-            // load(elementArray, moduleId, options, callback)
+            // load(elementArray, moduleId, options, complete)
             Util.each(element, function(item /*, index*/ ) {
                 // item.setAttribute(Constant.ATTRS.id, moduleId)
                 // 2. 为组件 moduleId 新建一个容器元素
@@ -1336,19 +1501,27 @@ define(
             })
 
             // 3. 初始化组件 moduleId
-            boot(element, callback, options)
+            boot(element, complete, options)
             return this
         }
 
         /*
-            ### Loader.unload( element [, callback ] )
+            #### Loader.unload( element [, complete ] )
+
+            卸载节点 `element` 中加载的组件。
             
-            * Loader.unload( element [, callback ] )
+            * Loader.unload( element, complete )
+                * Loader.unload( element )
+                * Loader.unload( element, complete )
+            * Loader.unload( array{element}, complete )
+                * Loader.unload( array{element} )
+                * Loader.unload( array{element}, complete )
 
-            卸载节点 element 中加载的组件。
+            **参数的含义和默认值**如下：
 
-            * **element** 必选。目标元素。
-            * **callback** 可选。一个回调函数，当组件卸载完成后被执行。
+            * `element` 必选。目标节点。
+            * `array` 必选。目标节点数组。
+            * `complete` 可选。一个回调函数，当组件卸载完成后被执行。
          */
         function unload(element, callback) {
             destroy(element, callback)

@@ -7,8 +7,10 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <script src="bower_components/requirejs/require.js"></script>
+    <script src="http://localhost:4242/config-remote.js"></script>
     <!-- <script src="http://localhost:4242/config-remote.js"></script> -->
-    <script src="http://nuysoft.github.io/brix-release/config-remote.js"></script>
+    <!-- <script src="http://nuysoft.github.io/brix-release/config-remote.js"></script> -->
+    <!-- <script src="http://g.tbcdn.cn/thx/brix-release/config-remote.js"></script> -->
     <script src="./config.js"></script>
 </head>
 <body>
@@ -21,7 +23,9 @@
     </div>
     <div bx-name="site/footer"></div>
     <script type="text/javascript">
-        require(['loader'],function (Loader) {
+        require(['brix/loader'],function (Loader) {
+            window.Loader = Loader
+            // 加载组件
             Loader.boot(function() {
                 console.log('done!')
             }, function(error, instance, index, count) {
@@ -33,7 +37,9 @@
     </script>
     <script type="text/javascript" src="//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js" data-token="de360b07c26b465fb72ed13514291445"></script>
     <script type="text/javascript">
-        trackJs.track('Hello TrackJS');
+        window.onerror = function(msg, file, line) {
+            trackJs.track(msg, file, line)
+        }
     </script>
 </body>
 </html>

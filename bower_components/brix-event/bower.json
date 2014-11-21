@@ -1,0 +1,12 @@
+{
+  "name": "brix-event",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "underscore": "*"
+  },
+  "devDependencies": {}
+}

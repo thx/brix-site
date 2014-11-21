@@ -1,21 +1,20 @@
 {
   "name": "brix-base",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "ignore": [
     "**/.*"
   ],
   "dependencies": {
-    "requirejs": "*",
-    "jquery": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "brix-event": "*"
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-base",
-  "_release": "0.0.1",
+  "_release": "0.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.1",
-    "commit": "f5cc7ff5822ee5a05bca692f8e5d3d4dfd50ca4d"
+    "tag": "0.0.2",
+    "commit": "86a90352161cd882093c7bbfa9913565995d01ae"
   },
   "_source": "git://github.com/nuysoft/brix-base.git",
   "_target": "*",

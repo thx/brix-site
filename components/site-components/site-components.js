@@ -2,7 +2,7 @@
 define(
     [
         'jquery', 'underscore',
-        'base/brix',
+        'brix/base',
         './site-components.tpl.js',
         'css!./site-components.css'
     ],
@@ -20,7 +20,7 @@ define(
                 if (this.options.css) require('css!' + this.options.css)
             },
             render: function() {
-                var html = _.template(template, this.data)
+                var html = _.template(template)(this.data)
                 $(this.element).append(html)
             },
             data: {
