@@ -17,7 +17,7 @@
                 <a href="readme.html?name=brix-base&core=1">Brix Base</a>
             </div>
             <div class="panel-body">
-                <p>组件基类，<a href="https://github.com/thx/brix-loader/blob/master/src/loader.js#L4">Brix Component Definition</a> 的最简实现。在编写 Brix Component Implement 时，建议从继承该实现开始。</p>
+                <p>组件基类，<a href="https://github.com/thx/brix-loader/blob/master/src/brix/loader.js#L3">Brix Component Definition</a> 的最简实现。在编写 Brix Component Implement 时，建议从继承该实现开始。</p>
                 <p><a class="btn btn-default btn-sm" href="https://github.com/nuysoft/brix-base">GitHub</a></p>
             </div>
         </div>
