@@ -116,7 +116,7 @@ define([
       }
 
       // Remove special chars
-      multiple = multiple.replace(/(:|\.|\[|\]|\$)/g, '');
+      multiple = multiple.replace(/(:|\.|\[|\]|\{|\}|\$)/g, '');
 
       // Add proper `data-parsley-multiple` to siblings if we have a valid multiple name
       if ('undefined' !== typeof name) {
@@ -263,7 +263,7 @@ define([
   // ### PARSLEY auto-binding
   // Prevent it by setting `ParsleyConfig.autoBind` to `false`
   if (false !== ParsleyUtils.get(window, 'ParsleyConfig.autoBind'))
-    $(document).ready(function () {
+    $(function () {
       // Works only on `data-parsley-validate`.
       if ($('[data-parsley-validate]').length)
         $('[data-parsley-validate]').parsley();

@@ -1,6 +1,6 @@
 {
   "name": "brix-base",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "ignore": [
     "**/.*"
   ],
@@ -10,11 +10,11 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-base",
-  "_release": "0.0.2",
+  "_release": "0.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.2",
-    "commit": "86a90352161cd882093c7bbfa9913565995d01ae"
+    "tag": "0.0.3",
+    "commit": "8bfb652cc18896af0beced3231ac0b09549e3b9f"
   },
   "_source": "git://github.com/nuysoft/brix-base.git",
   "_target": "*",

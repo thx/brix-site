@@ -11,188 +11,134 @@ define(
 
         var DEBUG = ~location.search.indexOf('debug') && {
             fix: function(arg, len) {
-                var fix = parseInt(len) - arg.length
-                for (var i = 0; i < fix; i++) {
-                    arg += ' '
-                }
+                var fix = parseInt(len, 10) - ('' + arg).length
+                for (var i = 0; i < fix; i++) arg += ' '
                 return arg
             }
         }
 
-        var PREFIX
-        var RE_BX_TYPE
-
-        function setup(prefix) {
-            PREFIX = prefix
-            RE_BX_TYPE = new RegExp(PREFIX + '(?!name|options)(.+)')
-        }
-        setup('bx-')
-
         var RE_FN_ARGS = /([^()]+)(?:\((.*)\))?/
         var NAMESPACE = '.' + (Math.random() + '').replace(/\D/g, '')
 
-        var RE_BX_TARGET_TYPE = /^(window|document|body)-(.+)/
+        var RE_TARGET_TYPE = /^(window|document|body)-(.+)/
 
-        return {
-            /*
-                #### .setup( [ prefix ] )
+        function EventManager(prefix) {
+            // Allow instantiation without the 'new' keyword
+            if (!(this instanceof EventManager)) {
+                return new EventManager(prefix)
+            }
 
-                读取或设置 `bx-type` 风格中的前缀 `bx-`。
-             */
-            setup: function(prefix) {
-                if (prefix) return PREFIX
+            this.prefix = prefix || 'bx-'
 
-                setup(prefix)
+            // 原型方法 => 实例方法
+            this.delegateBxTypeEvents = this.delegateBxTypeEvents
+            this.undelegateBxTypeEvents = this.undelegateBxTypeEvents
 
-                return this
-            },
+            // 缩短方法名
+            this.delegate = this.delegateBxTypeEvents
+            this.undelegate = this.undelegateBxTypeEvents
+        }
 
-            /*
-                #### .delegateBxTypeEvents( [ element ] )
+        EventManager.prototype.delegateBxTypeEvents = function(element, owner) {
+            element = element || this.element
+            owner = owner || this
 
-                在节点 `element` 上代理 `bx-type` 风格的事件监听函数。参数 `element` 是可选的，如果未传入，则默认为 `this.element`。
-            */
-            delegateBxTypeEvents: function(element) {
-                element = element || this.element
-                if (!element) return this
+            var label = this.prefix + 'event'
+            if (DEBUG) {
+                console.group(label)
+                console.time(label)
+                console.log(element)
+            }
 
-                var label = 'bx-event'
-                if (DEBUG) {
-                    console.group(label)
-                    console.time(label)
-                    console.log(jQuery(element).toArray())
-                }
+            _undelegateBxTypeEvents(this.prefix, element)
+            _delegateBxTypeEvents(this.prefix, element, owner)
 
-                _delegateBxTypeEvents(this, element, false)
-                _delegateBxTypeEvents(this, element, true)
-
-                if (DEBUG) {
-                    console.timeEnd(label)
-                    console.groupEnd(label)
-                }
-
-                return this
-            },
-            /*
-                #### .undelegateBxTypeEvents()
-
-                从节点 `element` 上移除 `bx-type` 风格的事件监听函数。。参数 `element` 是可选的，如果未传入，则默认为 `this.element`。
-            */
-            undelegateBxTypeEvents: function(element) {
-                element = element || this.element
-                if (!element) return this
-
-                _undelegateBxTypeEvents(element, false)
-                _undelegateBxTypeEvents(element, true)
-
-                return this
-            },
-            _delegateBxTypeEvents: _delegateBxTypeEvents,
-            _undelegateBxTypeEvents: _undelegateBxTypeEvents,
-            _parseBxTypes: _parseBxTypes,
-            _parseBxEvents: _parseBxEvents,
-            _parseMethodAndParams: _parseMethodAndParams,
-
-            /*
-                在当前组件（关联的元素）上，为一个或多个事件类型绑定一个事件监听函数。
-                在内部，Brix 上的事件方法通过调用第三方库（例如 jQuery、KISSY 等）的事件绑定方法来实现。
-            */
-            on: function(types, selector, data, fn) {
-                jQuery(this.relatedElement || this.element).on(types, selector, data, fn)
-                return this
-            },
-            /*
-                在当前组件（关联的元素）上，为一个或多个事件类型绑定一个事件监听函数，这个监听函数最多执行一次。
-            */
-            one: function(types, selector, data, fn) {
-                jQuery(this.relatedElement || this.element).one(types, selector, data, fn)
-                return this
-            },
-            /*
-                在当前组件（关联的元素）上，移除绑定的一个或多个类型的监听函数。
-            */
-            off: function(types, selector, fn) {
-                jQuery(this.relatedElement || this.element).off(types, selector, fn)
-                return this
-            },
-            /*
-                在当前组件（关联的元素）上，执行所有绑定的事件监听函数和默认行为，并模拟冒泡过程。
-            */
-            trigger: function(type, data) {
-                jQuery(this.relatedElement || this.element).trigger(type, data)
-                return this
-            },
-            /*
-                在当前组件（关联的元素）上，执行所有绑定的事件监听函数，并模拟冒泡过程，但不触发默认行为。
-            */
-            triggerHandler: function(type, data) {
-                jQuery(this.relatedElement || this.element).triggerHandler(type, data)
-                return this
+            if (DEBUG) {
+                console.timeEnd(label)
+                console.groupEnd(label)
             }
         }
 
-        function _delegateBxTypeEvents(owner, element, deep) {
+        EventManager.prototype.undelegateBxTypeEvents = function(element) {
+            element = element || this.element
+            _undelegateBxTypeEvents(this.prefix, element)
+        }
+
+        // 静态方法
+        EventManager.prefix = 'bx-'
+        EventManager.delegateBxTypeEvents = EventManager.prototype.delegateBxTypeEvents
+        EventManager.undelegateBxTypeEvents = EventManager.prototype.undelegateBxTypeEvents
+        EventManager._delegateBxTypeEvents = _delegateBxTypeEvents
+        EventManager._undelegateBxTypeEvents = _undelegateBxTypeEvents
+        EventManager._parseBxTypes = _parseBxTypes
+        EventManager._parseBxEvents = _parseBxEvents
+        EventManager._parseMethodAndParams = _parseMethodAndParams
+
+        // 缩短方法名
+        EventManager.delegate = EventManager.prototype.delegateBxTypeEvents
+        EventManager.undelegate = EventManager.prototype.undelegateBxTypeEvents
+
+        return EventManager
+
+        function _delegateBxTypeEvents(prefix, element, owner) {
+            var SEPARATION = 'bx-event-separation'
+            var $body = jQuery(document.body)
             var $element = jQuery(element)
+            var separation = Math.random()
+            $element.data(SEPARATION, separation)
             var data = $element.data()
             if (!data._bxevents) data._bxevents = {}
 
-            var types = _parseBxTypes(element, deep)
+            var types = _parseBxTypes(prefix, element)
             _.each(types, function(type /*, index*/ ) {
-                if (data._bxevents[type]) return
-                data._bxevents[type] = true
+                var bxtype = prefix + type
+                var selector = '[' + bxtype + ']' // 'bx-' + type
 
-                var bxtype = PREFIX + type
-                var selector = '[' + PREFIX + type + ']' // 'bx-' + type
+                if (data._bxevents[bxtype]) return
+                data._bxevents[bxtype] = true
+
 
                 if (DEBUG) {
                     console.log(DEBUG.fix(type, 16), bxtype)
                 }
 
-                RE_BX_TARGET_TYPE.exec('')
-                if (RE_BX_TARGET_TYPE.exec(type)) {
-                    _delegateBxTargetType(type, element, owner)
+                RE_TARGET_TYPE.exec('')
+                if (RE_TARGET_TYPE.exec(type)) {
+                    _delegateBxTargetType(prefix, type, element, owner)
                     return
                 }
 
-                $element.on.apply(
-                    $element,
-                    deep ? [type + NAMESPACE, selector, _appetizer] : [type + NAMESPACE, _appetizer]
-                )
-                $element.on.apply(
-                    $element,
-                    deep ? [bxtype + NAMESPACE, selector, __entrees] : [bxtype + NAMESPACE, __entrees]
-                )
+                $body.on(type + NAMESPACE, selector, _appetizer)
 
-                function __entrees(event) {
+                $element.data(bxtype, _appetizer)
+
+                // 开胃菜
+                function _appetizer(event) {
+                    if (jQuery(event.target).closest('.disabled').length) return
+
+                    var parents = jQuery(event.currentTarget).parents()
+                    var lastestSeparation = jQuery(event.currentTarget).data(SEPARATION)
+                    if (!lastestSeparation) {
+                        for (var i = 0; i < parents.length; i++) {
+                            if (parents.eq(i).data(SEPARATION)) {
+                                lastestSeparation = parents.eq(i).data(SEPARATION)
+                                break
+                            }
+                        }
+                    }
+                    if (lastestSeparation !== separation) return
+
                     var extraParameters = [].slice.call(arguments, 1)
-                    _entrees.apply(this, [event, owner].concat(extraParameters))
+                    _entrees.apply(this, [event, owner, prefix].concat(extraParameters))
                 }
             })
         }
 
-        // 开胃菜
-        function _appetizer(event) {
-            // type ==> bx-type
-            var type = event.type
-            var bxtype = PREFIX + type
-            event.type = bxtype // bx-type
-
-            jQuery(event.target).trigger(event, [].slice.call(arguments, 1))
-
-            // bx-type ==> type
-            event.type = type
-        }
-
         // 主菜
-        function _entrees(event, owner) {
-            // bx-type ==> type
-            var bxtype = event.type // bx-type
-            var type = bxtype.replace(PREFIX, '') // type
-            event.type = type
+        function _entrees(event, owner, prefix) {
+            var extraParameters = [].slice.call(arguments, 3)
 
-            var extraParameters = [].slice.call(arguments, 2)
-
-            var handler = jQuery(event.currentTarget).attr(bxtype)
+            var handler = jQuery(event.currentTarget).attr(prefix + event.type)
             if (!handler) return
 
             var parts = _parseMethodAndParams(handler)
@@ -204,46 +150,42 @@ define(
                 /* jshint evil:true */
                 eval(handler)
             }
-
-            // type ==> bx-type
-            event.type = bxtype
         }
 
-        function _undelegateBxTypeEvents(element, deep) {
+        function _undelegateBxTypeEvents(prefix, element) {
+            var $body = jQuery(document.body)
             var $element = jQuery(element)
             var bxevents = $element.data()._bxevents
-                /* jshint unused:false */
-            _.each(bxevents, function(flag, type) {
-                bxevents[type] = false
+            var rePrefix = new RegExp('^' + prefix)
 
-                RE_BX_TARGET_TYPE.exec('')
-                if (RE_BX_TARGET_TYPE.exec(type)) {
-                    _undelegateBxTargetTypeEvents(type, element)
+            /* jshint unused:false */
+            _.each(bxevents, function(flag, bxtype) {
+                if (!rePrefix.exec(bxtype)) return
+
+                bxevents[bxtype] = false
+                var type = bxtype.replace(prefix, '')
+
+                RE_TARGET_TYPE.exec('')
+                if (RE_TARGET_TYPE.exec(type)) {
+                    _undelegateBxTargetTypeEvents(prefix, type, element)
                     return
                 }
 
-                var bxtype = PREFIX + type
-                var selector = '[' + PREFIX + type + ']' // 'bx-' + type
+                var selector = '[' + bxtype + ']'
+                var _appetizer = $element.data(bxtype)
 
-                $element.off.apply(
-                    $element,
-                    deep ? [type + NAMESPACE, selector] : [type + NAMESPACE]
-                )
-                $element.off.apply(
-                    $element,
-                    deep ? [bxtype + NAMESPACE, selector] : [bxtype + NAMESPACE]
-                )
+                $body.off(type + NAMESPACE, selector, _appetizer)
             })
         }
 
         // 在指定的节点上绑定事件
-        function _delegateBxTargetType(type, element, owner) {
+        function _delegateBxTargetType(prefix, type, element, owner) {
             // $1 window|document|body, $2 type
-            RE_BX_TARGET_TYPE.exec('')
-            var ma = RE_BX_TARGET_TYPE.exec(type)
+            RE_TARGET_TYPE.exec('')
+            var ma = RE_TARGET_TYPE.exec(type)
             if (!ma) throw '不支持 ' + type
 
-            var bxtype = PREFIX + type
+            var bxtype = prefix + type
 
             var $target =
                 ma[1] === 'window' && 　jQuery(window) ||
@@ -263,7 +205,7 @@ define(
 
             // 主菜
             function _bxTargetTypeEntrees(event) {
-                var selector = '[' + PREFIX + type + ']'
+                var selector = '[' + prefix + type + ']'
                 var $targets = function() {
                     var targets = []
                     if (jQuery(event.target).is(selector)) targets.push(event.target)
@@ -272,7 +214,7 @@ define(
                     return jQuery(targets)
                 }()
 
-                // bx-target-type ==> type
+                // bx-target-type => type
                 var currentType = event.type // bx-target-type
                 var originalType = ma[2] // type
                 event.type = originalType
@@ -294,18 +236,18 @@ define(
                     }
                 })
 
-                // type ==> bx-target-type
+                // type => bx-target-type
                 event.type = currentType
             }
         }
 
         // TODO
-        function _undelegateBxTargetTypeEvents(type /*, element*/ ) {
-            RE_BX_TARGET_TYPE.exec('')
-            var ma = RE_BX_TARGET_TYPE.exec(type)
+        function _undelegateBxTargetTypeEvents(prefix, type /*, element*/ ) {
+            RE_TARGET_TYPE.exec('')
+            var ma = RE_TARGET_TYPE.exec(type)
             if (!ma) throw '不支持 ' + type
 
-            var bxtype = PREFIX + type
+            var bxtype = prefix + type
 
             var $target =
                 ma[1] === 'window' && 　jQuery(window) ||
@@ -331,20 +273,23 @@ define(
          *        },
          *      ]
          */
-        function _parseBxEvents(element, deep) {
+        function _parseBxEvents(prefix, element) {
+            var RE_BX_TYPE = new RegExp(prefix + '(?!name|options)(.+)')
             var events = []
 
             // 数组 or 伪数组
             if (!element.nodeType && element.length) {
                 _.each(element, function(item /*, index*/ ) {
                     events = events.concat(
-                        _parseBxEvents(item, deep)
+                        _parseBxEvents(prefix, item)
                     )
                 })
                 return events
             }
 
-            var elements = deep ? element.getElementsByTagName('*') : [element]
+            var elements = [element].concat(
+                [].slice.call(element.getElementsByTagName('*'), 0)
+            )
             _.each(elements, function(item /*, index*/ ) {
                 _.each(item.attributes, function(attribute) {
                     RE_BX_TYPE.exec('') // reset lastIndex to 0
@@ -358,7 +303,7 @@ define(
                     _.extend(handleObj, _parseMethodAndParams(attribute.value))
 
                     // 避免重复代理
-                    if (item._bx_events && item._bx_events[handleObj.type]) return
+                    // if (item._bx_events && item._bx_events[handleObj.type]) return
 
                     events.push(handleObj)
 
@@ -376,11 +321,11 @@ define(
          * @return {array}
          *      [ 'click', 'change', ... ]
          */
-        function _parseBxTypes(element, deep) {
+        function _parseBxTypes(prefix, element) {
             return _.unique(
                 _.map(
                     // [ { target type handler fn params }, ... ]
-                    _parseBxEvents(element, deep),
+                    _parseBxEvents(prefix, element),
                     function(item) {
                         return item.type
                     }

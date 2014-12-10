@@ -1,6 +1,6 @@
 {
   "name": "brix-bisheng",
-  "version": "0.0.1",
+  "version": "0.1.4",
   "authors": [
     "墨智 <mozhi.gyy@alibaba-inc.com>"
   ],
@@ -21,11 +21,11 @@
     "underscore": "~1.7.0"
   },
   "homepage": "https://github.com/nuysoft/brix-bisheng",
-  "_release": "0.0.1",
+  "_release": "0.1.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.1",
-    "commit": "3bf9affb8fbd252a069cd15eb0f4ae1e7afe3e34"
+    "tag": "0.1.4",
+    "commit": "07ce7aeb6d5d58469b06697b2e04abdec1d81389"
   },
   "_source": "git://github.com/nuysoft/brix-bisheng.git",
   "_target": "*",

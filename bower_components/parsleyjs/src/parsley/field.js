@@ -59,13 +59,14 @@ define('parsley/field', [
 
       // Sort priorities to validate more important first
       var priorities = this._getConstraintsSortedPriorities();
-
+      if (0 === priorities.length)
+        return this.validationResult = [];
       // Value could be passed as argument, needed to add more power to 'parsley:field:validate'
       value = value || this.getValue();
 
       // If a field is empty and not required, leave it alone, it's just fine
       // Except if `data-parsley-validate-if-empty` explicitely added, useful for some custom validators
-      if (0 === value.length && !this._isRequired() && 'undefined' === typeof this.options.validateIfEmpty && true !== force)
+      if (!value.length && !this._isRequired() && 'undefined' === typeof this.options.validateIfEmpty && true !== force)
         return this.validationResult = [];
 
       // If we want to validate field against all constraints, just call Validator and let it do the job
@@ -140,7 +141,7 @@ define('parsley/field', [
           this.constraints.splice(i, 1);
           break;
         }
-
+      delete this.constraintsByName[name];
       return this;
     },
 
@@ -155,14 +156,17 @@ define('parsley/field', [
     // Internal only.
     // Bind constraints from config + options + DOM
     _bindConstraints: function () {
-      var constraints = [];
+      var constraints = [], constraintsByName = {};
 
       // clean all existing DOM constraints to only keep javascript user constraints
       for (var i = 0; i < this.constraints.length; i++)
-        if (false === this.constraints[i].isDomConstraint)
+        if (false === this.constraints[i].isDomConstraint) {
           constraints.push(this.constraints[i]);
+          constraintsByName[this.constraints[i].name] = this.constraints[i];
+        }
 
       this.constraints = constraints;
+      this.constraintsByName = constraintsByName;
 
       // then re-add Parsley DOM-API constraints
       for (var name in this.options)
@@ -201,14 +205,17 @@ define('parsley/field', [
       if ('undefined' === typeof type)
         return this;
 
-      // Small special case here for HTML5 number, that is in fact an integer validator
-      if ('number' === type)
-        return this.addConstraint('type', 'integer', undefined, true);
-
+      // Small special case here for HTML5 number: integer validator if step attribute is undefined or an integer value, number otherwise
+      if ('number' === type) {
+        if (('undefined' === typeof this.$element.attr('step')) || (0 === parseFloat(this.$element.attr('step')) % 1)) {
+          return this.addConstraint('type', 'integer', undefined, true);
+        } else {
+          return this.addConstraint('type', 'number', undefined, true);
+        }
       // Regular other HTML5 supported types
-      else if (new RegExp(type, 'i').test('email url range'))
+      } else if (new RegExp(type, 'i').test('email url range')) {
         return this.addConstraint('type', type, undefined, true);
-
+      }
       return this;
     },
 
