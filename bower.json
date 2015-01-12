@@ -13,12 +13,12 @@
     "tests"
   ],
   "dependencies": {
-    "brix-loader": "*",
-    "brix-base": "*",
-    "brix-event": "*",
-    "brix-components": "*",
-    "brix-bisheng": "*",
-    "brix-spa": "*"
+    "brix-loader": "master",
+    "brix-base": "master",
+    "brix-event": "master",
+    "brix-components": "master",
+    "brix-bisheng": "master",
+    "brix-spa": "master"
   },
   "devDependencies": {
     "requirejs": "~2.1.15",

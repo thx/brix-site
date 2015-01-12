@@ -19,3 +19,7 @@
     </div>
     <% } %>
 </div>
+<p class="dependencies">
+    <img style="background-color: #0769AD;" src="components/site-tools/images/logo_jquery.png">
+    <img style="background-color: #F7931E;" src="components/site-tools/images/logo_handlebars.png">
+</p>

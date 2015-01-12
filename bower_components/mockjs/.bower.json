@@ -1,9 +1,12 @@
 {
   "name": "Mock.js",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://github.com/nuysoft/MockService",
   "authors": [
     "nuysoft <nuysoft@gmail.com>"
+  ],
+  "main": [
+    "dist/mock.js"
   ],
   "license": "MIT",
   "ignore": [
@@ -22,11 +25,11 @@
     "seajs": "*",
     "js-beautify": "~1.5.1"
   },
-  "_release": "0.1.5",
+  "_release": "0.1.6",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.5",
-    "commit": "c1e23623c45d2b65cb9a2d11a50206ff7532f72f"
+    "tag": "0.1.6",
+    "commit": "6ba948b4b570ea9d433b54ce39db862be85529b0"
   },
   "_source": "git://github.com/nuysoft/Mock.git",
   "_target": "*",

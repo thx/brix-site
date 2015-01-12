@@ -5,14 +5,14 @@
 define(
     [
         'jquery', 'underscore',
-        'brix/base',
+        'brix/base', 'brix/event',
         './pure-pagination.js',
         './pagination.tpl.js',
         'css!./pagination.css'
     ],
     function(
         $, _,
-        Brix,
+        Brix, EventManager,
         PurePagination,
         template
     ) {
@@ -39,7 +39,9 @@ define(
                 公共事件：ready destroyed
                 
         */
-        return Brix.extend({
+        function Pagination() {}
+
+        _.extend(Pagination.prototype, Brix.prototype, {
             options: {
                 statistics: true,
                 simplify: false,
@@ -58,71 +60,66 @@ define(
             },
             render: function() {
                 var that = this
-                this.data = _.extend(function(options, _status) {
-                    var barStart = Math.min(
-                        _status.pages,
-                        Math.max(
-                            1,
-                            _status.cursor - parseInt(options.step / 2, 10)
-                        )
-                    )
-                    var limit = +options.limit
-                    var limits = [].concat(options.limits).sort()
-                    if (!_.contains(limits, limit)) {
-                        switch (true) {
-                            case limit < limits[0]:
-                                limits.unshift(limit)
-                                break
-                            case limit > limits[limits.length - 1]:
-                                limits.push(limit)
-                                break
-                            default:
-                                for (var i = 0; i < limits.length; i++) {
-                                    if (limit > limits[i]) {
-                                        limits.splice(i + 1, 0, limit)
-                                        break
-                                    }
-                                }
-                        }
-                    }
-                    return {
-                        barStart: barStart,
-                        barEnd: Math.min(_status.pages, barStart + options.step - 1),
-                        limits: limits
-                    }
-                }(this.options, this._status), this._status)
+                var manager = new EventManager()
+                this.data = this.fixData()
                 var html = _.template(template)(this.data)
                 $(this.element).empty().append(html)
 
                 // 重新 render 之后的 ready 事件？再次触发？
                 /* jshint unused:true */
-                this.off('change.dropdown', 'select')
-                    .on('change.dropdown', 'select', function(event, data) {
+                this.off('change.dropdown.original', 'select')
+                    .on('change.dropdown.original', 'select', function(event, data) {
                         /* data { label: label, value: value } */
                         that._status.setLimit(data.value)
                         that.trigger('change.pagination', that._status)
-                        that._wrapper()
+                        that.render()
                     })
-                // this.on('ready', function() {
-                //     var Loader = require('brix/loader')
-                //     var dropdown = Loader.query('components/dropdown', that)[0]
-                //     dropdown.on('change', function(event, data) {
-                //         debugger
-                //         /* data { label, value } */
-                //         that._status.setLimit(data.value)
-                //         that.render()
-                //     })
-                // })
 
-                this.delegateBxTypeEvents()
+                manager.delegate(this.element, this)
             },
             moveTo: function(event, extra) { // extraParameters
                 // moveTo( cursor )
                 if (arguments.length === 1) extra = event
                 this._status.moveTo(extra)
                 this.trigger('change.pagination', this._status)
-                this._wrapper()
+                this.render()
+            },
+            fixData: function() {
+                var barStart = Math.min(
+                    this._status.pages,
+                    Math.max(
+                        1,
+                        this._status.cursor - parseInt(this.options.step / 2, 10)
+                    )
+                )
+                var limit = +this.options.limit
+                var limits = [].concat(this.options.limits).sort()
+                if (!_.contains(limits, limit)) {
+                    switch (true) {
+                        case limit < limits[0]:
+                            limits.unshift(limit)
+                            break
+                        case limit > limits[limits.length - 1]:
+                            limits.push(limit)
+                            break
+                        default:
+                            for (var i = 0; i < limits.length; i++) {
+                                if (limit > limits[i]) {
+                                    limits.splice(i + 1, 0, limit)
+                                    break
+                                }
+                            }
+                    }
+                }
+                return _.extend({
+                    barStart: barStart,
+                    barEnd: Math.min(this._status.pages, barStart + this.options.step - 1),
+                    limits: limits
+                }, this._status)
             }
         })
+
+        return Pagination
+            // return Brix.extend()
     }
 )

@@ -14,3 +14,7 @@
   font-size: 24px;
   text-decoration: none;
 }
+.site-panel .link {
+  overflow: hidden;
+  white-space: nowrap;
+}

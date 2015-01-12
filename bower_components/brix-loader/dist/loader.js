@@ -1018,9 +1018,13 @@ define(
                         }
                     })
                     next()
-                        // .delay(100, queueName) // 每个组件之间的渲染间隔 100ms，方便观察
+                        // .delay(100) // 每个组件之间的渲染间隔 100ms，方便观察
                 })
                 .queue(function(next) {
+                    next()
+                    return
+
+                    // 暂停支持
                     // 6. 绑定事件
                     // 从初始的关联元素上解析事件配置项 bx-type，然后逐个绑定到最终的关联元素上。
                     // 以 Dropdown 为例，初试的关联元素是 <select>，最终的关联元素却是 <div class="dropdown">
@@ -1041,7 +1045,16 @@ define(
                         })
                     }
                     // 从最终的关联元素上解析事件配置项 bx-type，然后逐个绑定。
-                    // if (instance.delegateBxTypeEvents) instance.delegateBxTypeEvents()
+                    if (instance.delegateBxTypeEvents) {
+                        if (instance.element) {
+                            instance.undelegateBxTypeEvents(instance.element)
+                            instance.delegateBxTypeEvents(instance.element)
+                        }
+                        if (instance.relatedElement) {
+                            instance.undelegateBxTypeEvents(instance.relatedElement)
+                            instance.delegateBxTypeEvents(instance.relatedElement)
+                        }
+                    }
                     next()
                 })
                 .queue(function(next) {
@@ -1049,13 +1062,14 @@ define(
                     var descendants = element.getElementsByTagName('*')
                     var hasBrixElement = false
                     Util.each(descendants, function(descendant /*, index*/ ) {
-                            if (descendant.nodeType !== 1) return
-                            if (!hasBrixElement &&
-                                descendant.getAttribute(Constant.ATTRS.id)) {
-                                hasBrixElement = true
-                            }
-                        })
-                        // 7. 如果有后代组件，则递归加载
+                        if (descendant.nodeType !== 1) return
+                        if (!hasBrixElement &&
+                            descendant.getAttribute(Constant.ATTRS.id)) {
+                            hasBrixElement = true
+                        }
+                    })
+
+                    // 7. 如果有后代组件，则递归加载
                     if (hasBrixElement) {
                         boot(instance, function() {
                             next()
@@ -1246,6 +1260,14 @@ define(
             // 调用自定义销毁行为
             if (instance._destroy) {
                 try {
+                    /*if (instance.delegateBxTypeEvents) {
+                        if (instance.element) {
+                            instance.undelegateBxTypeEvents(instance.element)
+                        }
+                        if (instance.relatedElement) {
+                            instance.undelegateBxTypeEvents(instance.relatedElement)
+                        }
+                    }*/
                     instance._destroy()
                 } catch (error) {
                     if (complete) complete(error)
@@ -1289,7 +1311,8 @@ define(
         function cache(instance) {
             // 放入缓存
             CACHE[instance.clientId] = instance
-                // 关联父组件
+
+            // 关联父组件
             var parent = CACHE[instance.parentClientId]
             if (parent) parent.childClientIds.push(instance.clientId)
         }
@@ -1609,7 +1632,24 @@ define(
             query: query,
             tree: tree,
 
-            load: load,
+            load: function(element, moduleId, options, complete) {
+                // load( element, moduleId, complete )
+                if (Util.isFunction(options)) {
+                    complete = options
+                    options = undefined
+                }
+
+                tasks.queue(function(next) {
+                    booting = true
+                    load(element, moduleId, options, function(records) {
+                        booting = false
+                        if (complete) complete(records)
+                        next()
+                    })
+                })
+                if (!booting) tasks.dequeue()
+                return this
+            },
             unload: unload,
 
             Util: Util,

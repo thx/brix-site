@@ -1,0 +1,13 @@
+.dependencies img {
+  max-height: 100px;
+  padding: 18px;
+  margin-right: 5px;
+  margin-bottom: 8px;
+}
+.dependencies .text {
+  display: inline-block;
+  height: 100px;
+  padding: 18px;
+  text-align: center;
+  min-width: 100px;
+}

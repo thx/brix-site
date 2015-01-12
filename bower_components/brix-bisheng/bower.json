@@ -1,19 +1,27 @@
 {
   "name": "brix-bisheng",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "authors": [
     "墨智 <mozhi.gyy@alibaba-inc.com>"
   ],
   "moduleType": [
     "amd"
   ],
+  "main": [
+    "dist/bisheng.js"
+  ],
   "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
+    "src",
     "test",
-    "tests"
+    "tests",
+    "doc",
+    "demo",
+    "demo.html",
+    "gulpfile.js"
   ],
   "dependencies": {
     "jquery": "~2.1.1",

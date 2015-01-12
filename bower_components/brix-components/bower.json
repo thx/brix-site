@@ -1,13 +1,13 @@
 {
   "name": "brix-components",
-  "version": "0.0.0",
+  "version": "0.0.5",
   "ignore": [
     "**/.*"
   ],
   "dependencies": {
-    "brix-loader": "*",
-    "brix-base": "*",
-    "brix-event": "*",
+    "brix-loader": "master",
+    "brix-base": "master",
+    "brix-event": "master",
     "requirejs": "*",
     "requirejs-text": "*",
     "require-less": "*",
@@ -28,7 +28,8 @@
     "parsleyjs": "*",
     "log": "*",
     "colors": "*",
-    "handlebars": "~2.0.0"
+    "handlebars": "~2.0.0",
+    "swfobject": "*"
   },
   "devDependencies": {}
 }

@@ -1,6 +1,5 @@
 {
   "name": "brix-spa",
-  "version": "0.0.1",
   "authors": [
     "墨智 <mozhi.gyy@alibaba-inc.com>"
   ],
@@ -13,7 +12,7 @@
     "tests"
   ],
   "dependencies": {
-    "brix-loader": "*",
+    "brix-loader": "master",
     "jquery": "~2.1.1",
     "underscore": "~1.7.0",
     "director": "~1.2.2",
@@ -28,13 +27,13 @@
     "highlightjs": "~8.3.0"
   },
   "homepage": "https://github.com/nuysoft/brix-spa",
-  "_release": "0.0.1",
+  "_release": "d74392a30f",
   "_resolution": {
-    "type": "version",
-    "tag": "0.0.1",
-    "commit": "22e3de365f77148588bd9e470b1dbb0cf0ef036e"
+    "type": "branch",
+    "branch": "master",
+    "commit": "d74392a30f9fccf51794c965900c203c5d97fc11"
   },
   "_source": "git://github.com/nuysoft/brix-spa.git",
-  "_target": "*",
+  "_target": "master",
   "_originalSource": "brix-spa"
 }

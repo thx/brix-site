@@ -1,22 +1,32 @@
 {
   "name": "brix-event",
-  "version": "0.0.5",
+  "main": [
+    "dist/event.js"
+  ],
   "ignore": [
-    "**/.*"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "doc",
+    "demo.html",
+    "package.json",
+    "gulpfile.js"
   ],
   "dependencies": {
-    "jquery": "*",
+    "jquery": "1.x.x",
     "underscore": "*"
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-event",
-  "_release": "0.0.5",
+  "_release": "e18c145ac7",
   "_resolution": {
-    "type": "version",
-    "tag": "0.0.5",
-    "commit": "ea69d03d69797658dbe4eeb2df1db1b83cd43bb0"
+    "type": "branch",
+    "branch": "master",
+    "commit": "e18c145ac712f03dc7b22f6458af2de18e5ccdbb"
   },
   "_source": "git://github.com/nuysoft/brix-event.git",
-  "_target": "*",
+  "_target": "master",
   "_originalSource": "brix-event"
 }

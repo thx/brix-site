@@ -1,11 +1,22 @@
 {
   "name": "brix-event",
-  "version": "0.0.5",
+  "version": "0.0.7",
+  "main": [
+    "dist/event.js"
+  ],
   "ignore": [
-    "**/.*"
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "doc",
+    "demo.html",
+    "package.json",
+    "gulpfile.js"
   ],
   "dependencies": {
-    "jquery": "*",
+    "jquery": "1.x.x",
     "underscore": "*"
   },
   "devDependencies": {}

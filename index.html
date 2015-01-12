@@ -7,11 +7,9 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <script src="bower_components/requirejs/require.js"></script>
-    <script src="http://g.assets.daily.taobao.net/thx/brix-release/config-remote.js"></script>
-    <!-- <script src="http://g.assets.daily.taobao.net/thx/brix-release/config-remote.js"></script> -->
+    <script src="http://g-assets.daily.taobao.net/thx/brix-release/0.0.21/config-remote.js"></script>
+    <!-- <script src="http://g-assets.daily.taobao.net/thx/brix-release/0.0.21/config-remote.js"></script> -->
     <!-- <script src="http://localhost:4242/config-remote.js"></script> -->
-    <!-- <script src="http://nuysoft.github.io/brix-release/build/config-remote.js"></script> -->
-    <!-- <script src="http://g.tbcdn.cn/thx/brix-release/config-remote.js"></script> -->
     <script src="./config.js"></script>
 </head>
 <body>
@@ -28,11 +26,10 @@
             window.Loader = Loader
             // 加载组件
             Loader.boot(function() {
-                console.log('done!')
+                // console.log('done!')
             }, function(error, instance, index, count) {
-                index = index + 1
                 var nprogress = Loader.query('components/nprogress')
-                if (nprogress.length) nprogress.set(index / count)
+                if (nprogress.length) nprogress.set((index + 1) / count)
             })
         })
     </script>

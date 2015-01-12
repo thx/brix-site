@@ -7,12 +7,12 @@ define(function() {
     <div class="col-sm-4">
         <div class="panel panel-default site-panel">
             <div class="panel-heading">
-                <a href="readme.html?name=<%= components[i].name %>"><%= components[i].name %></a>
+                <a href="readme.html?name=<%= components[i].name %>" class="name"><%= components[i].name %></a>
             </div>
             <div class="panel-body">
-                <p><%= components[i].desc %></p>
+                <p class="desc" bx-name="components/ellipsis" data-lines="1"><%= components[i].desc %></p>
                 <p class="preview"><img class="img-thumbnail" src="<%= components[i].preview %>"></p>
-                <p>
+                <p class="link">
                     <% for (var ii = 0; ii < components[i].links.length; ii++) { %>
                     <a class="btn btn-default btn-sm" href="readme.html?name=<%= components[i].name %>#<%= components[i].links[ii][0] %>"><%= components[i].links[ii][0] %> <%= components[i].links[ii][1] %></a>
                     <% } %>

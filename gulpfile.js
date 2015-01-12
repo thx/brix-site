@@ -8,7 +8,17 @@ var less = require('gulp-less')
 // https://github.com/AveVlad/gulp-connect
 gulp.task('connect', function() {
     connect.server({
-        port: 4245
+        port: 4245,
+        middleware: function( /*connect, opt*/ ) {
+            return [
+                // https://github.com/senchalabs/connect/#use-middleware
+                /* jshint unused:true */
+                function cors(req, res, next) {
+                    if (req.method === 'POST') req.method = 'GET'
+                    next()
+                }
+            ]
+        }
     })
 })
 
@@ -61,15 +71,15 @@ gulp.task('tpl', function() {
         .pipe(through.obj(function(file, encoding, callback) {
             file.path = file.path + '.js'
             file.contents = new Buffer(
-                '/* global define */\n' +
-                'define(function() {\n' +
-                '    return (function(){/*\n' +
-                file.contents.toString() +
-                "\n    */}).toString().split('\\n').slice(1,-1).join('\\n') + '\\n'" +
-                '\n})'
-            )
-            // console.log(file.contents.toString())
-            // console.log(encoding)
+                    '/* global define */\n' +
+                    'define(function() {\n' +
+                    '    return (function(){/*\n' +
+                    file.contents.toString() +
+                    "\n    */}).toString().split('\\n').slice(1,-1).join('\\n') + '\\n'" +
+                    '\n})'
+                )
+                // console.log(file.contents.toString())
+                // console.log(encoding)
             callback(null, file)
         }))
         .pipe(gulp.dest('./'))

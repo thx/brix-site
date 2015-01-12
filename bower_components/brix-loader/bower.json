@@ -1,7 +1,10 @@
 {
   "name": "brix-loader",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "homepage": "https://github.com/thx/brix-loader",
+  "main": [
+    "dist/loader.js"
+  ],
   "license": "MIT",
   "ignore": [
     "**/.*",

@@ -3,39 +3,25 @@ define(function() {
     return (function(){/*
 <h2>基础类库</h2>
 <div class="row">
+    <% for (var i = 0, component; component = components[i]; i++) { %>
     <div class="col-sm-4">
         <div class="panel panel-default site-panel">
             <div class="panel-heading">
-                <a href="readme.html?name=brix-loader&core=1">Brix Loader</a>
+                <a href="readme.html?core=1&name=<%= component.resp %>" class="name"><%= component.name %></a>
             </div>
             <div class="panel-body">
-                <p>组件加载器，负责管理组件的整个生命周期，包括加载、初始化、渲染和销毁。</p>
-                <p><a class="btn btn-default btn-sm" href="https://github.com/thx/brix-loader">GitHub</a></p>
+                <p class="desc" bx-name="components/ellipsis" data-lines="2"><%= component.desc %></p>
+                <p class="link">
+                    <% for (var ii = 0, link; link = component.links[ii]; ii++) { %>
+                    <a class="btn btn-default btn-sm" href="<%= component.links[ii][1] %>">
+                        <%= component.links[ii][0] %>
+                    </a>
+                    <% } %>
+                </p>
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
-        <div class="panel panel-default site-panel">
-            <div class="panel-heading">
-                <a href="readme.html?name=brix-base&core=1">Brix Base</a>
-            </div>
-            <div class="panel-body">
-                <p>组件基类，<a href="https://github.com/thx/brix-loader/blob/master/src/brix/loader.js#L3">Brix Component Definition</a> 的最简实现。在编写 Brix Component Implement 时，建议从继承该实现开始。</p>
-                <p><a class="btn btn-default btn-sm" href="https://github.com/nuysoft/brix-base">GitHub</a></p>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="panel panel-default site-panel">
-            <div class="panel-heading">
-                <a href="readme.html?name=brix-event&core=1">Brix Event</a>
-            </div>
-            <div class="panel-body">
-                <p>支持 bx-type 风格的事件模型，实现事件与与 DOM 结构的松耦合，提升可读性、可复用性和可测试性。</p>
-                <p><a class="btn btn-default btn-sm" href="https://github.com/nuysoft/brix-event">GitHub</a></p>
-            </div>
-        </div>
-    </div>  
+    <% } %>
 </div>
 
     */}).toString().split('\n').slice(1,-1).join('\n') + '\n'
