@@ -120,7 +120,7 @@ define(
                     ]
                 }, {
                     name: 'AreaPicker',
-                    desc: '表单验证组件。',
+                    desc: '地区选择组件。',
                     preview: './components/site-components/image/areapicker.png',
                     readme: 'bower_components/brix-components/areapicker/README.md',
                     links: [
@@ -132,7 +132,7 @@ define(
                     ]
                 }, {
                     name: 'HourPicker',
-                    desc: '表单验证组件。',
+                    desc: '日程选择组件。',
                     preview: './components/site-components/image/hourpicker.png',
                     readme: 'bower_components/brix-components/hourpicker/README.md',
                     links: [
@@ -144,7 +144,7 @@ define(
                     ]
                 }, {
                     name: 'ChartxWrapper',
-                    desc: '表单验证组件。',
+                    desc: 'Chartx 组件。',
                     preview: './components/site-components/image/chartxwrapper.png',
                     readme: 'bower_components/brix-components/chartxwrapper/README.md',
                     links: [
@@ -156,7 +156,7 @@ define(
                     ]
                 }, {
                     name: 'Suggest',
-                    desc: '表单验证组件。',
+                    desc: '提示补全组件。',
                     preview: './components/site-components/image/suggest.png',
                     readme: 'bower_components/brix-components/suggest/README.md',
                     links: [
@@ -168,7 +168,7 @@ define(
                     ]
                 }, {
                     name: 'TagInput',
-                    desc: '表单验证组件。',
+                    desc: '标签输入组件。',
                     preview: './components/site-components/image/taginput.png',
                     readme: 'bower_components/brix-components/taginput/README.md',
                     links: [
