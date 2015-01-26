@@ -4,12 +4,44 @@
 
 ### 示例 <small>Examples</small>
 
+<!-- <table bx-name="components/table" class="table table-hover">
+    <thead>
+        <tr>
+            <th><input type="checkbox" data-linkage-name="all"> all</th>
+            <th>table</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="checkbox" data-linkage-name="1" data-linkage-parent-name="all"> 1</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <table bx-name="components/table" class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" value="1.1" data-linkage-name="1.1" data-linkage-parent-name="1"> 1.1</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" value="1.2" data-linkage-name="1.2" data-linkage-parent-name="1"> 1.2</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table> -->
+
 <div class="bs-example bs-example-modal">
     <div class="content">
         <table bx-name="components/table" class="table table-hover">
             <thead>
                 <tr>
-                    <th><input type="checkbox"></th>
+                    <th><input type="checkbox" data-linkage-name="all"></th>
                     <th>Id</th>
                     <th>Feature <span bx-name="components/popover" data-content="功能列表。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
                     <th>More <span bx-name="components/popover" data-content="鼠标移入之后显示更多内容。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
@@ -18,7 +50,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="checkbox" value="Aatrox"></td>
+                    <td><input type="checkbox" value="Aatrox" data-linkage-parent-name="all"></td>
                     <td>Aatrox</td>
                     <td>全选&amp;反选</td>
                     <td>
@@ -37,7 +69,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" value="Ahri"></td>
+                    <td><input type="checkbox" value="Ahri" data-linkage-parent-name="all"></td>
                     <td>Ahri</td>
                     <td>打开控制台查看选中的值</td>
                     <td>
@@ -56,7 +88,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" value="Akali"></td>
+                    <td><input type="checkbox" value="Akali" data-linkage-parent-name="all"></td>
                     <td>Akali</td>
                     <td>增强了 Table 的样式和事件</td>
                     <td>
@@ -86,6 +118,9 @@
         Loader.boot(function() {
             var instances = Loader.query('components/table')
             instances.on('toggle.table', function(event, values) {
+                console.log('delegateTarget', event.delegateTarget)
+                console.log('currentTarget', event.currentTarget)
+                console.log('target', event.target)
                 console.log(event.type, event.namespace, values)
             })
         })
@@ -108,8 +143,82 @@ toggle.table | 当勾选或取消勾选复选框时被触发。事件监听函�
 
 ```js
 var Loader = require('brix/loader')
-var instances = Loader.query('components/table')
+var instances = Loader.query('components/table')[0]
 instances.on('toggle.table', function(event, values) {
     console.log(event.type, event.namespace, values)
 })
 ```
+
+# linkage( container, callback( event, values ) )
+
+联动复选框工具函数。
+
+* linkage( container, callback( event, values ) )
+
+首先，需要在复选框 `<input type="checkbox">` 上附加两个属性 `data-linkage-name` 和 `data-linkage-parent-name`，分别表示当前复选框和父级复选框的唯一标识。例如：
+
+```html
+<label>
+    <input type="checkbox" data-linkage-name="all"> All
+</label>
+<label>
+    <input type="checkbox" data-linkage-name="item0" data-linkage-parent-name="all"> item 0
+</label>
+<label>
+    <input type="checkbox" data-linkage-name="item1" data-linkage-parent-name="all"> item 1
+</label>
+```
+
+然后，执行下面的代码，使容器元素 `container` 中的复选框的选中状态联动更新。如果子级复选框全部选中，则自动选中父级复选框；如果选中父级复选框，则自动选中全部子级复选框。
+
+```js
+require(['components/table/linkage'], function(linkage) {
+    linkage('#container', function(event, values) {
+        console.log(event, values)
+    })
+})
+```
+
+每当有复选框被点击时，会触发回调函数 `callback( event, values )`。其中，参数 `event` 是一个 [jQuery Event 对象](http://api.jquery.com/category/events/event-object/)，参数 `values` 是一个数组，包含了所有被选中复选框的值（即属性 `value`）。
+
+### 示例 <small>Examples</small>
+
+<div class="bs-example bs-example-modal">
+    <div class="content">
+        <div id="sexLinkage" bx-name>
+            <label><input type="checkbox" data-linkage-name="all"> All</label>
+            <ul>
+                <li>
+                    <label><input type="checkbox" value="1" data-linkage-name="1" data-linkage-parent-name="all"> 1</label>
+                    <ul>
+                        <li><label><input type="checkbox" value="1.1" data-linkage-name="1.1" data-linkage-parent-name="1"> 1.1</label></li>
+                        <li><label><input type="checkbox" value="1.2" data-linkage-name="1.2" data-linkage-parent-name="1"> 1.2</label></li>
+                        <li><label><input type="checkbox" value="1.3" data-linkage-name="1.3" data-linkage-parent-name="1"> 1.3</label></li>
+                    </ul>
+                </li>
+                <li>
+                    <label><input type="checkbox" data-linkage-name="2" data-linkage-parent-name="all"> 不限</label>
+                    <label><input type="checkbox" value="2.1" data-linkage-name="2.1" data-linkage-parent-name="2"> 2.1</label>
+                    <label><input type="checkbox" value="2.2" data-linkage-name="2.2" data-linkage-parent-name="2"> 2.2</label>
+                    <label><input type="checkbox" value="2.3" data-linkage-name="2.3" data-linkage-parent-name="2"> 2.3</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+```js
+require(['components/table/linkage'], function(linkage) {
+    linkage('#sexLinkage', function(event, values) {
+        console.log(event, values)
+    })
+})
+```
+
+<script type="text/javascript">
+    require(['components/table/linkage'], function(linkage) {
+        linkage('#sexLinkage', function(event, values) {
+            console.log(event, values)
+        })
+    })
+</script>

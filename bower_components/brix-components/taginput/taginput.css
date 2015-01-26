@@ -1,0 +1,36 @@
+.taginput {
+  position: relative;
+}
+.taginput .taginput-placeholder {
+  display: inline-block;
+}
+.taginput .taginput-item {
+  position: relative;
+  display: inline-block;
+  margin: 2px 4px 2px 0;
+  cursor: pointer;
+  background-color: #EEE;
+  border-radius: 4px;
+}
+.taginput .taginput-item:hover {
+  background-color: #DDD;
+}
+.taginput .taginput-item.active {
+  background-color: #497ED9;
+  color: #FFF;
+}
+.taginput .taginput-item .taginput-item-name {
+  display: inline-block;
+  padding: 2px 4px 2px 4px;
+  border-right: 1px solid #FFF;
+}
+.taginput .taginput-item .taginput-item-delete {
+  display: inline-block;
+  width: 16px;
+  text-align: center;
+  font-size: 10px;
+}
+.taginput .taginput-input {
+  border: none;
+  outline: none;
+}

@@ -34,9 +34,9 @@ define('parsley/field', [
     // # Public API
     // Validate field and $.emit some events for mainly `ParsleyUI`
     // @returns validationResult:
-    //  - `true` if all constraint passes
+    //  - `true` if all constraints pass
     //  - `[]` if not required field and empty (not validated)
-    //  - `[Violation, [Violation..]]` if there were validation errors
+    //  - `[Violation, [Violation...]]` if there were validation errors
     validate: function (force) {
       this.value = this.getValue();
 
@@ -62,7 +62,8 @@ define('parsley/field', [
       if (0 === priorities.length)
         return this.validationResult = [];
       // Value could be passed as argument, needed to add more power to 'parsley:field:validate'
-      value = value || this.getValue();
+      if ('undefined' === typeof value || null === value)
+        value = this.getValue();
 
       // If a field is empty and not required, leave it alone, it's just fine
       // Except if `data-parsley-validate-if-empty` explicitely added, useful for some custom validators
@@ -198,6 +199,20 @@ define('parsley/field', [
       // HTML5 max
       else if ('undefined' !== typeof this.$element.attr('max'))
         this.addConstraint('max', this.$element.attr('max'), undefined, true);
+
+    
+      // length
+      if ('undefined' !== typeof this.$element.attr('minlength') && 'undefined' !== typeof this.$element.attr('maxlength'))
+        this.addConstraint('length', [this.$element.attr('minlength'), this.$element.attr('maxlength')], undefined, true);
+
+      // HTML5 minlength
+      else if ('undefined' !== typeof this.$element.attr('minlength'))
+        this.addConstraint('minlength', this.$element.attr('minlength'), undefined, true);
+
+      // HTML5 maxlength
+      else if ('undefined' !== typeof this.$element.attr('maxlength'))
+        this.addConstraint('maxlength', this.$element.attr('maxlength'), undefined, true);
+
 
       // html5 types
       var type = this.$element.attr('type');

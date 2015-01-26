@@ -522,6 +522,7 @@ define(
             } catch (exception) {
                 options = {}
             }
+            
             options.element = element
             options.moduleId = moduleId
             options.clientId = clientId
@@ -862,12 +863,15 @@ define(
                 })
                 .queue(function(next) {
                     try {
-                        // 3. 创建组件实例
-                        instance = new BrixImpl(options)
+                        // 3. 创建组件实例（按需传入参数 options）
+                        instance = BrixImpl.length ? new BrixImpl(options) : new BrixImpl()
                             // 设置属性 options
                         instance.options = Util.extend({}, instance.options, options)
                             // 设置其他公共属性
                         Util.extend(instance, Util.pick(options, Constant.OPTIONS))
+
+                        // 增强通过 Loader 加载的组件
+                        // enhance(instance)
                         next()
                     } catch (error) {
                         if (callback) callback(error, instance)
@@ -964,7 +968,7 @@ define(
 
                         // 同步 clientId
                         function syncClientId() {
-                            var relatedElement = instance.relatedElement
+                            var relatedElement = instance.relatedElement || instance.$relatedElement
                             if (relatedElement) {
                                 // element
                                 if (relatedElement.nodeType && (relatedElement.clientId === undefined)) {
@@ -1260,20 +1264,11 @@ define(
             // 调用自定义销毁行为
             if (instance._destroy) {
                 try {
-                    /*if (instance.delegateBxTypeEvents) {
-                        if (instance.element) {
-                            instance.undelegateBxTypeEvents(instance.element)
-                        }
-                        if (instance.relatedElement) {
-                            instance.undelegateBxTypeEvents(instance.relatedElement)
-                        }
-                    }*/
                     instance._destroy()
                 } catch (error) {
                     if (complete) complete(error)
                     else console.error(error)
                 }
-
             }
 
             // 从缓存中移除
@@ -1374,25 +1369,35 @@ define(
                         // 是否在 context 内
                         if (context === undefined || parents(instance, context).length) {
                             results.push(instance)
-                                // 收集组件方法
-                            Util.each(instance.constructor.prototype, function(value, name) {
-                                if (Util.isFunction(value) && (name[0] !== '_')) methods.push(name)
-                            })
                         }
                     }
                 })
             }
 
+            // 收集组件方法
+            Util.each(results, function(instance, index) {
+                Util.each(instance.constructor.prototype, function(value, name) {
+                    if (Util.isFunction(value) && (name[0] !== '_')) methods.push(name)
+                })
+            })
+
             // 2. 绑定组件方法至 query() 返回的对象上
             Util.each(Util.unique(methods), function(name /*, index*/ ) {
                 results[name] = function() {
-                    // var that = this
+                    var that = this
                     var args = [].slice.call(arguments)
-                    Util.each(this, function(instance /*, index*/ ) {
+                    var result
+                    var hasNewResults = false
+                    var tmpNewResults = []
+                    Util.each(this, function(instance, index) {
                         if (!instance[name]) return
-                            // that[index] = 
-                        instance[name].apply(instance, args)
+                        result = instance[name].apply(instance, args)
+                        if (result !== undefined && result !== instance) {
+                            hasNewResults = true
+                            tmpNewResults.push(result)
+                        }
                     })
+                    if (hasNewResults) return tmpNewResults
                     return this
                 }
             })
@@ -1598,6 +1603,22 @@ define(
             _parseChildren(Constant.ROOT_CLIENT_ID, result.children)
 
             return result
+        }
+
+        /*
+            增强通过 Loader 加载的组件
+         */
+        function enhance(instance) {
+            if (!instance.constructor.prototype.query) instance.constructor.prototype.query = function(moduleId) {
+                //  TODO element, relatedElement, $relatedElement
+                return query(moduleId, this)
+            }
+            if (!instance.constructor.prototype.boot) instance.constructor.prototype.boot = function(callback, progress) {
+                //  TODO element, relatedElement, $relatedElement
+                Loader.boot(this.element, callback, progress)
+                // if (this.relatedElement || this.$relatedElement) Loader.boot(this.relatedElement || this.$relatedElement, callback, progress)
+                return this
+            }
         }
 
         var tasks = Util.queue()

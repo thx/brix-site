@@ -12,7 +12,7 @@
     "requirejs-text": "*",
     "require-less": "*",
     "require-css": "*",
-    "jquery": "*",
+    "jquery": "1.x.x",
     "underscore": "*",
     "bootstrap": "*",
     "less": "*",
@@ -29,7 +29,8 @@
     "log": "*",
     "colors": "*",
     "handlebars": "~2.0.0",
-    "swfobject": "*"
+    "swfobject": "*",
+    "accountingjs": "~0.3.2"
   },
   "devDependencies": {}
 }

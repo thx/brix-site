@@ -29,12 +29,12 @@ require(['jquery', 'brix/bisheng'], function($, BiSheng){
       title: 'foo'
     }
     // 执行双向绑定
-    BiSheng.bind(data, tpl, function(content){
+    var bs = BiSheng.bind(data, tpl, function(content){
         // 然后在回调函数中将绑定后的 DOM 元素插入文档中
         $('div.container').append(content)
     });
     // 改变数据 data.title，对应的文档区域会更新
-    BiSheng.apply(function() {
+    bs.apply(function() {
         data.title = 'bar'
     })
 })
@@ -45,10 +45,10 @@ require(['jquery', 'brix/bisheng'], function($, BiSheng){
 共计 6 个公开方法：
 
 * BiSheng.bind( data, tpl, callback )
-* BiSheng.unbind( data, tpl )
-* BiSheng.watch( data, properties, fn( change ) )
-* BiSheng.unwatch( data, fn )
-* BiSheng.apply( fn )
+* BiSheng.unbind( data, tpl ) ***DEPRECATED***
+* BiSheng.watch( data, handler( changes ) )
+* BiSheng.unwatch( data, handler )
+* BiSheng.apply( handler ) ***DEPRECATED***
 * BiSheng.auto( bool )
 
 
@@ -59,18 +59,18 @@ require(['jquery', 'brix/bisheng'], function($, BiSheng){
 * **BiSheng.bind( data, tpl [, callback( content ) ] )**
     * BiSheng.bind( data, tpl, callback( content ) )
     * BiSheng.bind( data, tpl, context )
-    * BiSheng.bind( data, tpl )
+    * ~~BiSheng.bind( data, tpl )~~
 * **BiSheng.bind( data, tpl, options )**
     * BiSheng.bind( data, tpl, options )
 
 **参数的含义和默认值**如下所示：
 
 * `data` 必选。待绑定的对象或数组。
-* `tpl` 必选。待绑定的 HTML 模板。在绑定过程中，先把 HTML 模板转换为 DOM 元素，然后将“绑定”数据到 DOM 元素。目前只支持 Handlebars.js 语法。
-* `callback( content )` 必选。回调函数，当绑定完成后被执行。执行该函数时，会把转换后的 DOM 元素作为参数 content 传入。该函数的上下文（即关键字 this）是参数 data。
+* `tpl` 必选。待绑定的 HTML 模板。在绑定过程中，会先把 HTML 模板转换为 DOM 元素，然后将数据“绑定”到 DOM 元素。目前只支持 Handlebars.js 语法。
+* `callback( content )` 必选。回调函数，当绑定完成后被执行。执行该函数时，会把转换后的 DOM 元素作为参数 `content` 传入。该函数的上下文（即关键字 `this`）是参数 `data`。
     * `content` 数组，其中包含了转换后的 DOM 元素。
-* `context` 可选。容器元素，可以是单个  DOM 元素，或 DOM 元素数组，或选择器表达式。转换后的 DOM 元素将被插入该参数中。
-* `options` 可选。对象，其中包含了三种回调函数：`resolve`、`before`、`after`，格式为：
+* `context` 可选。容器元素，可以是单个 DOM 元素，或 DOM 元素数组，或选择器表达式。转换后的 DOM 元素将被插入该参数中。
+* `options` 可选。对象，其中可以包含三种回调函数：`resolve`、`before`、`after`，格式为：
 
     ```js
     {
@@ -109,23 +109,31 @@ var data = {
   title: 'foo'
 }
 // 执行双向绑定
-BiSheng.bind(data, tpl, function(content){
+var bs = BiSheng.bind(data, tpl, function(content){
     // 然后在回调函数中将绑定后的 DOM 元素插入文档中
     $('div.container').append(content)
 });
 // 改变数据 data.title，对应的文档区域会更新
-BiSheng.apply(function(){
+bs.apply(function(data){
     data.title = 'bar'
 })
 // 解除双向绑定
-BiSheng.unbind(data, tpl);
+bs.unbind(data, tpl);
 // 再次改变数据 data.title，对应的文档区域不会更新
-BiSheng.apply(function(){
+bs.apply(function(){
     data.title = 'foo'
 })
 ```
 
-#### BiSheng.unbind( data, tpl )
+**注意**
+
+执行方法 `BiSheng.bind()` 将返回一个实例对象，含有两个实例属性 `data`、`tpl`，和两个实例方法 `.unbind()`、`.apply(handler)`。
+
+实例方法 `.unbind()` 的功能与全局方法 `BiSheng.unbind( data, tpl )` 相同，差别在于前者不需要指定参数 `data` 和 `tpl`。
+
+实例方法 `.apply(handler)` 的功能与全局方法 `BiSheng.apply( handler )` 相同，但是前者只会检查实例属性 `data` 的变化，性能更好。*全局方法 `BiSheng.apply( handler )` 已不推荐使用。*
+
+#### BiSheng.unbind( data, tpl ) ***DEPRECATED***
 
 解除数据 `data` 和模板 `tpl` 之间的双向绑定。
 
@@ -145,7 +153,9 @@ BiSheng.apply(function(){
 使用示例见 BiSheng.bind( data, tpl, callback( content ) )。
 
 
-#### BiSheng.watch( data, properties, handler( change ) )
+#### BiSheng.watch( data, handler( changes ) )
+
+<!-- BiSheng.watch( data, properties, handler( change ) ) -->
 
 为一个或一组或所有属性添加监听函数。
 <!--Attach default handler function to all properties.-->
@@ -163,7 +173,7 @@ BiSheng.apply(function(){
     
     * `change` 一个对象，格式为：
 
-        ```json
+        ```js
         {
             type: 'add/delete/update',
             path: [,,],
@@ -174,7 +184,7 @@ BiSheng.apply(function(){
 
     * changes 是一个数组，格式为：
         
-        ```json
+        ```js
         [
             {
                 type: 'add',
@@ -252,7 +262,7 @@ setTimeout(function(){
 使用示例见 BiSheng.watch( data, properties, handler( change ) )。
 
 
-#### BiSheng.apply( handler )
+#### BiSheng.apply( handler ) ***DEPRECATED***
 
 用于包裹对数据的操作。内部会检查数据的变化，并自动同步到视图。
 

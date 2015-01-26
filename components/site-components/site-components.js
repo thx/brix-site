@@ -1,4 +1,4 @@
-/* global define, require */
+/* global define */
 define(
     [
         'jquery', 'underscore',
@@ -13,15 +13,11 @@ define(
     ) {
         return Brix.extend({
             options: {},
-            init: function() {
-                // 支持自定义 HTML 模板 template
-                template = this.options.template || template
-                // 支持自定义 CSS 样式
-                if (this.options.css) require('css!' + this.options.css)
-            },
+            init: function() {},
             render: function() {
-                var html = _.template(template)(this.data)
-                $(this.element).append(html)
+                $(this.element).append(
+                    _.template(template)(this.data)
+                )
             },
             data: {
                 components: [{
@@ -89,17 +85,6 @@ define(
                         ['事件', '']
                     ]
                 }, {
-                    name: 'ColorPicker',
-                    desc: '调色板。',
-                    preview: './components/site-components/image/colorpicker.png',
-                    readme: 'bower_components/brix-components/colorpicker/README.md',
-                    links: [
-                        ['示例', ''],
-                        ['配置', ''],
-                        ['方法', ''],
-                        ['事件', '']
-                    ]
-                }, {
                     name: 'Popover',
                     desc: '浮层。',
                     preview: './components/site-components/image/popover.png',
@@ -115,6 +100,89 @@ define(
                     desc: '上传组件。',
                     preview: './components/site-components/image/uploader.png',
                     readme: 'bower_components/brix-components/uploader/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'Validation',
+                    desc: '表单验证组件。',
+                    preview: './components/site-components/image/validation.png',
+                    readme: 'bower_components/brix-components/validation/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'AreaPicker',
+                    desc: '表单验证组件。',
+                    preview: './components/site-components/image/areapicker.png',
+                    readme: 'bower_components/brix-components/areapicker/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'HourPicker',
+                    desc: '表单验证组件。',
+                    preview: './components/site-components/image/hourpicker.png',
+                    readme: 'bower_components/brix-components/hourpicker/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'ChartxWrapper',
+                    desc: '表单验证组件。',
+                    preview: './components/site-components/image/chartxwrapper.png',
+                    readme: 'bower_components/brix-components/chartxwrapper/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'Suggest',
+                    desc: '表单验证组件。',
+                    preview: './components/site-components/image/suggest.png',
+                    readme: 'bower_components/brix-components/suggest/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'TagInput',
+                    desc: '表单验证组件。',
+                    preview: './components/site-components/image/taginput.png',
+                    readme: 'bower_components/brix-components/taginput/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
+                    name: 'ColorPicker',
+                    desc: '调色板。',
+                    preview: './components/site-components/image/colorpicker.png',
+                    readme: 'bower_components/brix-components/colorpicker/README.md',
                     links: [
                         ['示例', ''],
                         ['配置', ''],
@@ -177,7 +245,7 @@ define(
                         ['事件', '']
                     ]
                 }, {
-                    name: 'Chart',
+                    name: 'ChartxWrapper',
                     desc: '图表。',
                     preview: './components/site-components/image/chart.png',
                     readme: 'bower_components/brix-components/chart/README.md',
@@ -195,18 +263,6 @@ define(
                     links: [
                         ['示例', ''],
                         ['配置', ''],
-                        ['方法', ''],
-                        ['事件', '']
-                    ]
-                }, {
-                    name: 'Validation',
-                    desc: '表单验证组件。',
-                    preview: './components/site-components/image/validation.png',
-                    readme: 'bower_components/brix-components/validation/README.md',
-                    links: [
-                        ['示例', ''],
-                        ['配置', ''],
-                        ['属性', ''],
                         ['方法', ''],
                         ['事件', '']
                     ]

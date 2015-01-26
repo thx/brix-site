@@ -11,7 +11,7 @@
     "requirejs-text": "*",
     "require-less": "*",
     "require-css": "*",
-    "jquery": "*",
+    "jquery": "1.x.x",
     "underscore": "*",
     "bootstrap": "*",
     "less": "*",
@@ -28,15 +28,16 @@
     "log": "*",
     "colors": "*",
     "handlebars": "~2.0.0",
-    "swfobject": "*"
+    "swfobject": "*",
+    "accountingjs": "~0.3.2"
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-components",
-  "_release": "0a4f9a37ec",
+  "_release": "9032157501",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "0a4f9a37ec00e83801f224513cb5d702ad993819"
+    "commit": "9032157501ca8bcb6d917dced4399b89837431aa"
   },
   "_source": "git://github.com/nuysoft/brix-components.git",
   "_target": "master",

@@ -79,10 +79,7 @@ define(
 
                 return this
             },
-            render: function() {
-                this.$manager.delegate(this.$element, this)
-                return this
-            },
+            render: function() {},
             fill: function() {
                 var html = _.template(template)(this.options)
                 this.$relatedElement = $('div.dialog.dialog-singleton')
@@ -125,9 +122,18 @@ define(
                     left: this.options.left,
                     top: this.options.top
                 } : position(this.$element, this.$relatedElement, this.options.placement, this.options.align)
+                offset = {
+                    left: offset.left + (this.options.offset.left || 0),
+                    top: offset.top + (this.options.offset.top || 0)
+                }
                 this.$relatedElement.show()
-                    .css(this._start(offset))
-                    .animate(this._end(offset), TRANSITION_DURATION, EASING)
+                    .css(
+                        position.start(this.$relatedElement, offset)
+                    )
+                    .animate(
+                        position.end(this.$relatedElement, offset),
+                        TRANSITION_DURATION, EASING
+                    )
 
                 if (this.options.modal) {
                     $(document.body).addClass('modal-open')
@@ -152,21 +158,6 @@ define(
 
                 this.triggerHandler('close' + NAMESPACE)
                 return this
-            },
-            _start: function(offset) {
-                var width = this.$relatedElement.outerWidth()
-                return {
-                    opacity: 0,
-                    left: offset.left + width * 0.25 + (this.options.offset.left || 0),
-                    top: offset.top + (this.options.offset.top || 0)
-                }
-            },
-            _end: function(offset) {
-                return {
-                    opacity: 1,
-                    left: offset.left + (this.options.offset.left || 0),
-                    top: offset.top + (this.options.offset.top || 0)
-                }
             }
         })
 

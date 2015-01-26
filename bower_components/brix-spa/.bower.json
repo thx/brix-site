@@ -13,25 +13,25 @@
   ],
   "dependencies": {
     "brix-loader": "master",
-    "jquery": "~2.1.1",
-    "underscore": "~1.7.0",
-    "director": "~1.2.2",
-    "requirejs": "~2.1.15",
-    "requirejs-text": "~2.0.12",
-    "uri.js": "~1.14.1",
+    "jquery": "1.x.x",
+    "underscore": "*",
+    "director": "*",
+    "requirejs": "*",
+    "requirejs-text": "*",
+    "uri.js": "*",
     "page": "visionmedia/page.js#~1.4.1"
   },
   "devDependencies": {
-    "bootstrap": "~3.2.0",
-    "require-css": "~0.1.5",
-    "highlightjs": "~8.3.0"
+    "bootstrap": "*",
+    "require-css": "*",
+    "highlightjs": "*"
   },
   "homepage": "https://github.com/nuysoft/brix-spa",
-  "_release": "d74392a30f",
+  "_release": "3b99b7489d",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "d74392a30f9fccf51794c965900c203c5d97fc11"
+    "commit": "3b99b7489d5e0a5565ec5988de656febe55d4dd8"
   },
   "_source": "git://github.com/nuysoft/brix-spa.git",
   "_target": "master",

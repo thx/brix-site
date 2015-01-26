@@ -36,7 +36,7 @@ define([
     this.__version__ = '@@version';
     this.__id__ = ParsleyUtils.hash(4);
 
-    // Parsley must be instanciated with a DOM element or jQuery $element
+    // Parsley must be instantiated with a DOM element or jQuery $element
     if ('undefined' === typeof element)
       throw new Error('You must give an element');
 
@@ -84,7 +84,7 @@ define([
     },
 
     // Multiples fields are a real nightmare :(
-    // Maybe some refacto would be appreciated here..
+    // Maybe some refacto would be appreciated here...
     handleMultiple: function (parsleyFormInstance) {
       var
         that = this,

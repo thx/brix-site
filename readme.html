@@ -19,8 +19,11 @@
     <div id="main" class="container"></div>
     <div class="container">
         <hr>
-        <h2>Components Tree ( debug )</h2>
-        <div bx-name="components/tree"></div>
+        <h2>
+            Components Tree ( debug )
+            <small class="glyphicon glyphicon-refresh" onclick="require('brix/loader').query('components/ctree').render()"></small>
+        </h2>
+        <div bx-name="components/ctree"></div>
     </div>
     <div bx-name="site/footer"></div>
     <script type="text/javascript">
