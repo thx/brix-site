@@ -27,14 +27,10 @@ define(
                 var that = this
 
                 /* jshint unused:false */
-                linkage(this.element, function(event, values) {
-                    that.triggerToggle(event, values)
+                linkage(this.element, function(event, values, target) {
+                    that.trigger('toggle.table', [values, target])
                     that.contextual()
                 })
-            },
-            /* jshint unused:false */
-            triggerToggle: function(event, values) {
-                this.trigger('toggle.table', [values])
             },
             contextual: function() {
                 _.each(this.$element.find('input:checkbox'), function(item /*, index*/ ) {

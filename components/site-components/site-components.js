@@ -245,7 +245,7 @@ define(
                         ['事件', '']
                     ]
                 }, {
-                    name: 'ChartxWrapper',
+                    name: 'Chart',
                     desc: '图表。',
                     preview: './components/site-components/image/chart.png',
                     readme: 'bower_components/brix-components/chart/README.md',

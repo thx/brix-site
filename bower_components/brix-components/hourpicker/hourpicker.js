@@ -13,31 +13,6 @@ define(
         position,
         template
     ) {
-        /*
-            ### 数据
-                {}
-            ### 选项
-                TODO
-            ### 属性
-                TODO
-            ### 方法
-                TODO
-            ### 事件
-                TODO
-            ===
-
-            ### 公共选项
-                data template css
-            ### 公共属性
-                element relatedElement 
-                moduleId clientId parentClientId childClientIds 
-                data template css
-            ### 公共方法
-                .render()
-            ### 公共事件
-                ready destroyed
-
-        */
 
         var DEBUG = ~location.search.indexOf('debug')
 
@@ -76,12 +51,14 @@ define(
                     var has = !$target.hasClass('active')
                     $target.toggleClass('active')
                     that._merge()
+                    that._syncShortcut()
 
                     var siblings = $(this).siblings()
                     siblings.on('mouseenter.drag', function(event) {
                         var $target = $(this)
                         $target[has ? 'addClass' : 'removeClass']('active')
                         that._merge()
+                        that._syncShortcut()
                         event.preventDefault()
                     })
                     $(document.body).off('mouseup.drag')
@@ -93,6 +70,8 @@ define(
                     event.preventDefault()
                 })
             },
+            // { day: [] }
+            // day, hours []
             val: function() {
                 // picker-day picker-hour
                 return arguments.length ?
@@ -101,7 +80,17 @@ define(
             },
             /* jshint unused:true */
             shortcut: function(event, days) {
+                days += ''
                 var hours = _.range(0, 24)
+
+                if (days.length === 1) {
+                    var tmpDayHours = this.val()[days]
+                    if (tmpDayHours.length === 24) this.val(days, [])
+                    else this.val(days, hours)
+                    event.preventDefault()
+                    return
+                }
+
                 var mapped = {}
                 _.each(days, function(day /*, index*/ ) {
                     mapped[day] = hours
@@ -111,7 +100,7 @@ define(
             apply: function(event, todo, day) {
                 var that = this
                 var $target = $(event.target)
-                var $relatedElement = $('.apply-dialog')
+                var $relatedElement = $('.apply-dialog', this.$element)
                 switch (todo) {
                     case 'to':
                         this._tmp = this._tmp || {}
@@ -120,9 +109,13 @@ define(
                         var offset = position($target, $relatedElement, 'bottom', 'right')
                         $relatedElement.show().offset(offset)
                         $relatedElement
-                            .find('input').prop('checked', false).end()
-                            .find('label[data-value] input').prop('disabled', false).end()
-                            .find('label[data-value=' + day + '] input').prop('disabled', true)
+                            .find('label[data-value]').removeClass('disabled')
+                            .find('input[name="shortcut"]').prop({
+                                'checked': false,
+                                'disabled': false
+                            }).end().end()
+                            .find('label[data-value=' + day + ']').addClass('disabled')
+                            .find('input').prop('disabled', true)
                         break
                     case 'do':
                         var days = _.map($relatedElement.find('input:checked'), function(item /*, index*/ ) {
@@ -185,6 +178,7 @@ define(
                 })
 
                 this._merge()
+                this._syncShortcut()
             },
             _merge: function() {
                 var hours = $('.picker-hour')
@@ -206,6 +200,27 @@ define(
                         ]()
                     }
                 })
+            },
+            _syncShortcut: function() {
+                var value = this.val()
+
+                function is(days, other) {
+                    var day
+                    for (var i = 0; i < days.length; i++) {
+                        day = days[i]
+                        if (value[day].length < 24) return false
+                    }
+                    for (var j = 0; j < other.length; j++) {
+                        day = other[j]
+                        if (value[day].length !== 0) return false
+                    }
+
+                    return true
+                }
+
+                $('.shortcuts input[name=shortcut]:eq(0)', this.$element).prop('checked', is('0123456', ''))
+                $('.shortcuts input[name=shortcut]:eq(1)', this.$element).prop('checked', is('12345', '06'))
+                $('.shortcuts input[name=shortcut]:eq(2)', this.$element).prop('checked', is('06', '12345'))
             }
         })
 

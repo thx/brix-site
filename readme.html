@@ -8,7 +8,7 @@
     <link href="bower_components/highlightjs/styles/github.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <script src="bower_components/requirejs/require.js"></script>
-    <script src="http://g-assets.daily.taobao.net/thx/brix-release/0.0.21/config-remote.js"></script>
+    <script src="http://localhost:4242/config-remote.js"></script>
     <!-- <script src="http://g-assets.daily.taobao.net/thx/brix-release/0.0.21/config-remote.js"></script> -->
     <!-- <script src="http://localhost:4242/config-remote.js"></script> -->
     <script src="./config.js"></script>
@@ -41,24 +41,29 @@
             var params = Loader.Util.unparam(location.search.slice(1))
             var name = params.name.toLowerCase()
             var url = 'bower_components/' + (params.core ? '' : 'brix-components/') + name + '/README.md'
-            Loader.load(document.getElementById('main'), 'components/readme', {
-                url: url
-            },function(){
-                // 设置锚点，并滚动至 location.hash 指定的位置
-                require(['jquery', 'underscore'], function($, _) {
-                    // 插入锚点
-                    _.each($(':header'), function(item, index){
-                        $('<a>')
-                            .attr('name', $(item).contents().eq(0).text().trim())
-                            .insertBefore(item)
+            Loader.load(
+                document.getElementById('main'), 
+                'components/readme', 
+                {
+                    url: url
+                },
+                function(){
+                    // 设置锚点，并滚动至 location.hash 指定的位置
+                    require(['jquery', 'underscore'], function($, _) {
+                        // 插入锚点
+                        _.each($(':header'), function(item, index){
+                            $('<a>')
+                                .attr('name', $(item).contents().eq(0).text().trim())
+                                .insertBefore(item)
+                        })
+                        setTimeout(function() {
+                            var hash = location.hash.slice(1)
+                            var anchor = $('a[name="' + hash + '"]')[0]
+                            if (hash && anchor && anchor.scrollIntoView) anchor.scrollIntoView()
+                        }, 100)
                     })
-                    setTimeout(function() {
-                        var hash = location.hash.slice(1)
-                        var anchor = $('a[name="' + hash + '"]')[0]
-                        if (hash && anchor && anchor.scrollIntoView) anchor.scrollIntoView()
-                    }, 100)
-                })
-            })
+                }
+            )
         })
     </script>
 </body>

@@ -2,15 +2,24 @@
 
 Magix View 对话框。{ .lead }
 
+<script type="text/javascript">
+	require(['magix'], function(Magix) {
+		window.Magix = Magix
+		Magix.start({
+			error: function(e) {
+				console && console.error(e.stack) // 将错误抛出来
+			},
+			iniFile: '' // 配置在ini.js里
+		});
+	});
+</script>
+
 <pre>
 require(['components/dialogview'])
 var DialogView = require('components/dialogview')
-var dialogOptions = {
-    left: 100,
-    top: 100
-}
-var viewName = 'todo'
+var dialogOptions = {}
+var viewName = ''
 var viewOptions = {}
-var dialog = new DialogView(dialogOptions, viewName, viewOptions)
-dialog.open()
+DialogView.open(dialogOptions, viewName, viewOptions)
+DialogView.close()
 </pre>

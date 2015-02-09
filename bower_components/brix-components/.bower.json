@@ -29,15 +29,16 @@
     "colors": "*",
     "handlebars": "~2.0.0",
     "swfobject": "*",
-    "accountingjs": "~0.3.2"
+    "accountingjs": "~0.3.2",
+    "progressbar.js": "~0.7.4"
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-components",
-  "_release": "9032157501",
+  "_release": "d30f0ecfde",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "9032157501ca8bcb6d917dced4399b89837431aa"
+    "commit": "d30f0ecfde4038a78541adce147b031dd820ccdb"
   },
   "_source": "git://github.com/nuysoft/brix-components.git",
   "_target": "master",

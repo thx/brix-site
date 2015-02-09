@@ -1,4 +1,4 @@
-/* global define, console */
+/* global define, document, console */
 define(
     [
         'jquery', 'underscore',
@@ -17,19 +17,28 @@ define(
         var CLASS_ITEM = '.taginput-item'
         var CLASS_ITEM_NAME = '.taginput-item-name'
         var INPUT_MIN_WIDTH = 20
+        var STATE = {
+            PENDING: 'pending',
+            ACTIVE: 'active',
+            INACTIVE: 'inactive'
+        }
 
         function TagInput() {}
 
         _.extend(TagInput.prototype, Brix.prototype, {
             options: {
                 placeholder: '',
-                data: []
+                data: [],
+                limit: 0,
+                same: true,
+                suggest: true
             },
             init: function() {
-                // this._focus = 'input'
+                this.options.limit = +this.options.limit
             },
             render: function() {
                 var that = this
+                var defer = $.Deferred()
                 var manager = new EventManager()
                 this.$element = $(this.element).hide()
 
@@ -37,6 +46,7 @@ define(
                 this.$relatedElement = $(html).insertAfter(this.$element)
                 this.$input = this.$relatedElement.find('input')
                 if (this.options.placeholder) this.$input.attr('placeholder', this.options.placeholder)
+                if (!this.options.suggest) this.$input.hide()
 
                 this.val(this.options.data, false)
 
@@ -45,26 +55,91 @@ define(
                 manager.delegate(this.$element, this)
                 manager.delegate(this.$relatedElement, this)
 
+                this.$input
+                    .on('focus', function() {
+                        that.triggerHandler('focus' + NAMESPACE)
+                    })
+                    .on('blur', function() {
+                        that.triggerHandler('blur' + NAMESPACE)
+                    })
+
                 Loader.boot(this.$relatedElement, function() {
                     that.suggest = Loader.query('components/suggest', that.$relatedElement)[0]
 
                     /* jshint unused:false */
                     that.suggest.on('change.suggest.done', function(event, value) {
                         that.add(value)
-                        that.$input.focus()
+                            // that.$input.focus()
                     })
+
+                    defer.resolve()
                 })
+
+                /*
+                    var Loader = require('brix/loader')
+                    var trees = Loader.query('components/taginput')
+                    trees.on('active.taginput inactive.taginput', function(e){ console.log(e.type, e.namespace, e.target) } )
+                 */
+                var type = 'click' + NAMESPACE + '_' + this.clientId
+                this._state = STATE.INACTIVE
+                $(document.body).off(type)
+                    .on(type, function(event) {
+                        if (event.target === that.element || // 点击组件节点
+                            $.contains(that.element, event.target) || // 点击组件子节点
+                            event.target === that.$relatedElement[0] || // 点击组件关联节点
+                            $.contains(that.$relatedElement[0], event.target) || // 点击组件关联子节点
+                            (
+                                // 点击不存在节点
+                                !$.contains(document.body, event.target) &&
+                                $(event.target).closest('.taginput-item-delete').length &&
+                                $(event.target).closest('.taginput-item-delete').attr('data-taginput-clientid') == that.clientId
+                            )
+                        ) {
+                            // if (that._state === 'active') return
+                            that.trigger(
+                                $.Event('active' + NAMESPACE, {
+                                    target: event.target
+                                })
+                            )
+                            that._state = STATE.ACTIVE
+                            return
+                        }
+
+                        // if (that._state === STATE.INACTIVE) return
+                        that.trigger(
+                            $.Event('inactive' + NAMESPACE, {
+                                target: event.target
+                            })
+                        )
+                        that._state = STATE.INACTIVE
+                    })
+
+                // return defer.promise()
             },
             // trigger is for internal usage only
             add: function(value, trigger) {
+                this._state = STATE.ACTIVE
+
                 value += ''
                 if (value.length === 0) return
+
+                // 如果选项 same 为 false，则不允许插入重复的值。
+                if (!this.options.same && _.indexOf(this.options.data, value) !== -1) {
+                    this.$input.val('')
+                    return
+                }
+
+                // 如果选项 limit 不是 0，则值的个数不允许超过它。
+                if (this.options.limit && this.options.data.length >= this.options.limit) {
+                    return
+                }
 
                 this.options.data.push(value)
                 this.$element.val(this.options.data.join(','))
 
                 var itemHTML = _.template(itemTemplate)({
-                    data: value
+                    data: value,
+                    clientId: this.clientId
                 })
                 $(itemHTML).insertBefore(this.$input)
 
@@ -72,6 +147,8 @@ define(
                 this._fixInput()
 
                 if (trigger !== false) this.trigger('change' + NAMESPACE, [this.options.data])
+
+                if (this.options.limit && this.options.data.length >= this.options.limit) this.$input.hide()
 
                 return this
             },
@@ -92,7 +169,7 @@ define(
                         this.options.data = _.without(this.options.data, $(item).find(CLASS_ITEM_NAME).text())
                         this.$element.val(this.options.data.join(','))
                         $(event.target).closest(CLASS_ITEM).remove()
-                        this.$input.focus()
+                        event.preventDefault()
 
                     } else {
                         // delete( value )
@@ -113,7 +190,14 @@ define(
 
                 this._fixInput()
 
-                if (trigger === false) this.trigger('change' + NAMESPACE, [this.options.data])
+                if (trigger !== false) this.trigger('change' + NAMESPACE, [this.options.data])
+
+                if (this.options.limit && this.options.data.length < this.options.limit) this.$input.show()
+
+                // delete(event)
+                if (event && event.type) {
+                    this.$input.focus()
+                }
 
                 return this
             },
@@ -141,7 +225,7 @@ define(
                 event.preventDefault()
                 this._fixInput()
             },
-            active: function(event) {
+            _active: function(event) {
                 $(event.currentTarget).toggleClass('active')
             },
             _selection: function(event) {

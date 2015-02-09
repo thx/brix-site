@@ -20,8 +20,12 @@
         X $data X $watchers √ $blocks √ $helpers √ $path
 */
 define(
-    'brix/bisheng/loop',[],
-    function() {
+    'brix/bisheng/loop',[
+        'underscore'
+    ],
+    function(
+        _
+    ) {
 
         var DEBUG = ~location.search.indexOf('bisheng.debug') && {
             fix: function(arg, len) {
@@ -59,9 +63,7 @@ define(
                 if (data !== undefined && task.data !== data) continue
                 if (tpl !== undefined && task.tpl !== tpl) continue
 
-                if (DEBUG) console.group('task ' + i)
-                task()
-                if (DEBUG) console.groupEnd('task ' + i)
+                task(i)
             }
             if (AUTO) timerId = setTimeout(letMeSee, DURATION)
         }
@@ -81,7 +83,7 @@ define(
             * Loop.unwatch(unwatch)
             * Loop.clone(clone)
             * Loop.diff(diff)
-            * Loop.letMeSee(letMeSee)
+            * Loop.letMeSee([data [, tpl ]])
 
         */
         var Loop = (function() {
@@ -153,7 +155,8 @@ define(
                 var id = guid++;
                 var shadow = clone(data, autoboxing, [id])
 
-                function task() {
+                function task(index) {
+                    if (DEBUG) console.group('task ' + index)
                     if (DEBUG) console.time(DEBUG.fix('diff'))
                     var result = diff(data, shadow, autoboxing ? [id] : [], autoboxing)
                     if (DEBUG) console.timeEnd(DEBUG.fix('diff'))
@@ -161,11 +164,13 @@ define(
                     if (result && result.length) {
                         fn(result, data, shadow)
 
-                        if (DEBUG) console.time(DEBUG.fix('shadow'))
+                        if (DEBUG) console.time(DEBUG.fix('clone shadow'))
                         shadow = clone(data, autoboxing, [id])
-                        if (DEBUG) console.timeEnd(DEBUG.fix('shadow'))
+                        if (DEBUG) console.timeEnd(DEBUG.fix('clone shadow'))
                     }
+                    if (DEBUG) console.groupEnd('task ' + index)
                 }
+                task = _.throttle(task, DURATION)
                 task.data = data
                 task.callback = fn
                 if (fn && fn.tpl) task.tpl = fn.tpl
@@ -883,7 +888,11 @@ define(
                     slot: '',
                     type: 'text',
                     path: '{{$lastest ' + prop + '}}',
-                    ishelper: !!node.isHelper
+                    ishelper: !!node.isHelper,
+                    isscoped: function() {
+                        if (!node.isHelper) return node.id.isScoped
+                        return false // TODO
+                    }()
                 }
                 var placeholder
                 var statements
@@ -931,7 +940,11 @@ define(
                     slot: '',
                     type: 'block',
                     path: '{{$lastest ' + prop + '}}',
-                    helper: helper
+                    helper: helper,
+                    isscoped: function() {
+                        if (node.mustache.params.length === 0) return false // TODO
+                        return node.mustache.params[0].isScoped
+                    }()
                 }
                 var placeholder
                 var statements
@@ -993,12 +1006,12 @@ define(
         }
 
         // 入口方法
-        function scan(node, data) {
+        function scan(node, data, tpl) {
             // data > dom, expression
             scanNode(node)
 
             // dom > data
-            scanFormElements(node, data)
+            scanFormElements(node, data, tpl)
         }
 
         // 扫描单个节点，包括：属性，子节点。
@@ -1153,7 +1166,7 @@ define(
         }
 
         // 扫描表单元素
-        function scanFormElements(node, data) {
+        function scanFormElements(node, data, tpl) {
             var locators = Locator.find({
                 slot: "start",
                 type: "attribute",
@@ -1165,8 +1178,16 @@ define(
 
                 // TODO 为什么不触发 change 事件？
                 $(target).on('change.bisheng keyup.bisheng', function(event) {
+                    // 忽略不产生输入的辅助按键
+                    if (event.type === 'keyup') {
+                        var key = event.keyCode
+
+                        //    command            modifiers                   arrows
+                        if (key === 91 || (15 < key && key < 19) || (37 <= key && key <= 40)) return
+                    }
+
                     updateValue(data, path, event.target)
-                    if (!Loop.auto()) Loop.letMeSee()
+                    if (!Loop.auto()) Loop.letMeSee(data, tpl)
                 })
             })
 
@@ -1201,7 +1222,7 @@ define(
                                 .trigger('change.bisheng', firing = true)
                         }
                         updateChecked(data, path, event.target)
-                        if (!Loop.auto()) Loop.letMeSee()
+                        if (!Loop.auto()) Loop.letMeSee(data, tpl)
                     })
                 })
         }
@@ -1440,6 +1461,7 @@ define(
             if ((change.type === 'delete' || change.type === 'add') && change.context instanceof Array) { /*paths.length === 0 && */
                 change.path.pop()
                 change.type = 'update'
+                change.value = change.context
                 change.context = change.getContext(change.root, change.path)()
                 handle(event, change, defined, context, options)
                 return
@@ -1486,9 +1508,9 @@ define(
                 var label
                 if (DEBUG) label = DEBUG.fix(guid, 4) + DEBUG.fix(type, 16) + DEBUG.fix(change.path.join('.'), 32)
                 if (DEBUG) console.group(label)
-                if (DEBUG) console.time(DEBUG.fix(''))
+                if (DEBUG) console.time(DEBUG.fix('Flush.handle[' + type + ']'))
                 if (handle[type]) handle[type](path, event, change, defined, options)
-                if (DEBUG) console.timeEnd(DEBUG.fix(''))
+                if (DEBUG) console.timeEnd(DEBUG.fix('Flush.handle[' + type + ']'))
                 if (DEBUG) console.groupEnd(label)
             })
         }
@@ -1623,13 +1645,16 @@ define(
         // 更新数组对应的 Block，路径 > guid > Block
         handle.block = function block(locator, event, change, defined, options) {
             var guid = Locator.parse(locator, 'guid')
+            var isscoped = Locator.parse(locator, 'isscoped')
             var ast = defined.$blocks[guid]
 
             if (DEBUG) console.time(DEBUG.fix('Loop.clone'))
             var context = Loop.clone(change.context, true, change.path.slice(0, -1)) // TODO
             if (DEBUG) console.timeEnd(DEBUG.fix('Loop.clone'))
 
-            var content = Handlebars.compile(ast)(context)
+            var content = Handlebars.compile(ast)(
+                (isscoped === 'true' || isscoped === true) ? change.value : context
+            )
 
             if (DEBUG) console.time(DEBUG.fix('HTML.convert'))
             content = HTML.convert(content)
@@ -1928,12 +1953,12 @@ define(
                     }
 
                     var label
-                    if (DEBUG) label = DEBUG.fix('flush [' + index + '] ' + change.path.join('.'))
-                    if (DEBUG) console.group(label)
+                    if (DEBUG) label = DEBUG.fix('Flush.handle changes[' + index + '] ' + change.path.join('.'))
                     if (DEBUG) console.time(label)
+                    if (DEBUG) console.group(label)
                     Flush.handle(event, change, clone, context, options)
-                    if (DEBUG) console.timeEnd(label)
                     if (DEBUG) console.groupEnd(label)
+                    if (DEBUG) console.timeEnd(label)
                     if (DEBUG) console.log('>', change.path.join('.'))
 
                     if (location.href.indexOf('scrollIntoView') > -1) Flush.scrollIntoView(event, data)
@@ -1948,6 +1973,7 @@ define(
             if (DEBUG) console.timeEnd(DEBUG.fix('clone'))
 
             // 预处理 HTML 属性（IE 遇到非法的样式会丢弃）
+            var originalTpl = tpl
             tpl = tpl.replace(/(<.*?)(style)(=.*?>)/g, '$1bs-style$3')
                 .replace(/(<input.*?)(checked)(=.*?>)/g, '$1bs-checked$3')
                 .replace(/(<img.*?)(src)(=.*?>)/g, '$1bs-src$3')
@@ -1980,7 +2006,7 @@ define(
 
             // 扫描占位符，定位 Expression 和 Block
             if (DEBUG) console.time(DEBUG.fix('scan'))
-            if (content.length) Scanner.scan(content[0], data)
+            if (content.length) Scanner.scan(content[0], data, originalTpl)
             if (DEBUG) console.timeEnd(DEBUG.fix('scan'))
 
             content = content.contents().get()
@@ -2003,7 +2029,7 @@ define(
 
             return {
                 data: data,
-                tpl: tpl,
+                tpl: originalTpl,
                 unbind: function() {
                     unbind(this.data, this.tpl)
                     return this

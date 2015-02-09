@@ -28,11 +28,11 @@
     "underscore": "~1.7.0"
   },
   "homepage": "https://github.com/nuysoft/brix-bisheng",
-  "_release": "a308892f9c",
+  "_release": "278948b211",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "a308892f9cad0fadecbb9fe4221374e2401c8ca5"
+    "commit": "278948b2116b9479821bb3bb7978a700e98e27f1"
   },
   "_source": "git://github.com/nuysoft/brix-bisheng.git",
   "_target": "master",

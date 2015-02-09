@@ -77,10 +77,32 @@
     <div class="content">
         <div class="row">
             <div class="col-xs-6">
+                <h4>设置可选范围：最小日期（单个日期选择器）。</h4>
+                <input bx-name="components/datepickerwrapper" 
+                    data-ranges="[[new Date(), '2015-3-14']]" 
+                    type="text" class="form-control w100">
+            </div>
+            <div class="col-xs-6">
+                <h4>设置可选范围：最小日期（多个日期选择器）。</h4>
+                <div bx-name="components/datepickerwrapper" 
+                    data-dates="[ '2015-1-1', '2015-1-2' ]" 
+                    data-ranges="[[ '2015-1-1', '2015-1-2' ]]" 
+                    class="form-control w300">
+                    <span data-index="0">2015-1-1</span> 至 <span data-index="1">2015-1-2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bs-example">
+    <div class="content">
+        <div class="row">
+            <div class="col-xs-6">
                 <h4>支持不限（单个日期选择器）。</h4>
                 <input bx-name="components/datepickerwrapper" 
-                    data-unlimits="[ '2099-1-1' ]" type="text" 
-                    class="form-control w100">
+                    data-unlimits="[ '2099-1-1' ]" 
+                    type="text" class="form-control w100">
             </div>
             <div class="col-xs-6">
                 <h4>支持不限（多个日期选择器）。</h4>
@@ -144,13 +166,13 @@
 </div>
 
 <script type="text/javascript">
-    require(['brix/loader', 'log'], function(Loader, log) {
+    require(['brix/loader'], function(Loader) {
         Loader.boot(function() {
             var instances = Loader.query('components/datepickerwrapper')
             instances.on('change.datepickerwrapper', function(event, dates) {
-                log(
-                    '_' + event.type + '_ ' + 
-                    '*' + event.namespace + '* ' + 
+                console.log(
+                    event.type,
+                    event.namespace,
                     _.map(dates, function(item) {
                         return item.format('YYYY-MM-DD')
                     })
@@ -169,6 +191,7 @@ Name | Type | Default | Description
 :--- | :--- | :------ | :----------
 shortcut | boolean or object | `{}` | 指示是否开启快捷日期和快捷日期的内容。格式见下面的代码。
 dates | array | `[]` | 初始日期。
+ranges | array | `[]` | 设置可选日期的范围。合法值参见 [DatePicker](./readme.html?name=DatePicker)。
 
 #### 配置项 `shortcut`
 

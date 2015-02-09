@@ -51,10 +51,10 @@ define(
             },
             render: function() {},
             fill: function() {
-                var vframe = new Magix.Vframe(DIALOG_VIEW_ID)
+                var vframe = Magix.VOM.get(DIALOG_VIEW_ID) || new Magix.Vframe(DIALOG_VIEW_ID)
                 if (vframe && vframe.view) vframe.unmountView()
                 vframe.mountView(this.options.view.name, this.options.view.options)
-                console.log($('#' + DIALOG_VIEW_ID))
+                    // console.log($('#' + DIALOG_VIEW_ID))
                     // $('#' + DIALOG_VIEW_ID).html(
                     //     this.options.view.name +
                     //     JSON.stringify(this.options.view.options)
@@ -66,6 +66,9 @@ define(
             },
             close: function() {
                 this.dialog.close()
+
+                var vframe = Magix.VOM.get(DIALOG_VIEW_ID)
+                if (vframe && vframe.view) vframe.unmountView()
             }
         })
 

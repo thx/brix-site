@@ -1,4 +1,4 @@
-/* global define */
+/* global define, require, document */
 /*
     Tree
     * Node
@@ -12,74 +12,211 @@
 define(
     [
         'jquery', 'underscore',
-        'brix/base',
+        'brix/base', 'brix/event',
         '../areapicker/area.js',
         './tree.tpl.js',
+        './tree.node.tpl.js',
         'css!./tree.css'
     ],
     function(
         $, _,
-        Brix,
+        Brix, EventManager,
         Area, // Area.tree(Area.REGION)
-        template
+        template,
+        nodeTemplate
     ) {
+
+        var NAMESPACE = '.tree'
 
         function Tree() {}
 
-        var data = [
-            { id: '一', name: '一' },
-            { id: '二', name: '二' },
-            { id: '三', name: '三' },
-
-            { id: '一一', pid: '一', name: '一一' },
-            { id: '一二', pid: '一', name: '一二' },
-
-            { id: '二一', pid: '二', name: '二一' },
-            { id: '二二', pid: '二', name: '二二' },
-
-            { id: '三一', pid: '三', name: '三一' },
-            { id: '三二', pid: '三', name: '三二' },
-
-            { id: '一一一', pid: '一一', name: '一一一' },
-            { id: '一一二', pid: '一一', name: '一一二' },
-            { id: '一一三', pid: '一一', name: '一一三' },
-
-            { id: '一一一一', pid: '一一一', name: '一一一一' },
-        ]
-
         _.extend(Tree.prototype, Brix.prototype, {
-            options: {},
-            init: function() {},
-            render: function() {
-                this.$element = $(this.element)
-                this.data = {
-                    children: Area.tree(data) // REGION
+            options: {
+                data: undefined,
+                nodeTemplate: undefined,
+                state: 'expand' // expand, collapse
+            },
+            init: function() {
+                var that = this
+                var defer = $.Deferred()
+
+                // 支持自定义 HTML 模板 template
+                var deps = []
+                var customNodeTemplate = this.options.nodeTemplate || this.options['node-template']
+                if (customNodeTemplate) deps.push(customNodeTemplate)
+                require(deps, function() {
+                    if (customNodeTemplate) that.options.customNodeTemplate = arguments[0]
+                    defer.resolve()
+                })
+
+                if (!this.options.data) {
+                    // 解析数据时先移除 BiSheng 插入的 script 节点
+                    $(this.element).find('script').remove()
+
+                    var text = $.trim(this.element.innerHTML)
+                        /* jshint evil:true */
+                    this.options.data = eval(
+                        '(function(){ return [].splice.call(arguments, 0 )[0] })(' + text + ')'
+                    )
+                    this.element.innerHTML = ''
                 }
-                fix(this.data, template)
+
+                var mapped = {}
+                _.each(this.options.data, function(item /*, index*/ ) {
+                    if (!item || !item.id) return
+
+                    /*jshint eqnull:true */
+                    if (item.pid != null && item.parentId == null) item.parentId = item.pid
+                    if (item.pid == null && item.parentId != null) item.pid = item.parentId
+
+                    mapped[item.id] = item
+                })
+                this.options.mapped = mapped
+
+                this.options.data = {
+                    id: 'root',
+                    name: 'root',
+                    children: Area.tree(this.options.data)
+                }
+
+                if (deps.length) return defer.promise()
+            },
+            render: function() {
+                var that = this
+                var manager = new EventManager()
+                this.$element = $(this.element)
+
+                fix(this.options.data, template, this.options.customNodeTemplate || nodeTemplate)
                 this.$element.append(
-                    _.template(template)(this.data)
+                    _.template(template)(this.options.data)
                 )
 
-                this.$element.on('click', '.tree-toggle', function(event) {
-                    $(event.currentTarget)
-                        .find('.glyphicon')
-                        .toggleClass('glyphicon-plus-sign')
-                        .toggleClass('glyphicon-minus-sign')
-                    $(event.currentTarget)
-                        .closest('li.node')
-                        .find('ul.tree')
-                        .slideToggle('fast')
+                manager.delegate(this.$element, this)
+
+                if (this.options.state === 'collapse') this.collapse()
+                if (this.options.state === 'expand') this.expand()
+
+                /*
+                    var Loader = require('brix/loader')
+                    var trees = Loader.query('components/taginput')
+                    trees.on('active.taginput inactive.taginput', function(e){ console.log(e.type, e.namespace, e.target) } )
+                 */
+                var type = 'click' + NAMESPACE + '_' + this.clientId
+                this._state = 'inactive'
+                $(document.body).off(type)
+                    .on(type, function(event) {
+                        if (event.target === that.element || // 点击组件节点
+                            $.contains(that.element, event.target) || // 点击组件子节点
+                            !event.target.parentNode // 点击不存在节点
+                        ) {
+                            // if (that._state === 'active') return
+                            that.trigger(
+                                $.Event('active' + NAMESPACE, {
+                                    target: event.target
+                                })
+                            )
+                            that._state = 'active'
+                            return
+                        }
+
+                        if (that._state === 'inactive') return
+                        that.trigger(
+                            $.Event('inactive' + NAMESPACE, {
+                                target: event.target
+                            })
+                        )
+                        that._state = 'inactive'
+                    })
+            },
+            toggle: function(event, id) {
+                var selector
+                if (event === undefined) selector = 'li[data-node-id]' // toggle()
+                else if (!event.type) selector = 'li[data-node-id="' + event + '"]' // toggle( id )
+                else selector = 'li[data-node-id="' + id + '"]' // toggle( event, id )
+
+                $(selector, this.$element)
+                    .find('> .tree-node-control .brixfont').toggle().end()
+                    .find('> ul.tree').slideToggle('fast')
+            },
+            expand: function(id) {
+                var selector
+                if (id === undefined) selector = 'li[data-node-id]'
+                else selector = 'li[data-node-id="' + id + '"]'
+
+                var mapped = this.options.mapped
+                if (id !== undefined && mapped[id] && mapped[id].parentId) this.expand(mapped[id].parentId)
+
+                var liNode = $(selector, this.$element).show()
+                    .find('> .tree-node-control .brixfont.plus-sign').hide().end()
+                    .find('> .tree-node-control .brixfont.minus-sign').show().end()
+                if (id === undefined) liNode.find('> ul.tree').show()
+                else liNode.find('> ul.tree').slideDown('fast')
+            },
+            collapse: function(id) {
+                var selector
+                if (id === undefined) selector = 'li[data-node-id]'
+                else selector = 'li[data-node-id="' + id + '"]'
+
+                var liNode = $(selector, this.$element).show()
+                    .find('> .tree-node-control .brixfont.plus-sign').show().end()
+                    .find('> .tree-node-control .brixfont.minus-sign').hide().end()
+                if (id === undefined) liNode.find('> ul.tree').hide()
+                else liNode.find('> ul.tree').slideUp('fast')
+            },
+            search: function(value) {
+                if (value === undefined) return
+
+                var that = this
+                $('li[data-node-id]', this.$element).hide()
+
+                var matched = []
+                _.each(this.options.mapped, function(item /*, id*/ ) {
+                    if (item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                        matched.push(item)
+                        clan(item, matched)
+                    }
                 })
+                _.each(_.uniq(matched), function(item /*, index*/ ) {
+                    that.expand(item.id)
+                })
+
+                highlight(this.$element, value)
+
+                function clan(item, matched) {
+                    _.each(item.children, function(stranger) {
+                        matched.push(stranger)
+                        clan(stranger, matched)
+                    })
+                }
+
+                function highlight($container, value) {
+                    var value_re = new RegExp(value, 'ig')
+                    _.each($('.tree-node-content-name', $container), function(item /*, index*/ ) {
+                        var $item = $(item)
+                        $item.html(
+                            $item.text().replace(value_re, function(matched) {
+                                return '<span class="highlight">' + matched + '</span>'
+                            })
+                        )
+                    })
+                }
+
+            },
+            forward: function(event, id) {
+                this.trigger(event.type + NAMESPACE, [this.options.mapped[id], event.currentTarget])
             }
         })
 
-        function fix(node, template) {
+        function fix(node, template, nodeTemplate) {
+            node.contentFn = function(item) {
+                return item.content || _.template(nodeTemplate)(item)
+            }
             node.childrenFn = function() {
                 if (!this.children || !this.children.length) return ''
                 return _.template(template)(this)
             }
             _.each(node.children, function(item /*, index*/ ) {
-                fix(item, template)
+                fix(item, template, nodeTemplate)
             })
         }
 

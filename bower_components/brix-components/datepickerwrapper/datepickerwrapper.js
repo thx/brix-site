@@ -69,6 +69,7 @@ define(
                 mode: 'signal', // signal multiple
                 shortcuts: SHORTCUTS,
                 dates: [],
+                ranges: [],
                 unlimits: []
             },
             init: function() {
@@ -82,6 +83,15 @@ define(
                         })
                     })
                 }
+                this.options.ranges = _.flatten(this.options.ranges)
+                _.each(this.options.ranges, function(date, index, ranges) {
+                    if (date) ranges[index] = moment(date)
+                })
+                this.options._ranges = _.map(this.options.ranges, function(date) {
+                    if (date) return date.format(DATE_PATTERN)
+                })
+                this.options._ranges = "['" + this.options._ranges.join("','") + "']"
+
                 // if (this.options.unlimits.length) {
                 //     _.each(this.options.unlimits, function(date, index, unlimits) {
                 //         if (date) unlimits[index] = moment(date)
@@ -148,7 +158,7 @@ define(
                             // 单个日期选择器：自动同步至隐藏域，并触发隐藏域的 change 事件。</h4>
                             that.$element.trigger('change') //  + NAMESPACE + NAMESPACE_ORIGINAL, date
                             if (!isInput) {
-                                var items = $('[data-hidden-index]', this.$element)
+                                var items = $('[data-hidden-index]', that.$element)
                                 items.eq(0).val(value).trigger('change')
                             }
                         }

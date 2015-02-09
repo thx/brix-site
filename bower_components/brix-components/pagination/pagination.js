@@ -1,18 +1,18 @@
-/* global define  */
+/* global define */
 /*
     分页组件。
  */
 define(
     [
         'jquery', 'underscore',
-        'brix/base', 'brix/event',
-        './pure-pagination.js',
+        'brix/loader', 'brix/base', 'brix/event',
+        './state.js',
         './pagination.tpl.js',
         'css!./pagination.css'
     ],
     function(
         $, _,
-        Brix, EventManager,
+        Loader, Brix, EventManager,
         PurePagination,
         template
     ) {
@@ -52,7 +52,7 @@ define(
                 limits: [10, 20, 30, 40, 50]
             },
             init: function() {
-                this._status = new PurePagination(
+                this._state = new PurePagination(
                     this.options.total,
                     this.options.cursor,
                     this.options.limit
@@ -61,35 +61,37 @@ define(
             render: function() {
                 var that = this
                 var manager = new EventManager()
+
                 this.data = this.fixData()
                 var html = _.template(template)(this.data)
                 $(this.element).empty().append(html)
 
+                manager.delegate(this.element, this)
+
                 // 重新 render 之后的 ready 事件？再次触发？
-                /* jshint unused:true */
-                this.off('change.dropdown.original', 'select')
-                    .on('change.dropdown.original', 'select', function(event, data) {
-                        /* data { label: label, value: value } */
-                        that._status.setLimit(data.value)
-                        that.trigger('change.pagination', that._status)
+                Loader.boot(this.element, function() {
+                    that.dropdown = Loader.query('components/dropdown', that.element)[0]
+                        /* jshint unused:false */
+                    that.dropdown.on('change.dropdown', function(event, data) {
+                        that._state.setLimit(data.value)
+                        that.trigger('change.pagination', that._state)
                         that.render()
                     })
-
-                manager.delegate(this.element, this)
+                })
             },
             moveTo: function(event, extra) { // extraParameters
                 // moveTo( cursor )
                 if (arguments.length === 1) extra = event
-                this._status.moveTo(extra)
-                this.trigger('change.pagination', this._status)
+                this._state.moveTo(extra)
+                this.trigger('change.pagination', this._state)
                 this.render()
             },
             fixData: function() {
                 var barStart = Math.min(
-                    this._status.pages,
+                    this._state.pages,
                     Math.max(
                         1,
-                        this._status.cursor - parseInt(this.options.step / 2, 10)
+                        this._state.cursor - parseInt(this.options.step / 2, 10)
                     )
                 )
                 var limit = +this.options.limit
@@ -113,9 +115,9 @@ define(
                 }
                 return _.extend({
                     barStart: barStart,
-                    barEnd: Math.min(this._status.pages, barStart + this.options.step - 1),
+                    barEnd: Math.min(this._state.pages, barStart + this.options.step - 1),
                     limits: limits
-                }, this._status)
+                }, this._state)
             }
         })
 

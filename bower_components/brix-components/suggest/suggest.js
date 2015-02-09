@@ -52,7 +52,7 @@ define(
                     defer.resolve()
                 })
 
-                if (deps.length) return defer.promise
+                if (deps.length) return defer.promise()
             },
             render: function() {
                 this.$element = $(this.element)
@@ -158,6 +158,7 @@ define(
                 },
                 // enter
                 13: function(event, items, active, index) {
+                    if(!this.$menu.is(':visible'))return
                     this._select(items, active, index)
                 },
                 // esc
