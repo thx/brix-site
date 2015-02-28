@@ -1,3 +1,6 @@
+.table-fixed {
+  table-layout: fixed;
+}
 .table .more {
   position: relative;
 }
@@ -30,4 +33,66 @@
 }
 .table tr:hover .operation {
   visibility: visible;
+}
+.column-scroll-arrow {
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #E6E6E6;
+  opacity: .5;
+  width: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+.column-scroll-arrow:hover {
+  background-color: #999;
+}
+.column-priority {
+  width: 500px;
+  margin-top: 2px;
+  display: none;
+}
+.column-priority .candidates,
+.column-priority .queue {
+  height: 300px;
+  overflow: scroll;
+}
+.column-priority .candidates .item {
+  float: left;
+  width: 33%;
+  padding: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.column-priority .queue .item {
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+.column-priority .queue .item-move {
+  border: 1px solid #E6E6E6;
+  cursor: move;
+}
+.column-priority .queue .item-not-allowed {
+  border: 1px dashed #E6E6E6;
+  cursor: not-allowed;
+}
+.column-priority .queue .sortable-wrapper .sortable-ghost {
+  opacity: 0.4;
+  background-color: #F4E2C9;
+}
+.column-priority .candidates .item span,
+.column-priority .queue .item span {
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+.column-priority.dialog .dialog-content .dialog-footer {
+  text-align: left;
 }

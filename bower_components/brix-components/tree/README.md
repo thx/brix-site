@@ -24,11 +24,11 @@
                 { id: '10', pid: '1', name: '.init()' },
                 { id: '11', pid: '1', name: '.render()' },
                 { id: '12', pid: '1', name: '.destroy()' },
-                { id: '12', pid: '1', name: '.on( types, selector, data, fn )' },
-                { id: '12', pid: '1', name: '.one( types, selector, data, fn )' },
-                { id: '12', pid: '1', name: '.off( types, selector, fn )' },
-                { id: '12', pid: '1', name: '.trigger( type, data)' },
-                { id: '12', pid: '1', name: '.triggerHandler( type, data )' },
+                { id: '13', pid: '1', name: '.on( types, selector, data, fn )' },
+                { id: '14', pid: '1', name: '.one( types, selector, data, fn )' },
+                { id: '15', pid: '1', name: '.off( types, selector, fn )' },
+                { id: '16', pid: '1', name: '.trigger( type, data)' },
+                { id: '17', pid: '1', name: '.triggerHandler( type, data )' },
 
                 { id: '20', pid: '2', name: '.delegate( element, owner )' },
                 { id: '21', pid: '2', name: '.undelegate( element )' },
@@ -219,6 +219,10 @@
             var taginput = Loader.query($('#demoTagInput'))
             taginput.add(data.name)
         })
+        tree.on('mouseenter.tree mouseleave.tree',function(event, data, target){
+            // if (event.namespace !== 'tree') return
+            // console.log(event, data, target)
+        })
     })
 </script>
 
@@ -253,21 +257,25 @@
     Loader.boot(function(){
         var taginput = Loader.query($('#demoTagInput2'))[0]
         var tree = Loader.query($('#demoTree2'))[0]
-        taginput.on('active.taginput', function(event) {
-            if (event.namespace !== 'taginput') return
-            $(tree.element).show()
+
+        taginput.$relatedElement.on('click', function(event){
+            if ($(event.target).attr('class').indexOf('-remove') >= 0) return
+            if (taginput.val().length < 3) $(tree.element).show()
         })
-        taginput.on('inactive.taginput', function(event) {
-            if (event.namespace !== 'taginput') return
-            $(tree.element).hide()
-        })
-        tree.on('inactive.tree', function(event) {
-            if (event.namespace !== 'tree') return
-            // debugger
-        })
+
         tree.on('click.tree', function(event, data, target) {
             if (event.namespace !== 'tree') return
             taginput.add(data.name)
+            if(taginput.val().length >= 3) $(tree.element).hide()
+        })
+
+        taginput.on('active.taginput inactive.taginput', function(event){
+            if (event.namespace !== 'taginput') return
+            console.log(event.type, event.namespace)
+        })
+        tree.on('active.tree inactive.tree', function(event){
+            if (event.namespace !== 'tree') return
+            console.log(event.type, event.namespace)
         })
     })
 </script>
@@ -300,15 +308,114 @@ state | string | `'expand'` | 可选。指定树结构的初始状态。可选�
 * .expand( id )
 * .expand()
 
+展开节点。
+
 #### .collapse( id )
 
 * .collapse( id )
 * .collapse()
 
+收起节点。
+
 #### .search( value )
 
 * .search( value )
 
+查找与参数 value 匹配的节点。
+
+#### .parent( element )
+
+* .parent( element )
+* .parent( id )
+
+查找父节点。
+
+参数 `element` 可以是 DOM 节点，类样式为 `tree-node-content`，也可以是数据唯一标识 `id`。
+
+该方法返回一个对象，含有两个属性：`element` 和 `data`，分别表示父节点以及父节点对应的数据：
+
+```json
+{
+    element: ...,
+    data: {
+        id: ...,
+        name: ...,
+        ...
+    }
+}
+```
+
+示例代码如下所示：
+
+```js
+var Loader = require('brix/loader')
+var instances = Loader.query('components/tree')
+instances[0].parent('00')
+```
+
+#### .children( element )
+
+* .children( element )
+* .children( id )
+
+查找子节点。
+
+参数同 `.parent( element )`。
+
+该方法返回一个数组，其中的元素是对象，含有两个属性：`element` 和 `data`，分别表示子节点以及子节点对应的数据：
+
+```json
+[
+    {
+        element: ...,
+        data: {
+            id: ...,
+            name: ...,
+            ...
+        }
+    },
+    ...
+]
+```
+
+示例代码如下所示：
+
+```js
+var Loader = require('brix/loader')
+var instances = Loader.query('components/tree')
+instances[0].children('05')
+```
+
+#### .siblings( element )
+
+* .children( element )
+* .children( id )
+
+查找兄弟节点。
+
+该方法返回一个数组，其中的元素是对象，含有两个属性：`element` 和 `data`，分别表示兄弟节点以及兄弟节点对应的数据：
+
+```json
+[
+    {
+        element: ...,
+        data: {
+            id: ...,
+            name: ...,
+            ...
+        }
+    },
+    ...
+]
+```
+
+示例代码如下所示：
+
+```js
+var Loader = require('brix/loader')
+var instances = Loader.query('components/tree')
+instances[0].siblings('0')
+```
 
 ### 事件 <small>Events</small>
 
@@ -317,6 +424,8 @@ Event Type | Description
 click.tree | -
 mouseenter.tree | -
 mouseleave.tree | -
+active.tree | -
+inactive.tree | -
 
 ```js
 var Loader = require('brix/loader')

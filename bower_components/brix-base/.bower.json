@@ -1,14 +1,8 @@
 {
   "name": "brix-base",
+  "version": "0.0.5",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "src",
-    "test",
-    "doc",
-    "package.json",
-    "gulpfile.js"
+    "**/.*"
   ],
   "dependencies": {
     "jquery": "1.x.x",
@@ -16,13 +10,13 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-base",
-  "_release": "bddfa57246",
+  "_release": "0.0.5",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "bddfa572460841b87d0e109605671105db28964c"
+    "type": "version",
+    "tag": "0.0.5",
+    "commit": "f1a24a4641c1548dcc613307ff9f87308e1b0154"
   },
   "_source": "git://github.com/nuysoft/brix-base.git",
-  "_target": "master",
+  "_target": "*",
   "_originalSource": "brix-base"
 }

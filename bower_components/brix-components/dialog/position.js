@@ -28,11 +28,15 @@ define(
             var triggerWidth = $trigger.outerWidth()
             var triggerHeight = $trigger.outerHeight()
 
-            var $overlay = $(overlay).show()
+            var $overlay = $(overlay) // .show()
+            var visible = $overlay.css('display') !== 'none'
+            $overlay.show()
             var overlayWidth = $overlay.outerWidth()
             var overlayHeight = $overlay.outerHeight()
                 // var overlayMarginLeft = parseInt($overlay.css('margin-left'), 10)
                 // var overlayMarginTop = parseInt($overlay.css('margin-top'), 10)
+
+            if (!visible) $overlay.hide()
 
             var left, top
             var leftDiff = triggerWidth / 2 - overlayWidth / 2
@@ -88,9 +92,14 @@ define(
 
             // center(overlay) {
             if (!height) {
-                var $overlay = $(width).show()
+                var $overlay = $(width) // .show()
+                var visible = $overlay.css('display') !== 'none'
+                $overlay.show()
                 overlayWidth = $overlay.outerWidth()
                 overlayHeight = $overlay.outerHeight()
+
+                if (!visible) $overlay.hide()
+
             } else {
                 // center(width, height)
                 overlayWidth = parseFloat(width, 12)
@@ -108,9 +117,13 @@ define(
         }
 
         function start(overlay, offset, placement) {
-            var $overlay = $(overlay)
+            var $overlay = $(overlay) // .show()
+            var visible = $overlay.css('display') !== 'none'
+            $overlay.show()
             var width = $overlay.outerWidth()
             var height = $overlay.outerHeight()
+
+            if (!visible) $overlay.hide()
 
             var result = {
                 opacity: 0,
