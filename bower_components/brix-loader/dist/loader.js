@@ -522,6 +522,7 @@ define(
             } catch (exception) {
                 options = {}
             }
+            
             options.element = element
             options.moduleId = moduleId
             options.clientId = clientId
@@ -697,7 +698,7 @@ define(
     ) {
 
         var CACHE = {}
-        var DEBUG = ~location.search.indexOf('debug')
+        var DEBUG = ~location.search.indexOf('brix.loader.debug')
 
         /*
             #### Loader.boot( [ context ] [, complete( records ) ] [, notify( error, instance, index, count ) ] )
@@ -862,12 +863,15 @@ define(
                 })
                 .queue(function(next) {
                     try {
-                        // 3. 创建组件实例
-                        instance = new BrixImpl(options)
+                        // 3. 创建组件实例（按需传入参数 options）
+                        instance = BrixImpl.length ? new BrixImpl(options) : new BrixImpl()
                             // 设置属性 options
                         instance.options = Util.extend({}, instance.options, options)
                             // 设置其他公共属性
                         Util.extend(instance, Util.pick(options, Constant.OPTIONS))
+
+                        // 增强通过 Loader 加载的组件
+                        // enhance(instance)
                         next()
                     } catch (error) {
                         if (callback) callback(error, instance)
@@ -934,7 +938,9 @@ define(
                             })
                         }
                         // 调用组件的 .render()
-                        var result = instance._render.apply(instance, arguments)
+                        var result
+                        if (instance._render) result = instance._render.apply(instance, arguments)
+                        else console.warn(instance.clientId, instance.moduleId, '找不到方法 render() ')
 
                         // 如果返回了 Promise，则依赖 Promise 的状态
                         if (result && result.then) {
@@ -964,7 +970,7 @@ define(
 
                         // 同步 clientId
                         function syncClientId() {
-                            var relatedElement = instance.relatedElement
+                            var relatedElement = instance.relatedElement || instance.$relatedElement
                             if (relatedElement) {
                                 // element
                                 if (relatedElement.nodeType && (relatedElement.clientId === undefined)) {
@@ -1260,20 +1266,11 @@ define(
             // 调用自定义销毁行为
             if (instance._destroy) {
                 try {
-                    /*if (instance.delegateBxTypeEvents) {
-                        if (instance.element) {
-                            instance.undelegateBxTypeEvents(instance.element)
-                        }
-                        if (instance.relatedElement) {
-                            instance.undelegateBxTypeEvents(instance.relatedElement)
-                        }
-                    }*/
                     instance._destroy()
                 } catch (error) {
                     if (complete) complete(error)
                     else console.error(error)
                 }
-
             }
 
             // 从缓存中移除
@@ -1349,21 +1346,17 @@ define(
             // 1. 根据 element 查找组件实例
             // query( element )
             if (moduleId.nodeType) {
-                results.push(
-                    CACHE[
-                        moduleId.clientId
-                    ]
-                )
+                if (moduleId.clientId !== undefined && CACHE[moduleId.clientId]) {
+                    results.push(CACHE[moduleId.clientId])
+                }
 
             } else if (moduleId.length && !Util.isString(moduleId)) {
                 // 1. 根据 elementArray 逐个查找组件实例
                 // query( elementArray )
                 Util.each(moduleId, function(element /*, index*/ ) {
-                    results.push(
-                        CACHE[
-                            element.clientId
-                        ]
-                    )
+                    if (element.clientId !== undefined && CACHE[element.clientId]) {
+                        results.push(CACHE[element.clientId])
+                    }
                 })
             } else {
                 // 1. 根据 moduleId 查找组件实例
@@ -1374,25 +1367,36 @@ define(
                         // 是否在 context 内
                         if (context === undefined || parents(instance, context).length) {
                             results.push(instance)
-                                // 收集组件方法
-                            Util.each(instance.constructor.prototype, function(value, name) {
-                                if (Util.isFunction(value) && (name[0] !== '_')) methods.push(name)
-                            })
                         }
                     }
                 })
             }
 
+            // 收集组件方法
+            Util.each(results, function(instance, index) {
+                if (!instance) return // 容错
+                Util.each(instance.constructor.prototype, function(value, name) {
+                    if (Util.isFunction(value) && (name[0] !== '_')) methods.push(name)
+                })
+            })
+
             // 2. 绑定组件方法至 query() 返回的对象上
             Util.each(Util.unique(methods), function(name /*, index*/ ) {
                 results[name] = function() {
-                    // var that = this
+                    var that = this
                     var args = [].slice.call(arguments)
-                    Util.each(this, function(instance /*, index*/ ) {
+                    var result
+                    var hasNewResults = false
+                    var tmpNewResults = []
+                    Util.each(this, function(instance, index) {
                         if (!instance[name]) return
-                            // that[index] = 
-                        instance[name].apply(instance, args)
+                        result = instance[name].apply(instance, args)
+                        if (result !== undefined && result !== instance) {
+                            hasNewResults = true
+                            tmpNewResults.push(result)
+                        }
                     })
+                    if (hasNewResults) return tmpNewResults
                     return this
                 }
             })
@@ -1600,10 +1604,27 @@ define(
             return result
         }
 
+        /*
+            增强通过 Loader 加载的组件
+         */
+        function enhance(instance) {
+            if (!instance.constructor.prototype.query) instance.constructor.prototype.query = function(moduleId) {
+                //  TODO element, relatedElement, $relatedElement
+                return query(moduleId, this)
+            }
+            if (!instance.constructor.prototype.boot) instance.constructor.prototype.boot = function(callback, progress) {
+                //  TODO element, relatedElement, $relatedElement
+                Loader.boot(this.element, callback, progress)
+                    // if (this.relatedElement || this.$relatedElement) Loader.boot(this.relatedElement || this.$relatedElement, callback, progress)
+                return this
+            }
+        }
+
         var tasks = Util.queue()
-        var booting = false
         var Loader = {
             CACHE: CACHE,
+            tasks: tasks,
+            booting: false,
             boot: function(context, callback, progress) {
                 // boot( callback, progress )
                 if (Util.isFunction(context)) {
@@ -1617,15 +1638,40 @@ define(
                     context = context ? context.element || context : document.body
                 }
 
+                if (DEBUG) console.log('call boot', context)
+
+                var caller = arguments.callee.caller
                 tasks.queue(function(next) {
-                    booting = true
+                    var label = 'queue boot'
+                    if (DEBUG) {
+                        console.group(label)
+                        console.time(label)
+                        console.log('context:', context)
+                        console.log('takks.list:', tasks.list.length)
+                    }
+
+                    Loader.booting = caller
                     boot(context, function(records) {
-                        booting = false
-                        if (callback) callback(records)
+                        if (callback) {
+                            try {
+                                callback(records)
+                            } catch (e) {
+                                console.error(e)
+                            }
+                        }
+
+                        Loader.booting = false
+
+                        if (DEBUG) {
+                            console.log(records.length, records)
+                            console.timeEnd(label)
+                            console.groupEnd(label)
+                        }
+
                         next()
                     }, null, progress)
                 })
-                if (!booting) tasks.dequeue()
+                if (!Loader.booting) tasks.dequeue()
                 return this
             },
             destroy: destroy,
@@ -1639,15 +1685,24 @@ define(
                     options = undefined
                 }
 
+                var caller = arguments.callee.caller
                 tasks.queue(function(next) {
-                    booting = true
+                    Loader.booting = caller
                     load(element, moduleId, options, function(records) {
-                        booting = false
-                        if (complete) complete(records)
+                        Loader.booting = false
+
+                        if (complete) {
+                            try {
+                                complete(records)
+                            } catch (e) {
+                                console.error(e)
+                            }
+                        }
+
                         next()
                     })
                 })
-                if (!booting) tasks.dequeue()
+                if (!Loader.booting) tasks.dequeue()
                 return this
             },
             unload: unload,
