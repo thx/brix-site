@@ -28,6 +28,8 @@
     "brix-loader": "master",
     "brix-base": "master",
     "brix-event": "master",
-    "brix-components": "master"
+    "brix-components": "master",
+    "brix-bisheng": "master",
+    "brix-spa": "master"
   }
 }
