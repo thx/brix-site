@@ -47,9 +47,86 @@
         width: 75px;
     }
     .column-priority {
-        display: block;
+        /*display: block;*/
     }
 </style>
+
+<div class="bs-example bs-example-modal">
+    <div class="content">
+        <table bx-name="components/table" class="table table-hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" data-linkage-name="all"></th>
+                    <th>Id</th>
+                    <th>Feature <span bx-name="components/popover" data-content="功能列表。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
+                    <th>More <span bx-name="components/popover" data-content="鼠标移入之后显示更多内容。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
+                    <th width="150px">Operations <span bx-name="components/popover" data-content="注意到最后一列了吗？鼠标移入之后才会显示。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" value="Aatrox" data-linkage-parent-name="all"></td>
+                    <td>Aatrox</td>
+                    <td>全选&amp;反选</td>
+                    <td>
+                        <div class="more">
+                            <div class="title">鼠标移入这里</div>
+                            <div class="content">
+                                <h3>卡马克</h3>
+                                <p>29 岁的卡马克是一个计算机程序员，一个清心寡欲并且乐善好施的人，一个在业余时间里建造高能火箭的人，比尔·盖茨（Bill Gates）心目中为数不多的天才之一。程序代码的优雅清晰是他的追求，也是他的游戏。</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);">详情</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="Ahri" data-linkage-parent-name="all"></td>
+                    <td>Ahri</td>
+                    <td>打开控制台查看选中的值</td>
+                    <td>
+                        <div class="more">
+                            <div class="title">鼠标移出这里</div>
+                            <div class="content">
+                                <h3>罗梅洛</h3>
+                                <p>32 岁的罗梅洛是个自大的游戏设计师，他那坏孩子般的形象使他成为了游戏界的明星，为了实现他心目中那些狂野的幻景，他愿意付出一切代价，甚至是他的名望。</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);">详情</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="Akali" data-linkage-parent-name="all"></td>
+                    <td>Akali</td>
+                    <td>增强了 Table 的样式和事件</td>
+                    <td>
+                        <div class="more">
+                            <div class="title">卡马克在他们分手时...</div>
+                            <div class="content">
+                                <p>卡马克在他们分手时有过一句简短的描述：“罗梅洛想建立一个帝国，而我只想写出优秀的程序。” </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);">详情</a>
+                            <a href="javascript: void(0);">详情</a>
+                            <a href="javascript: void(0);">详情</a>
+                            <a href="javascript: void(0);">链接不会折行</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <div class="bs-example bs-example-modal">
     <div class="content">
@@ -64,7 +141,7 @@
                     <th class="w30"><input type="checkbox" data-linkage-name="all"></th>
                     <th class="w75">不动列 1</th>
                     <th class="w75">不动列 2</th>
-                    <th data-column-priority-name="滚动列 1">滚动列 1 <span bx-name="components/popover" data-content="components/popover" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
+                    <th data-column-field="gungungun" data-column-name="滚滚滚滚滚滚长江东逝水">滚动列 1 <span bx-name="components/popover" data-content="components/popover" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
                     <th>滚动列 2</th>
                     <th>滚动列 3</th>
                     <th>滚动列 4</th>
@@ -247,83 +324,6 @@
     </div>
 </div>
 
-<div class="bs-example bs-example-modal">
-    <div class="content">
-        <table bx-name="components/table" class="table table-hover">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" data-linkage-name="all"></th>
-                    <th>Id</th>
-                    <th>Feature <span bx-name="components/popover" data-content="功能列表。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
-                    <th>More <span bx-name="components/popover" data-content="鼠标移入之后显示更多内容。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
-                    <th width="150px">Operations <span bx-name="components/popover" data-content="注意到最后一列了吗？鼠标移入之后才会显示。" data-placement="bottom" class="glyphicon glyphicon-question-sign gray"></span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="checkbox" value="Aatrox" data-linkage-parent-name="all"></td>
-                    <td>Aatrox</td>
-                    <td>全选&amp;反选</td>
-                    <td>
-                        <div class="more">
-                            <div class="title">鼠标移入这里</div>
-                            <div class="content">
-                                <h3>卡马克</h3>
-                                <p>29 岁的卡马克是一个计算机程序员，一个清心寡欲并且乐善好施的人，一个在业余时间里建造高能火箭的人，比尔·盖茨（Bill Gates）心目中为数不多的天才之一。程序代码的优雅清晰是他的追求，也是他的游戏。</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="operation">
-                            <a href="javascript: void(0);">详情</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" value="Ahri" data-linkage-parent-name="all"></td>
-                    <td>Ahri</td>
-                    <td>打开控制台查看选中的值</td>
-                    <td>
-                        <div class="more">
-                            <div class="title">鼠标移出这里</div>
-                            <div class="content">
-                                <h3>罗梅洛</h3>
-                                <p>32 岁的罗梅洛是个自大的游戏设计师，他那坏孩子般的形象使他成为了游戏界的明星，为了实现他心目中那些狂野的幻景，他愿意付出一切代价，甚至是他的名望。</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="operation">
-                            <a href="javascript: void(0);">详情</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" value="Akali" data-linkage-parent-name="all"></td>
-                    <td>Akali</td>
-                    <td>增强了 Table 的样式和事件</td>
-                    <td>
-                        <div class="more">
-                            <div class="title">卡马克在他们分手时...</div>
-                            <div class="content">
-                                <p>卡马克在他们分手时有过一句简短的描述：“罗梅洛想建立一个帝国，而我只想写出优秀的程序。” </p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="operation">
-                            <a href="javascript: void(0);">详情</a>
-                            <a href="javascript: void(0);">详情</a>
-                            <a href="javascript: void(0);">详情</a>
-                            <a href="javascript: void(0);">链接不会折行</a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <script type="text/javascript">
     require(['brix/loader', 'log'], function(Loader, log) {
         Loader.boot(function() {
@@ -335,13 +335,36 @@
                 console.log('target', target)
                 console.log(event.type, event.namespace, values)
             })
+            instances.on('change.table_column_rwd', function(event, state) {
+                console.log(event.type, event.namespace, state)
+            })
+            instances.on('change.table_column_priority', function(event, fields) {
+                console.log(event.type, event.namespace, fields)
+            })
         })
     })
 </script>
 
 ### 配置 <small>Options</small>
 
-无。
+column-rwd-range="[3,-2]"
+
+配置信息从 `data-*` 中读取，在组件中通过 `this.options` 访问。
+
+Name | Type | Default | Description
+:--- | :--- | :------ | :----------
+column-name | string | - | **Th** 可选。指定列名，默认取单元格 `th` 的文本内容。
+column-field | string | - | **Th** 可选。指定列名对应数据字段名，默认取单元格 `th` 的文本内容。
+column-rwd-range | array | - | **Table** 可选。指定列分页的范围，例如 `[3,-2]`。
+column-rwd-limit | array | 5 | **Table** 可选。指定列分页的单页个数，例如 `5`。
+column-priority-trigger | string | - | **Table** 可选。指定触发列配置浮层的节点选择器表达式，例如 `'#clickme'`
+column-priority-placement | string | 'bottom' | **Table** 可选。指定列配置浮层相对于触发节点的位置，可选值有 `'top'`、`'bottom'`、`'left'`、`'right'`。
+column-priority-align | string | 'right' | **Table** 可选。指定列配置浮层相对于触发节点的对齐方式，可选值有 `''`、`'top'`、`'bottom'`、`'left'`、`'right'`。
+
+**注意**
+
+1. 设置 `column-rwd-range` 启用列分页功能。
+1. 设置 `data-column-priority-trigger` 启用列配置功能。
 
 ### 方法 <small>Methods</small>
 
@@ -352,6 +375,8 @@
 Event Type | Description
 :--------- | :----------
 toggle.table | 当勾选或取消勾选复选框时被触发。事件监听函数接受三个参数：`event`、`values`、`target`。参数 `values` 是一个数组，其中存放了被选中的复选框的值，没有任何复选框被选中，则为空数组 `[]`。参数 `target` 是被点击的复选框。
+change.table_column_rwd | 当列滚动时触发。事件监听函数接受两个参数：`event`、`state`。参数 `state` 是一个对象，其中存放了列分页的状态。
+change.table_column_priority | 当列配置发生变化时触发。事件监听函数接受两个参数：`event`、`fields`。参数 `fields` 是一个数组，其中存放了排序后的列名。
 
 ```js
 var Loader = require('brix/loader')
@@ -359,7 +384,34 @@ var instances = Loader.query('components/table')[0]
 instances.on('toggle.table', function(event, values, target) {
     console.log(event.type, event.namespace, values, target)
 })
+instances.on('change.table_column_rwd', function(event, state) {
+    console.log(event.type, event.namespace, state)
+})
+instances.on('change.table_column_priority', function(event, fields) {
+    console.log(event.type, event.namespace, fields)
+})
 ```
+
+### 属性 <small>Properties</small>
+
+Name | Type | Default | Description
+:--- | :--- | :------ | :----------
+columnPriorityHandler | object | - | 列配置浮层的实例。
+
+#### 属性 columnPriorityHandler
+
+* .columnPriorityHandler.show()
+
+    显示列配置浮层。
+
+* .columnPriorityHandler.hide()
+
+    隐藏列配置浮层。
+
+* .columnPriorityHandler.fields( [ fields ] )
+
+    读取或设置可显示的列。
+
 
 # linkage( container, callback( event, values ) )
 
