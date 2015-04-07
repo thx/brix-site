@@ -27,7 +27,7 @@ define(
                 components: [{
                     name: 'Tree',
                     desc: '打印组件树。',
-                    preview: './components/site-tools/tree.png',
+                    preview: './site-components/site-tools/tree.png',
                     links: [
                         ['示例', ''],
                         ['配置', ''],
@@ -37,7 +37,7 @@ define(
                 }, {
                     name: 'printf',
                     desc: '日志工具。',
-                    preview: './components/site-tools/printf.png',
+                    preview: './site-components/site-tools/printf.png',
                     links: [
                         ['示例', ''],
                         ['配置', ''],
@@ -48,7 +48,7 @@ define(
                     name: 'CSS Layout Debugger',
                     alias: 'css-layout-debugger',
                     desc: 'CSS 布局调试工具。',
-                    preview: './components/site-tools/css-layout-debugger.png',
+                    preview: './site-components/site-tools/css-layout-debugger.png',
                     links: [
                         ['示例', ''],
                         ['配置', ''],

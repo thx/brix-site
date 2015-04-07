@@ -61,11 +61,12 @@ define(
             },
             render: function() {
                 var manager = new EventManager()
-                var $element = $(this.element)
-                var html = _.template(template)(this.data)
-                $element.append(html)
+                this.$element = $(this.element)
+                    .append(
+                        _.template(template)(this.data)
+                    )
 
-                manager.delegate(this.element, this)
+                manager.delegate(this.$element, this)
 
                 this._renderYearPicker()._renderMonthPicker()._renderDatePicker()._renderTimePicker()
             },
@@ -81,6 +82,14 @@ define(
                 }
                 return moment(this.data.date)
             },
+            range: function(value) {
+                if (value) {
+                    this.options.range = _.flatten(value)
+                    this._renderDatePicker()
+                    return this
+                }
+                return this.options.range
+            },
             // 在 .yearpicker .monthpicker .datepicker 之间切换（滑动效果）
             _slide: function(event, from, to) {
                 // _slide(from, to)
@@ -88,8 +97,8 @@ define(
                     to = from
                     from = event
                 }
-                $(this.element).find(from).slideUp('fast')
-                $(this.element).find(to).slideDown('fast')
+                this.$element.find(from).slideUp('fast')
+                this.$element.find(to).slideDown('fast')
             },
             // 点击 minus plus
             /* jshint unused:false */
@@ -166,8 +175,8 @@ define(
                     date = moment().startOf('day')
                 }
 
-                var $title = $(this.element).find('.yearpicker .picker-header h4')
-                var $body = $(this.element).find('.yearpicker .picker-body')
+                var $title = this.$element.find('.yearpicker .picker-header h4')
+                var $body = this.$element.find('.yearpicker .picker-body')
 
                 var limit = 20
                 var data = $body.data()
@@ -195,8 +204,8 @@ define(
                     date = moment().startOf('day')
                 }
 
-                var $title = $(this.element).find('.monthpicker .picker-header h4')
-                var $body = $(this.element).find('.monthpicker .picker-body')
+                var $title = this.$element.find('.monthpicker .picker-header h4')
+                var $body = this.$element.find('.monthpicker .picker-body')
                 $title.text(date.get('year'))
                 $body.empty()
                     // ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
@@ -229,8 +238,8 @@ define(
                 var startDay = moment(date).date(1).day()
                 var range = this.options.range
 
-                var $title = $(this.element).find('.datepicker .picker-header h4')
-                var $body = $(this.element).find('.datepicker .picker-body .datepicker-body-value')
+                var $title = this.$element.find('.datepicker .picker-header h4')
+                var $body = this.$element.find('.datepicker .picker-body .datepicker-body-value')
 
                 $title.text(date.format('YYYY - MM'))
                 $body.empty()
@@ -254,6 +263,12 @@ define(
                     for (var i = 0; i < range.length; i += 2) {
                         min = range[i] && moment(range[i]).startOf('day')
                         max = range[i + 1] && moment(range[i + 1]).startOf('day')
+                        if (min && max) {
+                            var tmpMin = moment.min(min, max)
+                            var tmpMax = moment.max(min, max)
+                            min = tmpMin
+                            max = tmpMax
+                        }
                         if (min && max && cur.diff(min, 'days') >= 0 && cur.diff(max, 'days') <= 0) return false
                         if (min && !max && cur.diff(min, 'days') >= 0) return false
                         if (!min && max && cur.diff(max, 'days') <= 0) return false
@@ -265,7 +280,7 @@ define(
             _renderTimePicker: function() {
                 var date = moment(this.data.date)
 
-                var inputs = $(this.element).find('.timepicker div.timepicker-group input')
+                var inputs = this.$element.find('.timepicker div.timepicker-group input')
                 inputs.eq(0).val(date.format('HH'))
                 inputs.eq(1).val(date.format('mm'))
                 inputs.eq(2).val(date.format('ss'))

@@ -1,6 +1,9 @@
 /* global define */
 /*
     分页组件。
+
+    TODO
+        去掉边框。
  */
 define(
     [
@@ -61,6 +64,7 @@ define(
             render: function() {
                 var that = this
                 var manager = new EventManager()
+                this.$element = $(this.element)
 
                 this.data = this.fixData()
                 var html = _.template(template)(this.data)
@@ -71,7 +75,10 @@ define(
                 // 重新 render 之后的 ready 事件？再次触发？
                 Loader.boot(this.element, function() {
                     that.dropdown = Loader.query('components/dropdown', that.element)[0]
-                        /* jshint unused:false */
+
+                    if (!that.dropdown) return
+
+                    /* jshint unused:false */
                     that.dropdown.on('change.dropdown', function(event, data) {
                         that._state.setLimit(data.value)
                         that.trigger('change.pagination', that._state)
@@ -85,6 +92,22 @@ define(
                 this._state.moveTo(extra)
                 this.trigger('change.pagination', this._state)
                 this.render()
+            },
+            total: function(total) {
+                if (total === undefined || total === null) return this._state.total
+                if (this._state.total !== total) {
+                    this._state.setTotal(total)
+                    this.render()
+                }
+                return this
+            },
+            cursor: function(cursor) {
+                if (cursor === undefined || cursor === null) return this._state.cursor
+                if (this._state.cursor !== cursor) {
+                    this._state.setCursor(cursor)
+                    this.render()
+                }
+                return this
             },
             fixData: function() {
                 var barStart = Math.min(

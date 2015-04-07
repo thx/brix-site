@@ -24,6 +24,9 @@
 
 ### 示例 <small>Examples</small>
 
+<style type="text/css">
+</style>
+
 <div class="bs-example bs-example-modal">
     <div class="content">
         <div bx-name="components/dialog" bx-click="open" data-content="<div class='dialog-body'>hello<div>" data-placement="bottom" data-align="left" class="btn btn-default">Dialog</div>

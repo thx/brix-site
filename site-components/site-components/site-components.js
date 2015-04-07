@@ -23,7 +23,7 @@ define(
                 components: [{
                     name: 'Dropdown',
                     desc: '下拉框组件。',
-                    preview: './components/site-components/image/dropdown.png',
+                    preview: './site-components/site-components/image/dropdown.png',
                     readme: 'bower_components/brix-components/dropdown/README.md',
                     links: [
                         ['示例', ''],
@@ -34,7 +34,7 @@ define(
                 }, {
                     name: 'Pagination',
                     desc: '分页组件。',
-                    preview: './components/site-components/image/pagination.png',
+                    preview: './site-components/site-components/image/pagination.png',
                     readme: 'bower_components/brix-components/pagination/README.md',
                     links: [
                         ['示例', ''],
@@ -45,7 +45,7 @@ define(
                 }, {
                     name: 'DatePicker',
                     desc: '日期选择器。',
-                    preview: './components/site-components/image/datepicker.png',
+                    preview: './site-components/site-components/image/datepicker.png',
                     readme: 'bower_components/brix-components/datepicker/README.md',
                     links: [
                         ['示例', ''],
@@ -56,7 +56,7 @@ define(
                 }, {
                     name: 'DatePickerWrapper',
                     desc: '日期选择器。',
-                    preview: './components/site-components/image/datepickerwrapper.png',
+                    preview: './site-components/site-components/image/datepickerwrapper.png',
                     readme: 'bower_components/brix-components/datepickerwrapper/README.md',
                     links: [
                         ['示例', ''],
@@ -67,7 +67,7 @@ define(
                 }, {
                     name: 'Dialog',
                     desc: '对话框。',
-                    preview: './components/site-components/image/modal.png',
+                    preview: './site-components/site-components/image/modal.png',
                     readme: 'bower_components/brix-components/dialog/README.md',
                     links: [
                         ['示例', ''],
@@ -78,7 +78,7 @@ define(
                 }, {
                     name: 'Table',
                     desc: '增强表格。',
-                    preview: './components/site-components/image/table.png',
+                    preview: './site-components/site-components/image/table.png',
                     readme: 'bower_components/brix-components/table/README.md',
                     links: [
                         ['示例', ''],
@@ -87,7 +87,7 @@ define(
                 }, {
                     name: 'Popover',
                     desc: '浮层。',
-                    preview: './components/site-components/image/popover.png',
+                    preview: './site-components/site-components/image/popover.png',
                     readme: 'bower_components/brix-components/popover/README.md',
                     links: [
                         ['示例', ''],
@@ -98,7 +98,7 @@ define(
                 }, {
                     name: 'Uploader',
                     desc: '上传组件。',
-                    preview: './components/site-components/image/uploader.png',
+                    preview: './site-components/site-components/image/uploader.png',
                     readme: 'bower_components/brix-components/uploader/README.md',
                     links: [
                         ['示例', ''],
@@ -109,7 +109,7 @@ define(
                 }, {
                     name: 'Validation',
                     desc: '表单验证组件。',
-                    preview: './components/site-components/image/validation.png',
+                    preview: './site-components/site-components/image/validation.png',
                     readme: 'bower_components/brix-components/validation/README.md',
                     links: [
                         ['示例', ''],
@@ -121,7 +121,7 @@ define(
                 }, {
                     name: 'AreaPicker',
                     desc: '地区选择组件。',
-                    preview: './components/site-components/image/areapicker.png',
+                    preview: './site-components/site-components/image/areapicker.png',
                     readme: 'bower_components/brix-components/areapicker/README.md',
                     links: [
                         ['示例', ''],
@@ -133,7 +133,7 @@ define(
                 }, {
                     name: 'HourPicker',
                     desc: '日程选择组件。',
-                    preview: './components/site-components/image/hourpicker.png',
+                    preview: './site-components/site-components/image/hourpicker.png',
                     readme: 'bower_components/brix-components/hourpicker/README.md',
                     links: [
                         ['示例', ''],
@@ -145,7 +145,7 @@ define(
                 }, {
                     name: 'ChartxWrapper',
                     desc: 'Chartx 组件。',
-                    preview: './components/site-components/image/chartxwrapper.png',
+                    preview: './site-components/site-components/image/chartxwrapper.png',
                     readme: 'bower_components/brix-components/chartxwrapper/README.md',
                     links: [
                         ['示例', ''],
@@ -157,7 +157,7 @@ define(
                 }, {
                     name: 'Suggest',
                     desc: '提示补全组件。',
-                    preview: './components/site-components/image/suggest.png',
+                    preview: './site-components/site-components/image/suggest.png',
                     readme: 'bower_components/brix-components/suggest/README.md',
                     links: [
                         ['示例', ''],
@@ -169,7 +169,7 @@ define(
                 }, {
                     name: 'TagInput',
                     desc: '标签输入组件。',
-                    preview: './components/site-components/image/taginput.png',
+                    preview: './site-components/site-components/image/taginput.png',
                     readme: 'bower_components/brix-components/taginput/README.md',
                     links: [
                         ['示例', ''],
@@ -181,7 +181,7 @@ define(
                 }, {
                     name: 'ColorPicker',
                     desc: '调色板。',
-                    preview: './components/site-components/image/colorpicker.png',
+                    preview: './site-components/site-components/image/colorpicker.png',
                     readme: 'bower_components/brix-components/colorpicker/README.md',
                     links: [
                         ['示例', ''],
@@ -192,7 +192,7 @@ define(
                 }, {
                     name: 'Editor',
                     desc: '富文本编辑器。',
-                    preview: './components/site-components/image/editor.png',
+                    preview: './site-components/site-components/image/editor.png',
                     readme: 'bower_components/brix-components/editor/README.md',
                     links: [
                         ['示例', ''],
@@ -203,7 +203,7 @@ define(
                 }, {
                     name: 'Editable',
                     desc: '可编辑的页面元素。',
-                    preview: './components/site-components/image/editable.png',
+                    preview: './site-components/site-components/image/editable.png',
                     readme: 'bower_components/brix-components/editable/README.md',
                     links: [
                         ['示例', ''],
@@ -214,7 +214,7 @@ define(
                 }, {
                     name: 'Spin',
                     desc: '纯 CSS 加载动画。',
-                    preview: './components/site-components/image/spin.png',
+                    preview: './site-components/site-components/image/spin.png',
                     readme: 'bower_components/brix-components/spin/README.md',
                     links: [
                         ['示例', ''],
@@ -225,7 +225,7 @@ define(
                 }, {
                     name: 'Countdown',
                     desc: '倒计时。',
-                    preview: './components/site-components/image/countdown.png',
+                    preview: './site-components/site-components/image/countdown.png',
                     readme: 'bower_components/brix-components/countdown/README.md',
                     links: [
                         ['示例', ''],
@@ -236,7 +236,7 @@ define(
                 }, {
                     name: 'Sidebar',
                     desc: '左侧导航组件。',
-                    preview: './components/site-components/image/sidebar.png',
+                    preview: './site-components/site-components/image/sidebar.png',
                     readme: 'bower_components/brix-components/sidebar/README.md',
                     links: [
                         ['示例', ''],
@@ -247,7 +247,7 @@ define(
                 }, {
                     name: 'Chart',
                     desc: '图表。',
-                    preview: './components/site-components/image/chart.png',
+                    preview: './site-components/site-components/image/chart.png',
                     readme: 'bower_components/brix-components/chart/README.md',
                     links: [
                         ['示例', ''],
@@ -258,7 +258,7 @@ define(
                 }, {
                     name: 'Imager',
                     desc: '响应式图片组件，优先显示图片的『核心区域』。',
-                    preview: './components/site-components/image/imager.png',
+                    preview: './site-components/site-components/image/imager.png',
                     readme: 'bower_components/brix-components/imager/README.md',
                     links: [
                         ['示例', ''],
@@ -269,7 +269,7 @@ define(
                 }, {
                     name: 'Ellipsis',
                     desc: '为多行文本的溢出部分增加省略号。',
-                    preview: './components/site-components/image/ellipsis.png',
+                    preview: './site-components/site-components/image/ellipsis.png',
                     readme: 'bower_components/brix-components/ellipsis/README.md',
                     links: [
                         ['示例', ''],

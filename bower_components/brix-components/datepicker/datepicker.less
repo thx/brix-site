@@ -1,5 +1,5 @@
 .datepicker-container {
-    background: white;
+    background-color: white;
     display: inline-block;
     border: 1px solid #CCC;
     padding: 0 10px;
@@ -10,7 +10,7 @@
     z-index: 10;
 
     .picker-group {
-        border-top: 1px solid gray;
+        border-top: 1px solid #DDD;
         padding: 15px 0 13px 0;
         margin-top: -2px;
 
@@ -26,16 +26,24 @@
             text-align: center;
             margin-bottom: 5px;
 
-            button {
+            .minus, 
+            .plus {
+                color: #CCC;
+                display: inline-block;
                 padding: 6px 7px;
                 line-height: 100%;
                 vertical-align: top;
             }
-            button.minus {
+            .minus {
                 float: left;
             }
-            button.plus {
+            .plus {
                 float: right;
+            }
+            .minus:hover, 
+            .plus:hover {
+                color: #3276b1;
+                text-decoration: none;
             }
             h4 {
                 display: inline-block;
@@ -49,7 +57,9 @@
         .picker-body {
             width: 238px;
 
-            span {
+            > span,
+            > .datepicker-body-description span,
+            > .datepicker-body-value span {
                 display: inline-block;
                 padding: 5px 0;
                 margin: 3px 2px 0 2px;
@@ -57,16 +67,19 @@
                 text-align: center;
                 border-radius: 5px;
                 cursor: pointer;
+            }
 
+            > span,
+            > .datepicker-body-value span {
                 &:hover {
-                    background: #EEE;
+                    background-color: #EEE;
                 }
                 &:active {
-                    background: #DDD;
+                    background-color: #DDD;
                 }
                 &.active {
                     color: white;
-                    background: #3276b1;
+                    background-color: #3276b1;
                 }
                 &.inactive:hover {
                     background: transparent;
@@ -78,11 +91,11 @@
                 }
                 &.disabled:hover {
                     color: #DDD;
-                    background: #FFF;
+                    background-color: #FFF;
                 }
                 &.disabled.active {
                     color: #FFF;
-                    background: #DDD;
+                    background-color: #DDD;
                 }
             }
         }
@@ -101,7 +114,7 @@
         }
         .picker-header h4 {
             &:hover {
-                background: #EEE;
+                background-color: #EEE;
             }
         }
     }
@@ -111,7 +124,7 @@
         }
         .picker-header h4 {
             &:hover {
-                background: #EEE;
+                background-color: #EEE;
             }
         }
     }

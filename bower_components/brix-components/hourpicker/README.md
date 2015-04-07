@@ -1,5 +1,8 @@
 # HourPicker
 
+<style type="text/css">
+</style>
+
 <div class="bs-example">
     <div class="content">
         <div bx-name="components/hourpicker"> </div>

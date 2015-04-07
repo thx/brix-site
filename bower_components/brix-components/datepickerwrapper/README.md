@@ -4,6 +4,12 @@
 
 ### 示例 <small>Examples</small>
 
+<style type="text/css">
+    * {
+        /*transition: all 0.1s ease-in-out;*/
+    }
+</style>
+
 <div class="bs-example">
     <div class="content">
         <div class="row">
@@ -255,7 +261,67 @@ ranges | array | `[]` | 设置可选日期的范围。合法值参见 [DatePicke
 
 ### 方法 <small>Methods</small>
 
-无。
+#### .shortcutText( dates )
+
+* .shortcutText( dates )
+
+获取日期对应的快捷日期文本。
+
+```js
+var Loader = require('brix/loader')
+var instances = Loader.query('components/datepickerwrapper')
+_.each(instances, function(picker, index) {
+    picker.on('change.datepickerwrapper', function(event, dates) {
+        var shortcutText = picker.shortcutText(dates)
+        if( shortcutText ) {
+            event.preventDefault()
+            picker.$element.text(shortcutText)
+        }
+    })
+})
+```
+
+#### .val( [ value ] )
+
+* .val()
+* .val( value )
+
+获取或设置选中的日期。
+
+```js
+var Loader = require('brix/loader')
+var instances = Loader.query('components/datepickerwrapper')
+var current = instances[0].val()
+current.forEach(function(item, index){
+    console.log(index, item.format('YYYY-MM-DD HH:mm:ss.SSS'))
+})
+current[0].add(1, 'year')
+instances[0].val(current)
+```
+
+> 方法 `.val()` 返回一个 [moment 对象]数组。
+
+[moment 对象]: http://momentjs.com/docs/
+
+#### .range( [ value ] )
+
+.range( [ value ] )
+
+* .range()
+* .range( value )
+
+获取或设置可选日期的范围。
+
+```js
+var Loader = require('brix/loader')
+var instances = Loader.query('components/datepickerwrapper')
+var range = instances[6].range()
+range.forEach(function(item, index){
+    console.log(index, item.format('YYYY-MM-DD HH:mm:ss.SSS'))
+})
+range[0].add(1, 'year')
+instances[6].range([new Date(), '2015-12-31'])
+```
 
 ### 事件 <small>Events</small>
 

@@ -20,9 +20,9 @@
     <% } %>
 </div>
 <p class="dependencies">
-    <img style="background-color: #0769AD;" src="components/site-tools/images/logo_jquery.png">
-    <img style="background-color: #F7931E;" src="components/site-tools/images/logo_handlebars.png">
-    <img style="background-color: #F4F4F4;" src="components/site-tools/images/logo_underscore.png">
-    <img style="background-color: #1D365D;" src="components/site-tools/images/logo_less.png">
-    <img style="background-color: #6F5499;" src="components/site-tools/images/logo_bootstrap.png">
+    <img style="background-color: #0769AD;" src="site-components/site-tools/images/logo_jquery.png">
+    <img style="background-color: #F7931E;" src="site-components/site-tools/images/logo_handlebars.png">
+    <img style="background-color: #F4F4F4;" src="site-components/site-tools/images/logo_underscore.png">
+    <img style="background-color: #1D365D;" src="site-components/site-tools/images/logo_less.png">
+    <img style="background-color: #6F5499;" src="site-components/site-tools/images/logo_bootstrap.png">
 </p>

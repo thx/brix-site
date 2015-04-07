@@ -18,8 +18,8 @@ define(
             dates
 
             TODO
-            一个日期
-            多个日期
+            √ 一个日期
+            √ 多个日期
             input trigger
             输入回调，输出回调
          */
@@ -93,7 +93,8 @@ define(
                         })
                     })
                 }
-                this.options.ranges = _.flatten(this.options.ranges)
+                if (this.options.range && this.options.range.length) this.options.ranges = this.options.range
+                this.options.ranges = _.flatten(this.options.ranges || this.options.range)
                 _.each(this.options.ranges, function(date, index, ranges) {
                     if (date) ranges[index] = moment(date)
                 })
@@ -123,47 +124,42 @@ define(
 
                 this['_' + this.options.mode]()
 
-                this.$element.on('click', function(event) {
-                    that.toggle(event)
-                })
+                var type = 'click.datepickerwrapper_toggle_' + this.clientId
+                this.$element.off(type)
+                    .on(type, function(event) {
+                        that.toggle(event)
+                    })
 
                 var manager = new EventManager('bx-')
                 manager.delegate(this.$element, this)
                 manager.delegate(this.$relatedElement, this)
 
-                var type = 'click' + NAMESPACE + '_' + this.clientId
-                this._state = STATE.INACTIVE
-                $(document.body).off(type)
-                    .on(type, function(event) {
-                        // 点击不存在节点
-                        if (!$.contains(document.body, event.target)) return
-                        if (
-                            event.target === that.element || // 点击组件节点
-                            $.contains(that.element, event.target) || // 点击组件子节点
-                            event.target === that.$relatedElement[0] || // 点击关联节点
-                            $.contains(that.$relatedElement[0], event.target) // 点击组件关联子节点
-                        ) {
-                            if (that._state === STATE.ACTIVE) return
-                            that.trigger(
-                                $.Event('active' + NAMESPACE, {
-                                    target: event.target
-                                })
-                            )
-                            that._state = STATE.ACTIVE
-                            return
-                        }
-
-                        if (that._state === STATE.INACTIVE) return
-                        var inactiveEvent = $.Event('inactive' + NAMESPACE, {
-                            target: event.target
-                        })
-                        that.trigger(inactiveEvent)
-                        that._state = STATE.INACTIVE
-
-                        if (inactiveEvent.isDefaultPrevented()) return
-
-                        that.hide()
+                this._autoHide()
+            },
+            val: function(value) {
+                var pickerComponents = Loader.query('components/datepicker', this.$relatedElement)
+                if (value) {
+                    _.each(pickerComponents, function(item, index) {
+                        item.val(
+                            _.isArray(value) ? value[index] : value
+                        )
                     })
+                    return this
+                }
+                return _.map(pickerComponents, function(item /*, index*/ ) {
+                    return item.val()
+                })
+            },
+            range: function(value) {
+                var pickerComponents = Loader.query('components/datepicker', this.$relatedElement)
+                if (value) {
+                    this.options.ranges = value = _.flatten(value)
+                    _.each(pickerComponents, function(item /*, index*/ ) {
+                        item.range(value)
+                    })
+                    return this
+                }
+                return this.options.ranges
             },
             _signal: function() {
                 var that = this
@@ -173,7 +169,7 @@ define(
                     pickerComponent.on('change.datepicker', function(event, date, type) {
                         if (type !== undefined && type !== 'date') return
 
-                        that.$relatedElement.hide()
+                        that.hide()
 
                         var validate = $.Event('change' + NAMESPACE)
                         that.trigger(validate, [
@@ -209,7 +205,7 @@ define(
                     var pickerComponents = Loader.query('components/datepicker', that.$relatedElement)
 
                     var shortcutWrapper = $('.datepickerwrapper-shortcuts', that.$relatedElement)
-                    var shortcuts = $('span', shortcutWrapper)
+                    var shortcuts = $('.shortcut', shortcutWrapper)
 
                     if (that.options.shortcuts) {
                         _.each(_.values(that.options.shortcuts), function(dates, index) {
@@ -257,22 +253,40 @@ define(
                     top: inputWrapperOffset.top + inputWrapper.outerHeight() + parseInt(pickerWrapper.css('margin-top'), 10)
                 })
 
+                var $picker = pickers.eq(index)
                 var $target = $(event.target)
                 var targetOffset = $target.offset()
-                pickers.eq(index)[type ? type : 'toggle']()
+                var pickerLeft
+                switch (this.options.align) {
+                    case 'left':
+                        pickerLeft = targetOffset.left
+                        break
+                    case 'right':
+                        pickerLeft = targetOffset.left - ($picker.outerWidth() - $target.outerWidth())
+                }
+                $picker[type ? type : 'toggle']()
                     .offset({ // 修正单个日期组件的位置
-                        left: targetOffset.left
+                        left: pickerLeft
                     })
                     .siblings().hide()
             },
+            _hideDatePicker: function( /*event*/ ) {
+                var pickerWrapper = $('.datepickerwrapper-pickers', this.$relatedElement)
+                var pickers = $('.picker', pickerWrapper)
+                pickers.hide()
+            },
             show: function( /*event*/ ) {
+                this.$element.addClass('datepickerwrapper-open')
                 this.$relatedElement.show()
                     .offset(this._offset())
             },
             hide: function( /*event*/ ) {
+                this.$element.removeClass('datepickerwrapper-open')
+                this._hideDatePicker()
                 this.$relatedElement.hide()
             },
             toggle: function( /*event*/ ) {
+                this.$element.toggleClass('datepickerwrapper-open')
                 this.$relatedElement.toggle()
                     .offset(this._offset())
             },
@@ -285,14 +299,25 @@ define(
                     top: offset.top + relatedMarginTop + (this.options.offset.top || 0)
                 }
             },
-            submit: function( /*event*/ ) {
+            /* jshint unused:false */
+            submit: function(event, from) {
                 var that = this
+
+                switch (from) {
+                    case 'shortcut':
+                        break
+                    default:
+                        var shortcutWrapper = $('.datepickerwrapper-shortcuts', that.$relatedElement)
+                        var shortcuts = $('.shortcut', shortcutWrapper)
+                        shortcuts.removeClass('active')
+                }
+
                 var pickerComponents = Loader.query('components/datepicker', this.$relatedElement)
                 var dates = _.map(pickerComponents, function(item /*, index*/ ) {
                     return item.val()
                 })
 
-                this.toggle()
+                this.hide()
 
                 var validate = $.Event('change' + NAMESPACE)
                 this.trigger(validate, [dates])
@@ -328,6 +353,19 @@ define(
                     })
                 }
             },
+            shortcutText: function(dates) {
+                var shortcutText
+                _.each(this.options.shortcuts, function(shortcutDates, key) {
+                    if (shortcutText) return
+
+                    var same = true
+                    _.each(shortcutDates, function(shortcutDate, index) {
+                        if (!shortcutDate.isSame(dates[index], 'days')) same = false
+                    })
+                    if (same) shortcutText = key
+                })
+                return shortcutText
+            },
             _change: function(event, type, index) {
                 var that = this
                 var $target = $(event.target)
@@ -344,7 +382,7 @@ define(
                         $target.addClass('active')
                             .siblings().removeClass('active')
 
-                        this.submit()
+                        this.submit(event, type)
                         break
                     case 'date':
                         var date = moment($target.val())
@@ -352,6 +390,63 @@ define(
                         pickerComponents[index].val(date)
                         break
                 }
+            },
+            _autoHide: function() {
+                var that = this
+                var type = 'click' + NAMESPACE + '_' + this.clientId
+                this._state = STATE.INACTIVE
+                $(document.body).off(type)
+                    .on(type, function(event) {
+                        // 点击不存在节点
+                        if (!$.contains(document.body, event.target)) return
+                        if (
+                            event.target === that.element || // 点击组件节点
+                            $.contains(that.element, event.target) || // 点击组件子节点
+                            event.target === that.$relatedElement[0] || // 点击关联节点
+                            $.contains(that.$relatedElement[0], event.target) // 点击组件关联子节点
+                        ) {
+                            if (that._state === STATE.ACTIVE) return
+                            that.trigger(
+                                $.Event('active' + NAMESPACE, {
+                                    target: event.target
+                                })
+                            )
+                            that._state = STATE.ACTIVE
+                            return
+                        }
+
+                        if (that._state === STATE.INACTIVE) return
+                        var inactiveEvent = $.Event('inactive' + NAMESPACE, {
+                            target: event.target
+                        })
+                        that.trigger(inactiveEvent)
+                        that._state = STATE.INACTIVE
+
+                        if (inactiveEvent.isDefaultPrevented()) return
+
+                        that.hide()
+                    })
+                    .on(type, function(event) {
+                        var inputWrapper = $('.datepickerwrapper-inputs-body', that.$relatedElement)
+                        var pickerWrapper = $('.datepickerwrapper-pickers', that.$relatedElement)
+                        if (
+                            ( // 点击关联节点，点击组件关联子节点
+                                event.target === that.$relatedElement[0] ||
+                                $.contains(that.$relatedElement[0], event.target)
+                            ) &&
+                            ( // 但不在 inputs 和 pickers 之内
+                                (inputWrapper.length && pickerWrapper.length) &&
+                                !$.contains(inputWrapper[0], event.target) &&
+                                !$.contains(pickerWrapper[0], event.target)
+                            )
+                        ) {
+                            that._hideDatePicker()
+                        }
+                    })
+            },
+            destroy: function() {
+                var type = 'click.datepickerwrapper_toggle_' + this.clientId
+                this.$element.off(type)
             }
         })
 

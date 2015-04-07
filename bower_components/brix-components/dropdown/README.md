@@ -4,6 +4,9 @@
 
 ### 示例 <small>Examples</small>
 
+<style type="text/css">
+</style>
+
 <div class="bs-example">
     <div class="content">
         <h4>直接在 `<select>` 节点上附加 `bx-name="components/dropdown"`。</h4>
