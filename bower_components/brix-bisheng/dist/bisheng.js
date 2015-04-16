@@ -155,7 +155,7 @@ define(
                 var id = guid++;
                 var shadow = clone(data, autoboxing, [id])
 
-                function task(index) {
+                var task = function(index) {
                     if (DEBUG) console.group('task ' + index)
                     if (DEBUG) console.time(DEBUG.fix('diff'))
                     var result = diff(data, shadow, autoboxing ? [id] : [], autoboxing)
@@ -805,10 +805,12 @@ define(
 */
 define(
     'brix/bisheng/ast',[
+        'underscore',
         'handlebars',
         './locator'
     ],
     function(
+        _,
         Handlebars,
         Locator
     ) {
@@ -873,7 +875,7 @@ define(
 
                 var prop = []
                 if (node.isHelper) {
-                    node.params.forEach(function(param) {
+                    _.each(node.params, function(param /*, index*/ ) {
                         if (param.type === 'ID') {
                             prop.push(param.string)
                         }
@@ -1065,6 +1067,19 @@ define(
                     $(node).attr('src', value)
                 }
             },
+            'bs-disabled': {
+                name: 'disabled',
+                setup: function() {},
+                teardown: function(node, value) {
+                    if (value === 'false' || value === 'disabled') {
+                        $(node).attr('disabled', 'disabled')
+                            .prop('disabled', true)
+                    } else {
+                        $(node).attr('disabled', false)
+                            .prop('disabled', false)
+                    }
+                }
+            },
             'bs-checked': {
                 name: 'checked',
                 setup: function() {},
@@ -1160,7 +1175,13 @@ define(
 
         // 扫描子节点
         function scanChildNode(node) {
-            _.each([].slice.call(node.childNodes), function(childNode /*, index*/ ) {
+            // “Array.prototype.slice: 'this' is not a JavaScript object” error in IE8
+            // [].slice.call(node.childNodes)
+            var tmp = []
+            for (var i = 0, childNodes = node.childNodes, len = childNodes.length; i < len; i++) {
+                tmp.push(childNodes[i])
+            }
+            _.each(tmp, function(childNode /*, index*/ ) {
                 scanNode(childNode)
             })
         }
@@ -1187,7 +1208,7 @@ define(
                     }
 
                     updateValue(data, path, event.target)
-                    if (!Loop.auto()) Loop.letMeSee(data, tpl)
+                    if (!Loop.auto()) Loop.letMeSee(data /*, tpl*/ )
                 })
             })
 
@@ -1222,8 +1243,31 @@ define(
                                 .trigger('change.bisheng', firing = true)
                         }
                         updateChecked(data, path, event.target)
-                        if (!Loop.auto()) Loop.letMeSee(data, tpl)
+                        if (!Loop.auto()) Loop.letMeSee(data /*, tpl*/ )
                     })
+                })
+
+            _.each(Locator.find({
+                    slot: "start",
+                    type: "attribute",
+                    name: "disabled"
+                }, node),
+                function(locator) {
+                    var path = Locator.parse(locator, 'path').split('.'),
+                        target = Locator.parseTarget(locator)[0];
+
+                    var value = data
+                    for (var index = 1; index < path.length; index++) {
+                        value = value[path[index]]
+                    }
+                    // 如果 disabled 的初始值是 false 或 "false"，则初始化为不禁用。
+                    if (value === undefined || value.valueOf() === false || value.valueOf() === 'false') {
+                        $(target).prop('disabled', false)
+                    }
+                    if (value !== undefined &&
+                        (value.valueOf() === true || value.valueOf() === 'true' || value.valueOf() === 'disabled')) {
+                        $(target).prop('disabled', true)
+                    }
                 })
         }
 
@@ -1618,6 +1662,9 @@ define(
                     }
                     $target.data('user is editing', false)
                     break
+                case 'disabled':
+                    $target.prop(name, value)
+                    break
                 case 'checked':
                     $target.prop(name, value)
 
@@ -1727,7 +1774,7 @@ define(
                     after(options, ['add', 'block'], [element])
 
                     before(options, ['delete', 'block'], [target[index]])
-                    target[index].parentNode.removeChild(target[index])
+                    if (target[index].parentNode) target[index].parentNode.removeChild(target[index])
                     after(options, ['delete', 'block'], [target[index]])
 
                     event.target.push(element)
@@ -1761,7 +1808,7 @@ define(
                         after(options, ['add', 'block'], [element])
 
                         before(options, ['delete', 'block'], [target[index]])
-                        target[index].parentNode.removeChild(target[index])
+                        if (target[index].parentNode) target[index].parentNode.removeChild(target[index])
                         after(options, ['delete', 'block'], [target[index]])
 
                         event.target.push(element)
@@ -1976,6 +2023,7 @@ define(
             var originalTpl = tpl
             tpl = tpl.replace(/(<.*?)(style)(=.*?>)/g, '$1bs-style$3')
                 .replace(/(<input.*?)(checked)(=.*?>)/g, '$1bs-checked$3')
+                .replace(/(<input.*?)(disabled)(=.*?>)/g, '$1bs-disabled$3')
                 .replace(/(<img.*?)(src)(=.*?>)/g, '$1bs-src$3')
 
             // 修改 AST，为 Expression 和 Block 插入占位符

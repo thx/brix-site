@@ -17,7 +17,10 @@ if (typeof module === 'object' && module.exports) {
 
 } else if (typeof define === "function" && define.amd) {
     // AMD modules
-    define(function() {
+    define('mock', [], function() {
+        return Mock
+    })
+    define('mockjs', [], function() {
         return Mock
     })
 
@@ -43,9 +46,7 @@ if (typeof KISSY != 'undefined') {
     */
     Util.each([
         'mock', 'components/mock/', 'mock/dist/mock',
-        'gallery/Mock/0.1.1/',
-        'gallery/Mock/0.1.2/',
-        'gallery/Mock/0.1.3/',
+        'gallery/Mock/0.1.9/'
     ], function register(name) {
         KISSY.add(name, function(S) {
             Mock.mockjax(S)

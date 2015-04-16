@@ -16,11 +16,11 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-base",
-  "_release": "bddfa57246",
+  "_release": "76d0595c2c",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "bddfa572460841b87d0e109605671105db28964c"
+    "commit": "76d0595c2c61fc9a08984c4a48378b7b96c242d9"
   },
   "_source": "git://github.com/nuysoft/brix-base.git",
   "_target": "master",
