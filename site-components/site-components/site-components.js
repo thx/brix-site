@@ -179,6 +179,18 @@ define(
                         ['事件', '']
                     ]
                 }, {
+                    name: 'Tree',
+                    desc: '树组件。',
+                    preview: './site-components/site-components/image/tree.png',
+                    readme: 'bower_components/brix-components/tree/README.md',
+                    links: [
+                        ['示例', ''],
+                        ['配置', ''],
+                        ['属性', ''],
+                        ['方法', ''],
+                        ['事件', '']
+                    ]
+                }, {
                     name: 'ColorPicker',
                     desc: '调色板。',
                     preview: './site-components/site-components/image/colorpicker.png',

@@ -25,7 +25,7 @@ define(
             },
             data: {
                 components: [{
-                    name: 'Tree',
+                    name: 'CTree',
                     desc: '打印组件树。',
                     preview: './site-components/site-tools/tree.png',
                     links: [

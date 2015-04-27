@@ -8,6 +8,23 @@
     * {
         /*transition: all 0.1s ease-in-out;*/
     }
+    .datepickerwrapper-trigger {
+        cursor: pointer;
+        display: inline-block;
+        width: auto;
+    }
+    .datepickerwrapper-trigger .brixfont.up {
+        display: none;
+    }
+    .datepickerwrapper-trigger .brixfont.down {
+        display: block;
+    }
+    .datepickerwrapper-trigger.datepickerwrapper-open .brixfont.up {
+        display: block;
+    }
+    .datepickerwrapper-trigger.datepickerwrapper-open .brixfont.down {
+        display: none;
+    }
 </style>
 
 <div class="bs-example">
@@ -30,8 +47,10 @@
         <div class="row">
             <div class="col-xs-6">
                 <h4>绑定 2 个日期选择器。</h4>
-                <div bx-name="components/datepickerwrapper" data-dates="[ '2015-1-1', '2015-1-2']" class="form-control w300">
+                <div bx-name="components/datepickerwrapper" data-dates="[ '2015-1-1', '2015-1-2']" class="form-control datepickerwrapper-trigger">
                     <span data-index="0">2015-1-1</span> 至 <span data-index="1">2015-1-2</span>
+                    <i class="brixfont pull-right ml5 down">&#xe623;</i>
+                    <i class="brixfont pull-right ml5 up">&#xe62e;</i>
                 </div>
             </div>
             <div class="col-xs-6">
@@ -236,11 +255,11 @@ Lorem ipsum.
 
 Name | Type | Default | Description
 :--- | :--- | :------ | :----------
-shortcut | boolean or object | `{}` | 指示是否开启快捷日期和快捷日期的内容。格式见下面的代码。
+shortcuts | boolean or object | `{}` | 指示是否开启快捷日期和快捷日期的内容。格式见下面的代码。
 dates | array | `[]` | 初始日期。
 ranges | array | `[]` | 设置可选日期的范围。合法值参见 [DatePicker](./readme.html?name=DatePicker)。
 
-#### 配置项 `shortcut`
+#### 配置项 `shortcuts`
 
 ```js
 {

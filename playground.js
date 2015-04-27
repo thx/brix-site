@@ -23,6 +23,7 @@ require(
 					email: data.email
 				})
 			},
+			/* jshint unused:false */
 			del: function(event, index) {
 				data.list.splice(index, 1)
 			},
@@ -33,6 +34,10 @@ require(
 				console.log([].slice.call(arguments, 0))
 				console.log(event.component)
 				console.groupEnd(event.component.moduleId)
+
+				if (event.component && event.component.moduleId === 'components/uploader') {
+					$(event.component.element.form).find('input[name=type]').val(Math.random())
+				}
 
 				if (event.component && event.component.moduleId === 'components/suggest') {
 					if (event.originalNamespace.indexOf('.input') !== -1)
@@ -69,6 +74,7 @@ require(
 // 加载组件
 function boot() {
 	require(['brix/loader'], function(Loader) {
+		/* jshint unused:false */
 		Loader.boot(function() {
 			// console.log('done!')
 		}, function(error, instance, index, count) {
