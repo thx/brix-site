@@ -1,5 +1,8 @@
 {
   "name": "brix-base",
+  "main": [
+    "dist/base.js"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",
@@ -16,11 +19,11 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-base",
-  "_release": "76d0595c2c",
+  "_release": "84956e269d",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "76d0595c2c61fc9a08984c4a48378b7b96c242d9"
+    "commit": "84956e269db1fc34ec95a2891cc04b803fdfae99"
   },
   "_source": "git://github.com/nuysoft/brix-base.git",
   "_target": "master",

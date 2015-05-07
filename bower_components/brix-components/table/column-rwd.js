@@ -1,4 +1,4 @@
-/* global define */
+/* global define, setTimeout */
 define(
     [
         'jquery', 'underscore',
@@ -40,12 +40,18 @@ define(
             }
 
             _bind(spree)
-            _beautify(spree)
+            setTimeout(function() {
+                _beautify(spree)
+            }, 100)
 
             return {
                 state: state,
                 flush: function(moveto) {
                     _flush(Constant, $table, range, moveto || cursor, limit, state)
+                    _beautify(spree)
+                    return this
+                },
+                beautify: function() {
                     _beautify(spree)
                     return this
                 }

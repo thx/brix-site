@@ -3,6 +3,7 @@ define(
     [
         'jquery', 'underscore', 'moment',
         'brix/loader', 'components/base', 'brix/event',
+        'components/datepicker',
         '../dialog/position.js',
         './datepickerwrapper.tpl.js',
         'css!./datepickerwrapper.css'
@@ -10,6 +11,7 @@ define(
     function(
         $, _, moment,
         Loader, Brix, EventManager,
+        DatePicker,
         position,
         template
     ) {
@@ -28,6 +30,8 @@ define(
         var NAMESPACE = '.datepickerwrapper'
             // var NAMESPACE_ORIGINAL = '.original'
         var DATE_PATTERN = 'YYYY-MM-DD'
+        var TIME_PATTERN = 'HH:mm:ss'
+        var DATE_TIME_PATTERN = DATE_PATTERN + ' ' + TIME_PATTERN
         var SHORTCUTS = function() {
             var now = moment()
             var nowDate = now.get('date')
@@ -68,6 +72,8 @@ define(
         function DatePickerWrapper() {}
 
         DatePickerWrapper.DATE_PATTERN = DATE_PATTERN
+        DatePickerWrapper.TIME_PATTERN = TIME_PATTERN
+        DatePickerWrapper.DATE_TIME_PATTERN = DATE_TIME_PATTERN
         DatePickerWrapper.SHORTCUTS = SHORTCUTS
 
         _.extend(DatePickerWrapper.prototype, Brix.prototype, {
@@ -78,12 +84,14 @@ define(
 
                 mode: 'signal', // signal multiple
                 shortcuts: SHORTCUTS,
+                type: 'date', // all date year month time
                 dates: [],
                 ranges: [],
                 unlimits: []
             },
             init: function() {
                 // 修正选项
+                this.options.typeMap = DatePicker.typeMap(this.options.type)
                 if (this.options.dates.length > 1) this.options.mode = 'multiple'
                 if (!this.options.dates.length) this.options.dates = [moment().startOf('day').format(DATE_PATTERN)]
                 if (this.options.shortcuts) {
@@ -166,8 +174,9 @@ define(
                 Loader.boot(this.$relatedElement, function( /*records*/ ) {
                     var pickerComponent = Loader.query('components/datepicker', that.$relatedElement)[0]
                         /* jshint unused:false */
-                    pickerComponent.on('change.datepicker', function(event, date, type) {
-                        if (type !== undefined && type !== 'date') return
+                    pickerComponent.on('change.datepicker unchange.datepicker', function(event, date, type) {
+                        if (type !== undefined && type !== 'date' && type !== 'time') return
+                        if (that.options.typeMap.time && type === 'date') return
 
                         that.hide()
 
@@ -190,6 +199,9 @@ define(
                                 items.eq(0).val(value).triggerHandler('change')
                             }
                         }
+                    })
+                    pickerComponent.$element.on('click', '.timepicker .timepicker-footer .cancel', function() {
+                        that.hide()
                     })
                 })
             },
@@ -227,8 +239,8 @@ define(
                     _.each(pickerComponents, function(item, index) {
                         /* jshint unused:false */
                         item.val(that.options.dates[index])
-                            .on('change.datepicker', function(event, date, type) {
-                                if (type !== undefined && type !== 'date') return
+                            .on('change.datepicker unchange.datepicker ', function(event, date, type) {
+                                if (type !== undefined && type !== 'date' && type !== 'time') return
 
                                 var value = that._unlimitFilter(date, that.options.unlimits[index])
                                 inputs.eq(index).val(value)
@@ -240,8 +252,12 @@ define(
                 })
             },
             _unlimitFilter: function(date, unlimit) {
-                var text = date.format(DATE_PATTERN)
-                if (unlimit && text === moment(unlimit).format(DATE_PATTERN)) text = '不限'
+                var typeMap = this.options.typeMap
+                var pattern = typeMap.date && typeMap.time && DATE_TIME_PATTERN ||
+                    typeMap.date && DATE_PATTERN ||
+                    typeMap.time && TIME_PATTERN
+                var text = date.format(pattern)
+                if (unlimit && text === moment(unlimit).format(pattern)) text = '不限'
                 return text
             },
             _inputToggleDatePicker: function(event, index, type) {
