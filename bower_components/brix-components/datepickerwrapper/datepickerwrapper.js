@@ -29,9 +29,9 @@ define(
         var RE_INPUT = /^input|textarea$/i
         var NAMESPACE = '.datepickerwrapper'
             // var NAMESPACE_ORIGINAL = '.original'
-        var DATE_PATTERN = 'YYYY-MM-DD'
-        var TIME_PATTERN = 'HH:mm:ss'
-        var DATE_TIME_PATTERN = DATE_PATTERN + ' ' + TIME_PATTERN
+        var DATE_PATTERN = DatePicker.DATE_PATTERN
+        var TIME_PATTERN = DatePicker.TIME_PATTERN
+        var DATE_TIME_PATTERN = DatePicker.DATE_TIME_PATTERN
         var SHORTCUTS = function() {
             var now = moment()
             var nowDate = now.get('date')
@@ -97,14 +97,20 @@ define(
                 if (this.options.shortcuts) {
                     _.each(this.options.shortcuts, function(dates /*, title*/ ) {
                         _.each(dates, function(date, index) {
-                            dates[index] = moment(date)
+                            dates[index] = moment(
+                                date,
+                                _.isString(date) && DATE_TIME_PATTERN
+                            )
                         })
                     })
                 }
                 if (this.options.range && this.options.range.length) this.options.ranges = this.options.range
                 this.options.ranges = _.flatten(this.options.ranges || this.options.range)
                 _.each(this.options.ranges, function(date, index, ranges) {
-                    if (date) ranges[index] = moment(date)
+                    if (date) ranges[index] = moment(
+                        date,
+                        _.isString(date) && DATE_TIME_PATTERN
+                    )
                 })
                 this.options._ranges = _.map(this.options.ranges, function(date) {
                     if (date) return date.format(DATE_PATTERN)
@@ -223,7 +229,11 @@ define(
                         _.each(_.values(that.options.shortcuts), function(dates, index) {
                             var same = true
                             _.each(dates, function(date, index) {
-                                if (!date.isSame(that.options.dates[index]), 'days') same = false
+                                var optionDate = moment(
+                                    that.options.dates[index],
+                                    _.isString(that.options.dates[index]) && DATE_TIME_PATTERN
+                                )
+                                if (!date.isSame(optionDate, 'days')) same = false
                             })
                             if (same) {
                                 shortcuts.eq(index).addClass('active')
@@ -233,7 +243,14 @@ define(
                     }
 
                     _.each(inputs, function(item, index) {
-                        $(item).val(moment(that.options.dates[index]).format(DATE_PATTERN)) // 初始值
+                        $(item)
+                            .val(
+                                moment(
+                                    that.options.dates[index],
+                                    _.isString(that.options.dates[index]) && DATE_TIME_PATTERN
+                                )
+                                .format(DATE_PATTERN)
+                            ) // 初始值
                     })
 
                     _.each(pickerComponents, function(item, index) {
@@ -241,13 +258,23 @@ define(
                         item.val(that.options.dates[index])
                             .on('change.datepicker unchange.datepicker ', function(event, date, type) {
                                 if (type !== undefined && type !== 'date' && type !== 'time') return
+                                if (that.options.typeMap.time && type === 'date') return
 
                                 var value = that._unlimitFilter(date, that.options.unlimits[index])
                                 inputs.eq(index).val(value)
                                 pickers.eq(index).hide()
                             })
-                        var value = that._unlimitFilter(moment(that.options.dates[index]), that.options.unlimits[index])
+                        var value = that._unlimitFilter(
+                            moment(
+                                that.options.dates[index],
+                                _.isString(that.options.dates[index]) && DATE_TIME_PATTERN
+                            ),
+                            that.options.unlimits[index]
+                        )
                         inputs.eq(index).val(value)
+                        item.$element.on('click', '.timepicker .timepicker-footer .cancel', function() {
+                            pickers.eq(index).hide()
+                        })
                     })
                 })
             },
@@ -257,7 +284,10 @@ define(
                     typeMap.date && DATE_PATTERN ||
                     typeMap.time && TIME_PATTERN
                 var text = date.format(pattern)
-                if (unlimit && text === moment(unlimit).format(pattern)) text = '不限'
+                if (unlimit && text === moment(
+                        unlimit,
+                        _.isString(unlimit) && DATE_TIME_PATTERN
+                    ).format(pattern)) text = '不限'
                 return text
             },
             _inputToggleDatePicker: function(event, index, type) {
@@ -268,7 +298,10 @@ define(
                 var inputWrapperOffset = inputWrapper.offset()
                 pickerWrapper.offset({ // 修正日期组件容器的位置
                     left: inputWrapperOffset.left,
-                    top: inputWrapperOffset.top + inputWrapper.outerHeight() + parseInt(pickerWrapper.css('margin-top'), 10)
+                    top: inputWrapperOffset.top + inputWrapper.outerHeight() + (
+                        parseInt(pickerWrapper.css('margin-top'), 10) ||
+                        0
+                    )
                 })
 
                 var $picker = pickers.eq(index)
@@ -310,8 +343,8 @@ define(
             },
             _offset: function() {
                 var offset = position(this.$element, this.$relatedElement, this.options.placement, this.options.align)
-                var relatedMarginLeft = parseInt(this.$relatedElement.css('margin-left'), 10)
-                var relatedMarginTop = parseInt(this.$relatedElement.css('margin-top'), 10)
+                var relatedMarginLeft = parseInt(this.$relatedElement.css('margin-left'), 10) || 0
+                var relatedMarginTop = parseInt(this.$relatedElement.css('margin-top'), 10) || 0
                 return {
                     left: offset.left + relatedMarginLeft + (this.options.offset.left || 0),
                     top: offset.top + relatedMarginTop + (this.options.offset.top || 0)
@@ -354,7 +387,9 @@ define(
 
                         })
                     } else {
-                        this.$element.text(
+                        this.$element[
+                            RE_INPUT.test(this.element.nodeName) ? 'val' : 'html'
+                        ](
                             _.map(dates, function(item, index) {
                                 return that._unlimitFilter(item, that.options.unlimits[index])
                             }).join(', ')

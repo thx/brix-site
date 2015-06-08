@@ -16,15 +16,16 @@
   ],
   "dependencies": {
     "jquery": "1.x.x",
-    "underscore": "*"
+    "underscore": "*",
+    "brix-loader": "master"
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-event",
-  "_release": "d9588930e1",
+  "_release": "0fb5719940",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "d9588930e16dbd139d99523914681bdc996e2f77"
+    "commit": "0fb5719940d80f08b441fe31e04505ef5414c706"
   },
   "_source": "git://github.com/nuysoft/brix-event.git",
   "_target": "master",

@@ -1,7 +1,10 @@
 /* global require, console */
 var gulp = require('gulp')
+var through = require('through2')
 var jshint = require('gulp-jshint')
 var less = require('gulp-less')
+var uglify = require('gulp-uglify')
+var minifyCss = require('gulp-minify-css')
 
 gulp.task('hello', function() {
     console.log((function() {
@@ -23,7 +26,8 @@ gulp.task('jshint', function() {
     var globs = [
         '**/*.js',
         '!bower_components/**/*',
-        '!node_modules/**/*'
+        '!node_modules/**/*',
+        '!dist/**/*'
     ]
     return gulp.src(globs)
         .pipe(jshint('.jshintrc'))
@@ -34,11 +38,21 @@ gulp.task('jshint', function() {
 gulp.task('watch', function( /*callback*/ ) {
     var globs = [
         '!bower_components/**/*',
-        '!node_modules/**/*'
+        '!node_modules/**/*',
+        '!dist/**/*'
     ]
-    gulp.watch(['**/*.js'].concat(globs), ['hello', 'jshint'])
-    gulp.watch(['**/*.less'].concat(globs), ['hello', 'less'])
-    gulp.watch(['**/*.tpl'].concat(globs), ['hello', 'tpl'])
+    gulp.watch(['**/*.js', '!**/*.tpl.js'].concat(globs), ['hello', 'jshint', 'compress'])
+        .on('change', function(event) {
+            console.log('File ' + event.path + ' was ' + event.type + ', running tasks...')
+        })
+    gulp.watch(['**/*.less'].concat(globs), ['hello', 'less', 'minify-css'])
+        .on('change', function(event) {
+            console.log('File ' + event.path + ' was ' + event.type + ', running tasks...')
+        })
+    gulp.watch(['**/*.tpl'].concat(globs), ['hello', 'tpl', 'compress'])
+        .on('change', function(event) {
+            console.log('File ' + event.path + ' was ' + event.type + ', running tasks...')
+        })
 })
 
 // https://github.com/plus3network/gulp-less
@@ -46,7 +60,8 @@ gulp.task('less', function() {
     var globs = [
         '**/*.less',
         '!bower_components/**/*',
-        '!node_modules/**/*'
+        '!node_modules/**/*',
+        '!dist/**/*'
     ]
     gulp.src(globs)
         .pipe(less({}))
@@ -55,12 +70,12 @@ gulp.task('less', function() {
 
 // https://github.com/plus3network/gulp-less
 gulp.task('tpl', function() {
-    var through = require('through2')
     var Buffer = require('buffer').Buffer
     var globs = [
         '**/*.tpl',
         '!bower_components/**/*',
-        '!node_modules/**/*'
+        '!node_modules/**/*',
+        '!dist/**/*'
     ];
     /* jshint unused:false */
     gulp.src(globs)
@@ -71,7 +86,7 @@ gulp.task('tpl', function() {
                 'define(function() {\n' +
                 '    return (function(){/*\n' +
                 file.contents.toString() +
-                "\n    */}).toString().split('\\n').slice(1,-1).join('\\n') + '\\n'" +
+                '\n    */}).toString().split("\\n").slice(1,-1).join("\\n")' +
                 '\n})'
             )
 
@@ -82,4 +97,42 @@ gulp.task('tpl', function() {
         .pipe(gulp.dest('./'))
 })
 
-gulp.task('default', ['hello', 'jshint', 'less', 'tpl', 'watch'])
+// https://github.com/terinjokes/gulp-uglify
+gulp.task('compress', function() {
+    gulp.src([
+            '*/**/*.js',
+            '!**/*.tpl.js',
+            '!bower_components/**/*',
+            '!node_modules/**/*',
+            '!dist/**/*'
+        ])
+        .pipe(uglify({
+            preserveComments: 'some'
+        }))
+        .pipe(gulp.dest('dist'))
+
+    gulp.src([
+            '**/*.tpl.js',
+            '!bower_components/**/*',
+            '!node_modules/**/*',
+            '!dist/**/*'
+        ])
+        .pipe(gulp.dest('dist'))
+})
+
+// https://github.com/murphydanger/gulp-minify-css
+gulp.task('minify-css', function() {
+    var globs = [
+        '*/**/*.css',
+        '!bower_components/**/*',
+        '!node_modules/**/*',
+        '!dist/**/*'
+    ]
+    return gulp.src(globs)
+        .pipe(minifyCss({
+            compatibility: 'ie8'
+        }))
+        .pipe(gulp.dest('dist'));
+})
+
+gulp.task('default', ['hello', 'jshint', 'less', 'tpl', 'compress', 'minify-css', 'watch'])

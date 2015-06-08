@@ -18,6 +18,9 @@
     "gulp": "*",
     "gulp-jshint": "*",
     "gulp-less": "*",
+    "gulp-minify-css": "*",
+    "gulp-requirejs": "*",
+    "gulp-uglify": "*",
     "jshint-stylish": "*",
     "through2": "*"
   },
