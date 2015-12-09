@@ -1,0 +1,40 @@
+{
+  "name": "brix-bisheng",
+  "authors": [
+    "墨智 <mozhi.gyy@alibaba-inc.com>"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "main": [
+    "dist/bisheng.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "tests",
+    "doc",
+    "demo",
+    "demo.html",
+    "gulpfile.js"
+  ],
+  "dependencies": {
+    "jquery": "1.x.x",
+    "handlebars": "~2.0.0",
+    "underscore": "~1.7.0"
+  },
+  "homepage": "https://github.com/nuysoft/brix-bisheng",
+  "_release": "917cc62f26",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "917cc62f265e2ac17414b1a23ea49c79aaf01220"
+  },
+  "_source": "git://github.com/nuysoft/brix-bisheng.git",
+  "_target": "master",
+  "_originalSource": "brix-bisheng"
+}

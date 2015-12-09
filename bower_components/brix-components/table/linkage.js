@@ -1,0 +1,111 @@
+/* global define  */
+/*
+    TODO
+        
+ */
+define(
+    [
+        'jquery', 'underscore'
+    ],
+    function(
+        $, _
+    ) {
+
+        var PREFIX = 'data-linkage-'
+        var ATTR_NAME = PREFIX + 'name'
+        var ATTR_PARENT_NAME = PREFIX + 'parent-name'
+        var ATTR_NAME_VALUE = '[' + ATTR_NAME + '="<%= name %>"]'
+        var ATTR_PARENT_NAME_VALUE = '[' + ATTR_PARENT_NAME + '="<%= name %>"]'
+
+        function linkage(container, callback) {
+            var selector = '[' + ATTR_NAME + '],[' + ATTR_PARENT_NAME + ']'
+            $(container).on('click', selector, function(event) {
+                _parent($(event.currentTarget), $(event.delegateTarget))
+                _children($(event.currentTarget), $(event.delegateTarget))
+                _siblings($(event.currentTarget), $(event.delegateTarget))
+
+                if (callback) callback(event, linkage.val(container), event.currentTarget)
+            })
+        }
+
+        linkage.val = function(container, values) {
+            if (values) {
+                var checkboxs = $(container).find('input:checkbox, input:radio').prop('checked', false)
+                _.each(values, function(item /*, index*/ ) {
+                    var $target = checkboxs.filter('[value="' + item + '"]').prop('checked', true)
+                    _.each($target, function(item /*, index*/ ) {
+                        _parent($(item), $(container))
+                        _children($(item), $(container))
+                    })
+                })
+                return linkage
+            }
+
+            values = []
+            var checked = $(container).find('input:checkbox:checked, input:radio:checked')
+            _.each(checked, function(item /*, index*/ ) {
+                var value = $(item).attr('value')
+                if (value !== undefined && value !== '') values.push(value)
+            })
+            return values
+        }
+
+        function _parent($target, $container) {
+            var parentName = $target.attr(ATTR_PARENT_NAME)
+
+            var $parent = $container.find(
+                _.template(ATTR_NAME_VALUE)({
+                    name: parentName
+                })
+            )
+
+            if (!$parent.length) return
+
+            var $siblings = $container.find(
+                _.template(ATTR_PARENT_NAME_VALUE)({
+                    name: parentName
+                })
+            )
+
+            if (!$siblings.length) return
+
+            $parent.prop('checked',
+                $siblings.length === $siblings.filter(':checked').length
+            )
+
+            _parent($parent, $container)
+        }
+
+        function _children($target, $container) {
+            var name = $target.attr(ATTR_NAME)
+            var checked = $target.prop('checked')
+
+            var $children = $container.find(
+                _.template(ATTR_PARENT_NAME_VALUE)({
+                    name: name
+                })
+            )
+
+            if (!$children.length) return
+
+            $children.prop('checked', checked)
+
+            _.each($children, function(item /*, index*/ ) {
+                _children($(item), $container)
+            })
+        }
+
+        function _siblings($target, $container) {
+            if (!$target.is(':radio')) return
+
+            var name = $target.attr('name')
+            var siblings = $('[name="' + name + '"]', $container).not($target)
+            _.each(siblings, function(item /*, index*/ ) {
+                _parent($(item), $container)
+                _children($(item), $container)
+            })
+        }
+
+        return linkage
+    }
+)

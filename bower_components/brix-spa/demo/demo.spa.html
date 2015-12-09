@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<script src="../bower_components/requirejs/require.js"></script>
+<script src="../config.js"></script>
+<div id="app"></div>
+<script>
+    require(['brix/spa'],function(spa){
+        window.spa = spa
+        spa.setup({
+            container : '#app',
+            frame : 'frame',
+            target : '#main',
+            view : 'main'
+        }).start()
+    })
+</script>

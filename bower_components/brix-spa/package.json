@@ -1,0 +1,11 @@
+{
+  "name": "brix-spa",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-jshint": "*",
+    "jshint-stylish": "*",
+    "gulp-requirejs": "*",
+    "gulp-connect": "*"
+  }
+}

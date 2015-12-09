@@ -1,0 +1,135 @@
+.table-fixed {
+    table-layout: fixed;
+}
+
+.table {
+    .more {
+        position: relative;
+
+        .title {}
+        .content {
+            position: absolute;
+            top: -8px;
+            display: none;
+            z-index: 1000;
+
+            padding: 9px 14px;
+            text-align: left;
+            white-space: normal;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+        }
+        .indicator {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        &:hover {
+            .title, .indicator {
+                // display: none;
+            }
+            .content {
+                display: block;
+            }
+        }
+    }
+
+    tr {
+        .operation {
+            visibility: hidden;
+            // display: none;
+            a {
+                white-space: nowrap;
+            }
+        }
+        &:hover {
+            .operation {
+                // display: block;
+                visibility: visible;
+            }
+        }
+    }
+
+}
+
+.column-scroll-arrow {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: #2378FF;
+    color: #E6E6E6;
+    // opacity: .5;
+    width: 16px;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: background-color .2s ease-in-out;
+            transition: background-color .2s ease-in-out;
+    &:hover {
+        // background-color: #999;
+        // color: #3276b1;
+    }
+}
+
+.column-priority {
+    width: 500px;
+    margin-top: 2px;
+    display: none;
+
+    .candidates, 
+    .queue {
+        height: 300px;
+        overflow: scroll;
+    }
+
+    .candidates {
+        .item {
+            float: left;
+            width: 33%;
+            padding: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    }
+    .queue {
+        .item {
+            width: 100%;
+            padding: 5px;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: 5px;
+
+            // transition: * 0.15s ease-in;
+        }
+        .item-move {
+            border: 1px solid #E6E6E6;
+            cursor: move;
+        }
+        .item-not-allowed {
+            border: 1px dashed #E6E6E6;
+            cursor: not-allowed;
+        }
+
+        .sortable-wrapper {
+            .sortable-ghost {
+                opacity: 0.4;
+                background-color: #F4E2C9;
+            }
+        }
+    }
+    .candidates .item span,
+    .queue .item span {
+        width: 100%;
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-weight: normal;
+    }
+    &.dialog .dialog-content .dialog-footer {
+        text-align: left;
+    }
+}

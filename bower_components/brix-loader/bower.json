@@ -1,0 +1,24 @@
+{
+  "name": "brix-loader",
+  "version": "0.0.9",
+  "homepage": "https://github.com/thx/brix-loader",
+  "main": [
+    "dist/loader.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src",
+    "test",
+    "doc",
+    "package.json",
+    "gulpfile.js",
+    "AUTHORS.txt",
+    "CONTRIBUTING.md",
+    "HISTORY.md"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}

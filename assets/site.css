@@ -1,0 +1,8 @@
+body pre {
+  border: none;
+  padding: 18px 40px;
+  border-radius: 6px;
+  background-color: #f5f5f5;
+  margin-bottom: 20px;
+  font-size: 13px;
+}

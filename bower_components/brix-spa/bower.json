@@ -1,0 +1,33 @@
+{
+  "name": "brix-spa",
+  "version": "0.0.1",
+  "authors": [
+    "墨智 <mozhi.gyy@alibaba-inc.com>"
+  ],
+  "main": [
+    "dist/spa.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "brix-loader": "master",
+    "jquery": "1.x.x",
+    "underscore": "*",
+    "director": "*",
+    "requirejs": "*",
+    "requirejs-text": "*",
+    "uri.js": "*",
+    "page": "visionmedia/page.js#~1.4.1"
+  },
+  "devDependencies": {
+    "bootstrap": "*",
+    "require-css": "*",
+    "highlightjs": "*"
+  }
+}

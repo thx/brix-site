@@ -1,0 +1,1 @@
+define(["jquery","underscore","brix/base","text!./switch.tpl"],function(t,e,i,n){function s(){}return e.extend(s.prototype,i.prototype,{options:{},init:function(){n=this.options.template||n,this.options.css&&require("css!"+this.options.css)},render:function(){this.data=this.data||e.extend({},this.options);var i=e.template(n)(this.data);t(this.element).append(i)}}),s});

@@ -1,0 +1,65 @@
+/*
+    <span class="glyphicon glyphicon-plus-sign"></span>
+    <span class="glyphicon glyphicon-minus-sign"></span>
+    <span class="glyphicon glyphicon-folder-close"></span>
+    <span class="glyphicon glyphicon-folder-open"></span>
+ */
+.tree-wrapper {
+    padding: 10px;
+    margin: 2px 0 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.tree {
+    list-style-type: none;
+    padding-left: 0px;
+
+    @padding: 18px;
+
+    .tree-node {
+        .tree-node-control {
+            margin-left: @padding;
+            white-space: nowrap;
+            border-radius: 4px;
+
+            &:hover {
+                color: #262626;
+                background-color: #f5f5f5;
+            }
+
+            .tree-node-toggle {
+                float: left;
+                margin-left: -@padding;
+                cursor: pointer;
+                padding: 2px 5px;
+
+                .brixfont {
+                    color: #999;
+                }
+
+                .plus-sign {
+                    display: none;
+                }
+            }
+
+            .tree-node-content {
+                padding: 2px 5px;
+
+                .tree-node-content-name {
+                    .highlight {
+                        background-color: yellow;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+        
+        &.tree-leaf .tree-node-toggle {
+            visibility: hidden;
+        }
+    }
+    .tree {
+        padding-left: @padding;
+    }
+}

@@ -1,0 +1,61 @@
+bower check-new     Checking for new versions of the project dependencies..
+brix-site#brix-site /Users/mo/AliDrive/ws/brix-central-impl/brix-site
+├─┬ bootstrap#3.3.5 (3.3.6 available, latest is 4.0.0-alpha.2)
+│ └── jquery#1.11.3 (3.0.0-alpha1+compat available)
+├─┬ brix-base#91de117b7e
+│ ├── jquery#1.11.3 (latest is 3.0.0-alpha1+compat)
+│ └── underscore#1.7.0 (1.8.3 available)
+├─┬ brix-bisheng#917cc62f26
+│ ├── handlebars#2.0.0 (latest is 4.0.5)
+│ ├── jquery#1.11.3
+│ └── underscore#1.7.0 (latest is 1.8.3)
+├─┬ brix-components#9554610feb
+│ ├── Sortable#1.1.1 (latest is 1.4.2)
+│ ├── accountingjs#0.3.2 (latest is 0.4.1)
+│ ├─┬ bootstrap#3.3.5 (latest is 4.0.0-alpha.2)
+│ │ └── jquery#1.11.3
+│ ├─┬ brix-base#91de117b7e
+│ │ ├── jquery#1.11.3
+│ │ └── underscore#1.7.0
+│ ├─┬ brix-event#0d9c97bc3c
+│ │ ├── jquery#1.11.3
+│ │ └── underscore#1.7.0
+│ ├── brix-loader#f65736246c
+│ ├── chartjs#1.0.2 (latest is 2.0.0-beta1)
+│ ├── colors#2.2.0
+│ ├── director#1.2.8
+│ ├── fontawesome#4.4.0 (latest is 4.5.0)
+│ ├── handlebars#2.0.0
+│ ├── highlightjs#8.9.1
+│ ├── jquery#1.11.3
+│ ├── less#2.5.3
+│ ├── log#0.3.0
+│ ├── marked#0.3.5
+│ ├── mockjs#0.1.10 (latest is 0.2.0-alpha1)
+│ ├── moment#2.10.6
+│ ├── mousetrap#1.5.3
+│ ├── nprogress#0.2.0
+│ ├─┬ parsleyjs#2.1.3 (latest is 2.2.0-rc4)
+│ │ └── jquery#1.11.3 (3.0.0-alpha1+compat available)
+│ ├── progressbar.js#0.7.4 (latest is 0.9.0)
+│ ├── require-css#0.1.8
+│ ├── require-less#0.1.5
+│ ├── requirejs#2.1.20 (2.1.22 available)
+│ ├── requirejs-text#2.0.14
+│ └── underscore#1.7.0
+├─┬ brix-event#0d9c97bc3c
+│ ├── jquery#1.11.3
+│ └── underscore#1.7.0
+├── brix-loader#f65736246c
+├─┬ brix-spa#d3887e05b5
+│ ├── brix-loader#f65736246c
+│ ├── director#1.2.8
+│ ├── jquery#1.11.3
+│ ├── page#1.4.1 (latest is 1.6.4)
+│ ├── requirejs#2.1.20 (2.1.22 available)
+│ ├── requirejs-text#2.0.14
+│ ├── underscore#1.7.0
+│ └─┬ uri.js#1.15.1 (1.17.0 available)
+│   └── jquery#1.11.3 (3.0.0-alpha1+compat available)
+├── requirejs#2.1.20 (2.1.22 available)
+└── swfobject#0a37c21d17 extraneous
