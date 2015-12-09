@@ -32,6 +32,6 @@
     "commit": "d411c0b7c4cfb6448573381d9591570d18abe8a1"
   },
   "_source": "git://github.com/nuysoft/Mock.git",
-  "_target": "*",
+  "_target": "~0.1.10",
   "_originalSource": "mockjs"
 }

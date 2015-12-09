@@ -13,7 +13,7 @@ log = ->
     _log.apply window, args
 
 _log = ->
-    console.log.apply console, makeArray(arguments)
+    Function.prototype.apply.call console.log, console, makeArray(arguments)
 
 makeArray = (arrayLikeThing) ->
     Array::slice.call arrayLikeThing
@@ -80,7 +80,7 @@ isOpera = -> /OPR/.test(navigator.userAgent) and /Opera/.test(navigator.vendor)
 isFF = -> /Firefox/.test(navigator.userAgent)
 isIE = -> /MSIE/.test(navigator.userAgent)
 
-# Safari starting supporting stylized logs in Nightly 537.38+
+# Safari started supporting stylized logs in Nightly 537.38+
 # See https://github.com/adamschwartz/log/issues/6
 safariSupport = ->
     m = navigator.userAgent.match /AppleWebKit\/(\d+)\.(\d+)(\.|\+|\s)/

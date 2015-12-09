@@ -9,6 +9,6 @@
     "commit": "9fffc76078915cabd0e93562fae6249cf176dcf9"
   },
   "_source": "git://github.com/ccampbell/mousetrap.git",
-  "_target": "*",
+  "_target": "~1.5.3",
   "_originalSource": "mousetrap"
 }

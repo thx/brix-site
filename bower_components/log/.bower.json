@@ -1,6 +1,5 @@
 {
   "name": "log",
-  "version": "0.2.0",
   "homepage": "http://adamschwartz.co/log",
   "authors": [
     "Adam Schwartz <adam.flynn.schwartz@gmail.com>"
@@ -24,13 +23,14 @@
     "test",
     "tests"
   ],
-  "_release": "0.2.0",
+  "version": "0.3.0",
+  "_release": "0.3.0",
   "_resolution": {
     "type": "version",
-    "tag": "v0.2.0",
-    "commit": "86a79c73a557b23fbc2419795717e5c0ab899ad9"
+    "tag": "v0.3.0",
+    "commit": "794b7219685e3625386ea53454b2e5f5b691b4c0"
   },
   "_source": "git://github.com/adamschwartz/log.git",
-  "_target": "*",
+  "_target": "~0.3.0",
   "_originalSource": "log"
 }

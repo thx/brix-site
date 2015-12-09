@@ -191,11 +191,11 @@ var instances = Loader.query('components/popover')
 console.log(instances[0].show())
 ```
 
-#### hide()
+#### .hide()
 
-* hide()
+* .hide()
 
-关闭窗口。
+关闭浮层。
 
 ```js
 var Loader = require('brix/loader')
@@ -222,7 +222,7 @@ console.log(instances[0].title())
 * .content()
 * .content( content )
 
-获取或设置浮层的标题。
+获取或设置浮层的内容。
 
 ```js
 var Loader = require('brix/loader')

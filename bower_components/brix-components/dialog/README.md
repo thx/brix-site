@@ -22,6 +22,47 @@
     </div>
 </div> -->
 
+<!-- 
+var Dialog = require('components/dialog')
+var content = '\
+    <div class="dialog-header">\
+        <h4 class="dialog-title">abc</h4>\
+    </div>\
+'
+var dialog = new Dialog({
+    content: content,
+    modal: true,
+    left: 100,
+    top: 100
+})
+dialog.on('open.dialog',function(){
+    debugger
+})
+dialog.open()
+
+// 多个浮层
+var Dialog = require('components/dialog')
+var _ = require('underscore')
+var options = {
+    modal: true,
+    singleton: false,
+    left: 0,
+    top: 400
+}
+
+new Dialog(_.extend({}, options, {
+    content: options.left += 100,
+    left: options.left
+}))
+.on('open.dialog', function(event){
+    console.log(event)
+})
+.on('close.dialog', function(event){
+    console.log(event)
+})
+.open()
+ -->
+
 ### 示例 <small>Examples</small>
 
 <style type="text/css">
@@ -99,17 +140,17 @@
 
 Name | Type | Default | Description
 :--- | :--- | :------ | :----------
-placement | - | - | -
-align | - | - | -
-left | - | - | -
-top | - | - | -
-width | - | - | -
-height | - | - | -
-offset | - | - | -
-content | - | - | -
-closable | - | - | -
-modal | - | - | -
-singleton | - | - | -
+placement | string | `'right'` | 指定浮层的位置，可选值有 `'top'`、`'bottom'`、`'left'`、`'right'`。
+align | string | `''` | 指定浮层的对齐方式，可选值有 `''`、`'top'`、`'bottom'`、`'left'`、`'right'`。
+left | int | - | 指定浮层的距左坐标。
+top | int | - | 指定浮层的距上坐标。
+width | int | `'auto'` | 指定浮层的宽度。
+height | string | `''` | 指定浮层的高度。
+offset | object | `{}` | 指定浮层的偏移，可以含有两个属性：`left`、`top`。
+content | string | `''` | 指定浮层的内容。
+closable | boolean | `true` | 指定浮层是否可关闭。
+modal | boolean | `false` | 指定浮层是否模态对话框。
+singleton | boolean | `true` | 指定浮层是否单例模式。
 
 ### 方法 <small>Methods</small>
 
@@ -125,9 +166,9 @@ var instances = Loader.query('components/dialog')
 console.log(instances[0].open())
 ```
 
-#### close()
+#### .close()
 
-* close()
+* .close()
 
 关闭窗口。
 
@@ -152,7 +193,7 @@ instances.on('open.dialog close.dialog', function(event) {
 })
 ```
 
----
+<!-- 
 
 ## TODO（临时记录，不属于文档）
 
@@ -198,6 +239,4 @@ instances.on('open.dialog close.dialog', function(event) {
         * hide
     * Overlay 浮层
         * Position 位置
-
-
-
+ -->

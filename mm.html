@@ -1,0 +1,1457 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://mo.local:4242/require-config-css-animation.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="http://g.tbcdn.cn/thx/minecraft-animation/0.0.1/css/animate.css"> -->
+    <!-- <script src="http://g.tbcdn.cn/thx/brix-release/0.1.0/require-config-css.js"></script> -->
+    <!-- <script src="http://mo.local:4242/require-config-css.js"></script> -->
+</head>
+<body>
+
+<style type="text/css">
+    body {
+        margin: 20px;
+        /*padding-bottom: 500px;*/
+    }
+    .demo-row {
+        border-bottom: 1px solid #E6E6E6;
+        padding: 20px 0;
+        margin-bottom: 20px;
+    }
+    .demo-title {
+        width: 100px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .demo-css-colors {}
+    .demo-css-colors .item {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    .demo-css-colors .item div {
+        display: inline-block;
+        float: left;
+        width: 75px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        vertical-align: middle;
+        /*color: white;*/
+    }
+    .demo-css-colors .item div:first-child {
+        /*color: #333;*/
+    }
+    .demo-css-colors .item div:nth-child(2) {
+        border-radius: 4px 0 0 4px;
+        /*color: white;*/
+    }
+    .demo-css-colors .item div:last-child {
+        border-radius: 0px 4px 4px 0;
+        /*color: #333;*/
+    }
+</style>
+
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">颜色<br>Colors</div>
+    <div class="col demo-css-colors">
+        <div class="mb20">
+            <div class="item">
+                <div>文字灰度</div>
+                <div class="color-3">.color-3</div>
+                <div class="color-9">.color-9</div>
+                <div class="color-c">.color-c</div>
+                <div class="color-f">.color-f</div>
+            </div>
+        </div>
+        <div class="mb20">
+            <div class="item">
+                <div>色块灰度</div>
+                <div class="bg-c">.bg-c</div>
+                <div class="bg-e6">.bg-e6</div>
+                <div class="bg-f0">.bg-f0</div>
+                <div class="bg-f5">.bg-f5</div>
+                <div class="bg-fa">.bg-fa</div>
+                <div class="bg-f">.bg-f</div>
+            </div>
+        </div>
+        <div>
+            <div class="item">
+                <div>MiniCraft</div>
+                <div class="bg-minecraft-brand color-f">#FF6600</div>
+                <div class="bg-minecraft-brand-hover color-f">#FC4218</div>
+                <div class="bg-minecraft-nav color-f">#423F48</div>
+                <div class="bg-minecraft-table-hover">#FAF3EB</div>
+            </div>
+            <div class="item">
+                <div>淘宝联盟</div>
+                <div class="bg-pub-brand color-f">#FA6419</div>
+                <div class="bg-pub-brand-hover color-f">#E65C17</div>
+                <div class="bg-pub-nav color-f">#443F3C</div>
+                <div class="bg-pub-table-hover">#FAF1ED</div>
+            </div>
+            <div class="item">
+                <div>直通车</div>
+                <div class="bg-zhitongche-brand color-f">#F78400</div>
+                <div class="bg-zhitongche-brand-hover color-f">#E37900</div>
+                <div class="bg-zhitongche-nav color-f">#42403C</div>
+                <div class="bg-zhitongche-table-hover">#FAF3EB</div>
+            </div>
+            <div class="item">
+                <div>Tanx</div>
+                <div class="bg-tanx-brand color-f">#50B347</div>
+                <div class="bg-tanx-brand-hover color-f">#479E3F</div>
+                <div class="bg-tanx-nav color-f">#3C433C</div>
+                <div class="bg-tanx-table-hover">#F0F6EF</div>
+            </div>
+            <div class="item">
+                <div>钻石展位</div>
+                <div class="bg-zuanshi-brand color-f">#4A7BF7</div>
+                <div class="bg-zuanshi-brand-hover color-f">#4471E3</div>
+                <div class="bg-zuanshi-nav color-f">#3C404A</div>
+                <div class="bg-zuanshi-table-hover">#F0F3FA</div>
+            </div>
+            <div class="item">
+                <div>易传媒</div>
+                <div class="bg-adchina-brand color-f">#6363E6</div>
+                <div class="bg-adchina-brand-hover color-f">#5A5AD1</div>
+                <div class="bg-adchina-nav color-f">#3F3F49</div>
+                <div class="bg-adchina-table-hover">#F1F1F9</div>
+            </div>
+            <div class="item">
+                <div>DMP</div>
+                <div class="bg-dmp-brand color-f">#895AC7</div>
+                <div class="bg-dmp-brand-hover color-f">#7B50B3</div>
+                <div class="bg-dmp-nav color-f">#47414E</div>
+                <div class="bg-dmp-table-hover">#F1EDF6</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">字体<br>Font</div>
+    <div class="col">
+        <div class="mb10">
+            <span class="fontsize-20 mr40">.fontsize-20</span>
+            <span class="fontsize-16 mr40">.fontsize-16</span>
+            <span class="fontsize-14 mr40">.fontsize-14</span>
+            <span class="fontsize-12 mr40">.fontsize-12</span>
+        </div>
+        <div class="mb10">
+            <span class="fontsize-32 mr40">.fontsize-32</span>
+            <span class="fontsize-30 mr40">.fontsize-30</span>
+            <span class="fontsize-28 mr40">.fontsize-28</span>
+            <span class="fontsize-26 mr40">.fontsize-26</span>
+            <span class="fontsize-24 mr40">.fontsize-24</span>
+            <span class="fontsize-22 mr40">.fontsize-22</span>
+            <span class="fontsize-18 mr40">.fontsize-18</span>
+        </div>
+        <div class="mb10">
+            <span class="font-bold mr40">.font-bold</span>
+            <span class="font-number mr40">.font-number</span>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">按钮<br>Button</div>
+    <div class="col">
+        <div class="mb10">
+            <button class="btn btn-brand mr10">主要按钮 .btn .btn-brand</button>
+            <button class="btn mr10">次要按钮 .btn</button>
+            <button class="btn btn-disabled  mr10">不可点按钮 .btn ,btn-disabled</button>
+            <a class="mr10" href="javascript:;">文字按钮</a>
+        </div>
+        <div>
+            <div class="btn btn-brand btn-progress mr10">
+                <div class="btn-progress-bar"></div>
+                <span>正在加载</span>
+            </div>
+            <div class="btn btn-progress mr10">
+                <div class="btn-progress-bar"></div>
+                <span>正在加载</span>
+            </div>
+        </div>
+        <hr>
+        <div class="mb10">
+            <button class="btn btn-brand bx-trans-btn-radius mr10">主要按钮 .btn .btn-brand</button>
+            <button class="btn bx-trans-btn-radius mr10">次要按钮 .btn</button>
+
+            <button class="btn btn-brand bx-anim-btn-shake animated infinite mr10">主要按钮 .btn .btn-brand</button>
+            <button class="btn bx-anim-btn-shake animated infinite mr10">次要按钮 .btn</button>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">单选按钮<br>Radio</div>
+    <div class="col">
+        <label><input type="radio" name="radio-name-1"> 未选中</label>
+        <label><input type="radio" name="radio-name-1" checked="">已选中</label>
+        <label><input type="radio" name="radio-name-2" disabled=""> 禁用/未选中</label>
+        <label><input type="radio" name="radio-name-2" checked="" disabled="">禁用/已选中</label>
+
+        <div class="row">
+            <ul class="checklist col-xs-6">
+                <li><label><input type="radio" name="radio-name-3" data-linkage-name="linkage-name-1"> 单选1</label></li>
+                <li><label><input type="radio" name="radio-name-3" data-linkage-name="linkage-name-2"> 单选2</label></li>
+                <li>
+                    <label><input type="radio" name="radio-name-3" data-linkage-name="linkage-name-3"> 单选3</label>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox" name="checkbox-name-4" data-linkage-parent-name="linkage-name-3"> 多选1</label></li>
+                        <li><label><input type="checkbox" name="checkbox-name-5" data-linkage-parent-name="linkage-name-3"> 多选2</label></li>
+                        <li><label><input type="checkbox" name="checkbox-name-6" data-linkage-parent-name="linkage-name-3"> 多选3</label></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="checklist col-xs-6">
+                <li>
+                    <label>
+                        <input type="radio" name="radio-name-7"> 单选1
+                        <p class="desc">此处为真此单选的一些注意说明</p>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="radio-name-7"> 单选2
+                        <p class="desc">此处为真此单选的一些注意说明</p>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" name="radio-name-7"> 单选3
+                        <p class="desc">此处为真此单选的一些注意说明</p>
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">复选框<br>Checkbox</div>
+    <div class="col">
+        <label><input type="checkbox" name="checkbox-name-8"> 选项1</label>
+        <label><input type="checkbox" name="checkbox-name-8"> 选项2</label>
+        <label><input type="checkbox" name="checkbox-name-8"> 选项3</label>
+        <label><input type="checkbox" name="checkbox-name-8"> 选项4</label>
+
+        <div>
+            <label><input type="checkbox" name="checkbox-name-9"> 阅读并接受<a href="javascript:;">《用户协议》</a></label>
+        </div>
+
+        <div class="row">
+            <ul class="checklist col-xs-6">
+                <li><label><input type="radio" name="radio-name-10" data-linkage-name="linkage-name-4"> 单选1</label></li>
+                <li><label><input type="radio" name="radio-name-10" data-linkage-name="linkage-name-5"> 单选2</label></li>
+                <li>
+                    <label><input type="radio" name="radio-name-10" data-linkage-name="linkage-name-6"> 单选3</label>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox" name="checkbox-name-11" data-linkage-parent-name="linkage-name-6"> 多选1</label></li>
+                        <li><label><input type="checkbox" name="checkbox-name-12" data-linkage-parent-name="linkage-name-6"> 多选2</label></li>
+                        <li><label><input type="checkbox" name="checkbox-name-13" data-linkage-parent-name="linkage-name-6"> 多选3</label></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="checklist col-xs-6">
+                <li>
+                    <label>
+                        <input type="checkbox" name="checkbox-name-14"> 多选1
+                        <p class="desc">此处为真此单选的一些注意说明</p>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="checkbox-name-15"> 多选2
+                        <p class="desc">此处为真此单选的一些注意说明</p>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="checkbox-name-16"> 多选3
+                        <p class="desc">此处为真此单选的一些注意说明</p>
+                    </label>
+                </li>
+            </ul>
+            <ul class="checklist-linear col-xs-6">
+                <li><label><input type="checkbox" name="checkbox-name-17" data-linkage-name="linkage-name-7"> 全部</label></li>
+                <li><label><input type="checkbox" name="checkbox-name-18" data-linkage-parent-name="linkage-name-7"> 选项1</label></li>
+                <li><label><input type="checkbox" name="checkbox-name-19" data-linkage-parent-name="linkage-name-7"> 选项2</label></li>
+                <li><label><input type="checkbox" name="checkbox-name-20" data-linkage-parent-name="linkage-name-7"> 选项3</label></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">下拉框<br>Dropdown</div>
+    <div class="col">
+        <select>
+            <option value="0">选项 1</option>
+            <option value="1">选项 2</option>
+            <option value="2">选项 3</option>
+            <option value="3">选项 4</option>
+            <option value="4">选项 5</option>
+            <option value="5">选项 6</option>
+            <option value="6">选项 7</option>
+            <option value="7">选项 8</option>
+            <option value="8">选项 9</option>
+            <option value="9">选项 10</option>
+            <option value="10">选项 11</option>
+            <option value="11">选项 12</option>
+            <option value="12">选项 13</option>
+            <option value="13">选项 14</option>
+            <option value="14">选项 15</option>
+            <option value="15">选项 16</option>
+        </select>
+        <select bx-name="components/dropdown" on-change="handle">
+            <option value="0">选项 1</option>
+            <option value="1">选项 2</option>
+            <option value="2">选项 3</option>
+            <option value="3">选项 4</option>
+            <option value="4">选项 5</option>
+            <option value="5">选项 6</option>
+            <option value="6">选项 7</option>
+            <option value="7">选项 8</option>
+            <option value="8">选项 9</option>
+            <option value="9">选项 10</option>
+            <option value="10">选项 11</option>
+            <option value="11">选项 12</option>
+            <option value="12">选项 13</option>
+            <option value="13">选项 14</option>
+            <option value="14">选项 15</option>
+            <option value="15">选项 16</option>
+        </select>
+        <select bx-name="components/dropdown">
+            <optgroup label="optgroup 1">
+                <option value="1">Action</option>
+            </optgroup>
+            <optgroup label="optgroup 2">
+                <option value="2">Another action</option>
+            </optgroup>
+            <optgroup label="optgroup 3">
+                <option value="3" selected="">Something else here</option>
+            </optgroup>
+        </select>
+
+        <hr>
+        <select bx-name="components/dropdown" 
+            data-searchbox="true" 
+            data-popover="200" 
+            on-search="handle">
+            <optgroup label="optgroup 1">
+                <option value="1">Action</option>
+            </optgroup>
+            <optgroup label="optgroup 2">
+                <option value="2">Another action</option>
+            </optgroup>
+            <option class="divider"></option>
+            <optgroup label="optgroup 3">
+                <option value="3" selected>Something else here</option>
+            </optgroup>
+        </select>
+
+        <hr>
+        <div class="dropdown" bx-name="components/dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" value="0" bx-click="toggle()">
+                <span class="dropdown-toggle-label">选项 1</span>
+                <span class="caret_custom">
+                    <span class="brixfont down">&#xe623;<!-- &#xe623; --></span><!-- 向下 -->
+                    <span class="brixfont up">&#xe62e;<!-- &#xe62e; --></span><!-- 向上 -->
+                </span>
+            </button>
+            <div class="dropdown-menu-wrapper">
+                <div class="searchbox hide">
+                    <label>
+                        <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                        <input type="text" placeholder="搜索关键词">
+                    </label>
+                </div>
+                <ul class="dropdown-menu">
+                    <li class="active"> <a href="javascript: void(0);" bx-click="select()" value="0"> 选项 1 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="1"> 选项 2 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="2"> 选项 3 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="3"> 选项 4 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="4"> 选项 5 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="5"> 选项 6 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="6"> 选项 7 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="7"> 选项 8 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="8"> 选项 9 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="9"> 选项 10 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="10"> 选项 11 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="11"> 选项 12 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="12"> 选项 13 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="13"> 选项 14 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select()" value="14"> 选项 15 </a> </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="dropdown" bx-name="components/dropdown" data-value="1" id="customDropdownWithSearchbox">
+            <button class="btn btn-default dropdown-toggle" type="button" value="0" bx-click="toggle()">
+                <span class="dropdown-toggle-label">选项 1</span>
+                <span class="caret_custom">
+                    <span class="brixfont down">&#xe623;<!-- &#xe623; --></span><!-- 向下 -->
+                    <span class="brixfont up">&#xe62e;<!-- &#xe62e; --></span><!-- 向上 -->
+                </span>
+            </button>
+            <div class="dropdown-menu-wrapper">
+                <div class="searchbox">
+                    <label>
+                        <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                        <input type="text" placeholder="搜索关键词">
+                    </label>
+                </div>
+                <ul class="dropdown-menu">
+                    <li class="active"> <a href="javascript: void(0);" bx-click="select" value="0"> 选项 1 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="1"> 选项 2 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="2"> 选项 3 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="3"> 选项 4 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="4"> 选项 5 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="5"> 选项 6 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="6"> 选项 7 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="7"> 选项 8 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="8"> 选项 9 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="9"> 选项 10 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="10"> 选项 11 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="11"> 选项 12 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="12"> 选项 13 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="13"> 选项 14 </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" value="14"> 选项 15 </a> </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="dropdown dropdown-popover dropdown-ellipsis" bx-name="components/dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" value="3" bx-click="toggle()">
+                <span class="dropdown-toggle-label">4 据习济命拉算为统合型教史他连通。同总国目色单派样样劳即龙我今。铁去可设白备道中引选件反学转连王公。照规新器角质条知好等技经走日非安南出。</span>
+                <span class="caret_custom">
+                    <span class="brixfont down">&#xe623;<!-- &#xe623; --></span><!-- 向下 -->
+                    <span class="brixfont up">&#xe62e;<!-- &#xe62e; --></span><!-- 向上 -->
+                </span>
+            </button>
+            <div class="dropdown-menu-wrapper">
+                <div class="searchbox hide">
+                    <label>
+                        <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                        <input type="text" placeholder="搜索关键词">
+                    </label>
+                </div>
+                <ul class="dropdown-menu">
+                    <li class="active"> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="1 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>1 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="2 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>2 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="3 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>3 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="4 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>4 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="5 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>5 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="6 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>6 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="7 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>7 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="8 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>8 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="9 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>9 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                    <li class=""> <a href="javascript: void(0);" bx-click="select" bx-name="components/popover" data-offset="{ left: 5 }" data-content="10 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。" data-width="200"> <span>10 据走重图外叫了也做铁先与反合道造容志。们们着数系管边采其别与长色相据。周质与任广近公史派林后被定条公层义划。张风书干查王东题住及特通里想采。记通治片们下收发候张统为例同西。拉农毛点道斗式约识济共产府技到第。期北八间治就不国党统交法议应条土。</span> </a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">输入框<br>Input</div>
+    <div class="col">
+        <form>
+            <input placeholder="请输入计划名称" data-parsley-required="" data-parsley-trigger="change keyup">
+            <input placeholder="昵称不超过 18 个字" data-parsley-maxlength="18" data-parsley-trigger="change keyup">
+            <input type="password" placeholder="请输入密码" data-parsley-required="" data-parsley-trigger="change keyup">
+
+            <select bx-name="components/dropdown" data-parsley-required="">
+                <optgroup label="optgroup 1">
+                    <option value="1">Action</option>
+                </optgroup>
+                <optgroup label="optgroup 2">
+                    <option value="2">Another action</option>
+                </optgroup>
+                <optgroup label="optgroup 3">
+                    <option value="3">Something else here</option>
+                </optgroup>
+            </select>
+        </form>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">文本框<br>Textarea</div>
+    <div class="col">
+        <form>
+            <textarea class="form-control" rows="3" placeholder="请输入描述信息" data-parsley-trigger="change keyup" data-parsley-required=""></textarea>
+            <textarea class="form-control" rows="3" placeholder="请输入描述信息" 
+                onkeyup="$(this).next()[this.value.length ? 'show' : 'hide'](); $('#maxlength-tips').text(Math.max(0, 100 - this.value.length))" 
+                data-parsley-trigger="change keyup" data-parsley-maxlength="100"></textarea>
+            <ul class="parsley-errors-list filled" style="display: none;">
+                <li class="parsley-maxlength">还可输入 <span id="maxlength-tips">100</span> 个字</li>
+            </ul>
+        </form>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">日历<br>Calendar</div>
+    <div class="col">
+        <input bx-name="components/datepickerwrapper" type="text" class="form-control w100">
+        <div bx-name="components/datepickerwrapper" data-dates="['2015-1-1', '2015-1-2']" data-shortcuts="false" class="form-control datepickerwrapper-trigger w210">
+            <span data-index="0">2015-01-01</span> 至 <span data-index="1">2015-01-02</span>
+            <i class="brixfont pull-right ml5 down">&#xe623;<!-- &#xe623; --></i>
+            <i class="brixfont pull-right ml5 up">&#xe62e;<!-- &#xe62e; --></i>
+        </div>
+        <div bx-name="components/datepickerwrapper" data-dates="['2015-1-1', '2015-1-2']" class="form-control datepickerwrapper-trigger w210">
+            <span data-index="0">2015-01-01</span> 至 <span data-index="1">2015-01-02</span>
+            <i class="brixfont pull-right ml5 down">&#xe623;<!-- &#xe623; --></i>
+            <i class="brixfont pull-right ml5 up">&#xe62e;<!-- &#xe62e; --></i>
+        </div>
+        <div class="mt20 mb20"><span bx-name="components/datepickerwrapper" class="fontsize-16">请选择日期</span></div>
+        <div>
+            <div class="mr40" style="display: inline-block;">
+                <div class="pl9 mb10 color-999">开始日期</div>
+                <div style="position: relative;">
+                    <input bx-name="components/datepickerwrapper" type="text" class="form-control">
+                    <span class="brixfont color-c" style="position: absolute; right: 9px; top: 6px;">&#xe615;<!-- &#xe615; --></span>
+                </div>
+            </div>
+            <div style="position: relative; display: inline-block;">
+                <div class="pl9 mb10 color-999">结束日期</div>
+                <div style="position: relative;">
+                    <input bx-name="components/datepickerwrapper" data-align="right" type="text" class="form-control">
+                    <span class="brixfont color-c" style="position: absolute; right: 9px; top: 6px;">&#xe615;<!-- &#xe615; --></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">面包屑<br>Breadcrumb</div>
+    <div class="col">
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">一级类目</a></li>
+            <li><a href="javascript:;">二级类目</a></li>
+            <li class="active"><a href="javascript:;">三级类目</a></li>
+        </ol>
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">女装</a></li>
+            <li><a href="javascript:;">上衣</a></li>
+            <li class="active"><a href="javascript:;">运动 T 恤</a></li>
+        </ol>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">翻页器<br>Pagination</div>
+    <div class="col">
+        <div bx-name="components/pagination" data-total="100" data-cursor="1" data-limit="9" data-simplify="true" class="mb10"></div>
+        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" bx-options="{ step: 4 }"></div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">搜索框<br>SearchBox</div>
+    <div class="col">
+        <div class="searchbox mb10">
+            <label>
+                <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                <input type="text" placeholder="请输入关键词搜索">
+            </label>
+        </div>
+        <div class="searchbox mb10">
+            <label>
+                <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                <input type="text" bx-name="components/suggest" placeholder="请输入关键词搜索">
+            </label>
+        </div>
+        <div class="input-group mb10">
+            <input type="text" class="form-control" bx-name="components/suggest" placeholder="请输入关键词搜索">
+            <span class="input-group-addon">搜索</span>
+        </div>
+
+        <div class="input-group-wrapper mb10">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <select bx-name="components/dropdown">
+                        <option value="1">分类 1</option>
+                        <option value="2">分类 2</option>
+                        <option value="3">分类 3</option>
+                    </select>
+                </div>
+                <div class="input-group-input">
+                    <input type="text" class="form-control" bx-name="components/suggest" placeholder="请输入关键词搜索">
+                </div>
+                <div class="input-group-btn">
+                    <button class="btn btn-default bg-brand" type="button">搜索</button>
+                </div>
+            </div>
+        </div>
+        <div class="input-group-wrapper mb10">
+            <div class="input-group-tab">
+                <button class="btn btn-default active" type="button">分类 1</button>
+                <button class="btn btn-default" type="button">分类 2</button>
+                <button class="btn btn-default" type="button">分类 3</button>
+            </div>
+            <div class="input-group">
+                <div class="input-group-input">
+                    <input type="text" class="form-control" bx-name="components/suggest" placeholder="请输入关键词搜索">
+                </div>
+                <div class="input-group-btn">
+                    <button class="btn btn-default bg-brand" type="button">搜索</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="searchbox searchbox-simplify mb10">
+            <label>
+                <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                <input id="case2" type="text" placeholder="请输入关键词搜索" style="transition: inherit;">
+            </label>
+        </div>
+
+        <div class="searchbox searchbox-simplify open mb10">
+            <label>
+                <span class="brixfont">&#xe61c;<!-- &#xe61c; --></span>
+                <input id="case2" type="text" placeholder="请输入关键词搜索" style="transition: inherit;">
+            </label>
+        </div>
+
+        <div class="input-group-wrapper mb10">
+            <div class="input-group mb10">
+                <div class="input-group-input">
+                    <input type="text" class="form-control" bx-name="components/suggest" placeholder="请输入关键词搜索">
+                </div>
+                <div class="input-group-btn">
+                    <button class="btn btn-default bg-brand" type="button">搜索</button>
+                </div>
+            </div>
+            <div class="hots">
+                <a href="javascript:;">热词 1</a>
+                <a href="javascript:;">热词 2</a>
+                <a href="javascript:;">热词 3</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">就地编辑<br>Editable</div>
+    <div class="col">
+        <div bx-name="components/editable">简单模式</div>
+        <div class="editable" bx-name="components/editable">
+            <span class="editable-content">自定义模式</span>
+            <a href="javascript:;" class="editable-toggle brixfont color-c">&#xe604;<!-- &#xe604; --></a>
+            <input value="自定义模式" class="editable-input" style="display: none;">
+        </div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="editable" bx-name="components/editable">
+                            <span class="editable-content">就地编辑表格中的内容</span>
+                            <a href="javascript:;" class="editable-toggle brixfont color-c">&#xe604;<!-- &#xe604; --></a>
+                            <input value="就地编辑表格中的内容" class="editable-input" style="display: none;">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">通用信息<br>Message</div>
+    <div class="col pr10">
+        <div class="contextual-message mb10">
+            <span class="zsfont glyph color-help">&#xe6ab;<!-- &#xe6ab; --></span>
+            <span>帮助</span>
+        </div>
+        <div class="contextual-message mb10">
+            <span class="zsfont glyph color-info">&#xe6af;<!-- &#xe6af;; --></span>
+            <span>资讯</span>
+        </div>
+        <div class="contextual-message bg-info mb10">
+            <span class="zsfont glyph color-info">&#xe6ac;<!-- &#xe6ac; --></span>
+            <span>资讯</span>
+        </div>
+        <div class="ungrid-row mb10">
+            <div class=" col pr10">
+                <div class="contextual-message bg-info">
+                    <span class="zsfont glyph color-warning">&#xe6ae;<!-- &#xe6ae; --></span>
+                    <span>低风险警告</span>
+                </div>
+            </div>
+            <div class="col pl10">
+                <div class="contextual-message bg-warning color-f">
+                    <span class="zsfont glyph">&#xe6ae;<!-- &#xe6ae; --></span>
+                    <span>低风险警告</span>
+                </div>
+            </div>
+        </div>
+        <div class="ungrid-row mb10">
+            <div class=" col pr10">
+                <div class="contextual-message bg-info mb10">
+                    <span class="zsfont glyph color-danger">&#xe6ad;<!-- &#xe6ad; --></span>
+                    <span>高风险警告</span>
+                </div>
+            </div>
+            <div class="col pl10">
+                <div class="contextual-message bg-danger color-f mb10">
+                    <span class="zsfont glyph">&#xe6ad;<!-- &#xe6ad; --></span>
+                    <span>高风险警告</span>
+                </div>
+            </div>
+        </div>
+        <div class="ungrid-row mb10">
+            <div class=" col pr10">
+                <div class="contextual-message bg-info mb10">
+                    <span class="zsfont glyph color-success">&#xe6aa;<!-- &#xe6aa; --></span>
+                    <span>成功</span>
+                </div>
+            </div>
+            <div class="col pl10">
+                <div class="contextual-message bg-success color-f mb10">
+                    <span class="zsfont glyph">&#xe6aa;<!-- &#xe6aa; --></span>
+                    <span>成功</span>
+                </div>
+            </div>
+        </div>
+        <div class="ungrid-row mb10">
+            <div class=" col pr10">
+                <div class="contextual-message bg-info mb10">
+                    <span class="zsfont glyph color-fail">&#xe6a7;<!-- &#xe6a7; --></span>
+                    <span>失败</span>
+                </div>
+            </div>
+            <div class="col pl10">
+                <div class="contextual-message bg-fail color-f mb10">
+                    <span class="zsfont glyph">&#xe6a7;<!-- &#xe6a7; --></span>
+                    <span>失败</span>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="mm-message-overlay mb10" style="position: relative;">
+            <span>您的账户余额不足，如不及时充值将会停止投放。</span>
+        </div>
+        <div class="mm-message-top">
+            <span>您的账户被禁用，无法进行相关操作，如果有疑问请与客服联系。</span>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">表格<br>Table</div>
+    <div class="col">
+        <table bx-name="components/table" class="table table-hover table-fixed mt40" data-column-rwd-range="[1,-1]" data-column-rwd-limit="3" data-column-rwd-cursor="1">
+            <thead>
+                <tr>
+                    <th class="stable">名称</th><th class="" data-column-id="0">状态</th><th class="" data-column-id="1">类型</th><th class="" data-column-id="2">尺寸</th><th class="" data-column-id="3" style="display: none;">滚动列 1</th><th class="" data-column-id="4" style="display: none;">滚动列 2</th><th class="" data-column-id="5" style="display: none;">滚动列 3</th>
+                    <th class="stable">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="">品习经信</td><td class="">拒绝</td><td class="">图片</td><td class="">943x200</td><td style="display: none;">pxikc</td><td style="display: none;">txsbs</td><td style="display: none;">lsxtlslhip</td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);" class="btn mr10">详情</a>
+                            <div class="btn-dropdown mr10">
+                                <a href="javascript: void(0);" class="btn btn-dropdown-toggle">
+                                    <span>更多</span>
+                                    <span class="btn-dropdown-caret">
+                                        <span class="brixfont down"></span><!-- 向下 -->
+                                        <span class="brixfont up"></span><!-- 向上 -->
+                                    </span>
+                                </a>
+                                <div class="btn-dropdown-content">
+                                    <p class="pl5">设置</p>
+                                    <a href="javascript: void(0);" class="btn mr10">编辑单元</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">海行得元</td><td class="">拒绝</td><td class="">Flash</td><td class="">134x994</td><td style="display: none;">twfyor</td><td style="display: none;">gvdqopxtrs</td><td style="display: none;">jzmn</td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);">详情</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="">员离决革型实复</td><td class="">通过</td><td class="">视频</td><td class="">361x819</td><td style="display: none;">gywhqsnvgv</td><td style="display: none;">kptqoi</td><td style="display: none;">qomrbd</td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);">详情</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table bx-name="components/table" class="table table-hover table-fixed">
+            <thead>
+                <tr>
+                    <th width="40"></th>
+                    <th class="nowrap">名称</th>
+                    <th class="nowrap">状态</th>
+                    <th class="nowrap">类型</th>
+                    <th class="nowrap">尺寸</th>
+                    <th class="nowrap">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="sub-toggle">
+                        <span class="brixfont plus fontsize-20 color-c"></span><!-- + -->
+                        <span class="brixfont minus fontsize-20 color-brand"></span><!-- - -->
+                    </td>
+                    <td class="nowrap">样已由义</td>
+                    <td class="nowrap">拒绝</td>
+                    <td class="nowrap">Flash</td>
+                    <td class="nowrap">606x573</td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);" class="mr10">详情</a>
+                            <a href="javascript: void(0);" class="mr10">编辑</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="sub">
+                    <td></td>
+                    <td colspan="5" style="padding-left: 0; padding-right: 0;">
+                        <table bx-name="components/table" class="table table-hover table-fixed">
+                            <thead>
+                                <tr>
+                                    <th class="nowrap">名称</th>
+                                    <th class="nowrap">状态</th>
+                                    <th class="nowrap">类型</th>
+                                    <th class="nowrap">尺寸</th>
+                                    <th class="nowrap">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="nowrap">样已由义</td>
+                                    <td class="nowrap">拒绝</td>
+                                    <td class="nowrap">Flash</td>
+                                    <td class="nowrap">606x573</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nowrap">性走因儿达想要</td>
+                                    <td class="nowrap">待审</td>
+                                    <td class="nowrap">视频</td>
+                                    <td class="nowrap">726x698</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nowrap">心值把</td>
+                                    <td class="nowrap">待审</td>
+                                    <td class="nowrap">视频</td>
+                                    <td class="nowrap">340x411</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sub-toggle">
+                        <span class="brixfont plus fontsize-20 color-c"></span><!-- + -->
+                        <span class="brixfont minus fontsize-20 color-brand"></span><!-- - -->
+                    </td>
+                    <td class="nowrap">性走因儿达想要</td>
+                    <td class="nowrap">待审</td>
+                    <td class="nowrap">视频</td>
+                    <td class="nowrap">726x698</td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);" class="mr10">详情</a>
+                            <a href="javascript: void(0);" class="mr10">编辑</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="sub">
+                    <td></td>
+                    <td colspan="5" style="padding-left: 0; padding-right: 0;">
+                        <table bx-name="components/table" class="table table-hover table-fixed">
+                            <thead>
+                                <tr>
+                                    <th class="nowrap">名称</th>
+                                    <th class="nowrap">状态</th>
+                                    <th class="nowrap">类型</th>
+                                    <th class="nowrap">尺寸</th>
+                                    <th class="nowrap">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="nowrap">样已由义</td>
+                                    <td class="nowrap">拒绝</td>
+                                    <td class="nowrap">Flash</td>
+                                    <td class="nowrap">606x573</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nowrap">性走因儿达想要</td>
+                                    <td class="nowrap">待审</td>
+                                    <td class="nowrap">视频</td>
+                                    <td class="nowrap">726x698</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nowrap">心值把</td>
+                                    <td class="nowrap">待审</td>
+                                    <td class="nowrap">视频</td>
+                                    <td class="nowrap">340x411</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="sub-toggle">
+                        <span class="brixfont plus fontsize-20 color-c"></span><!-- + -->
+                        <span class="brixfont minus fontsize-20 color-brand"></span><!-- - -->
+                    </td>
+                    <td class="nowrap">心值把</td>
+                    <td class="nowrap">待审</td>
+                    <td class="nowrap">视频</td>
+                    <td class="nowrap">340x411</td>
+                    <td>
+                        <div class="operation">
+                            <a href="javascript: void(0);" class="mr10">详情</a>
+                            <a href="javascript: void(0);" class="mr10">编辑</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="sub">
+                    <td></td>
+                    <td colspan="5" style="padding-left: 0; padding-right: 0;">
+                        <table bx-name="components/table" class="table table-hover table-fixed">
+                            <thead>
+                                <tr>
+                                    <th class="nowrap">名称</th>
+                                    <th class="nowrap">状态</th>
+                                    <th class="nowrap">类型</th>
+                                    <th class="nowrap">尺寸</th>
+                                    <th class="nowrap">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="nowrap">样已由义</td>
+                                    <td class="nowrap">拒绝</td>
+                                    <td class="nowrap">Flash</td>
+                                    <td class="nowrap">606x573</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nowrap">性走因儿达想要</td>
+                                    <td class="nowrap">待审</td>
+                                    <td class="nowrap">视频</td>
+                                    <td class="nowrap">726x698</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="nowrap">心值把</td>
+                                    <td class="nowrap">待审</td>
+                                    <td class="nowrap">视频</td>
+                                    <td class="nowrap">340x411</td>
+                                    <td>
+                                        <div class="operation">
+                                            <a href="javascript: void(0);">子操作</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">页脚<br>Footer</div>
+    <div class="col">
+        <div bx-name="components/footer"></div>
+        <div bx-name="components/footer" data-type="back"></div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">进度条<br>Progress</div>
+    <div class="col">
+        <div class="mb10">
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-brand btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar"></div>
+                    <span>上传中... 50%</span>
+                </div>
+                <a class="color-999" href="javascript:;">取消</a>
+            </div>
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-brand btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 0%;"></div>
+                    <span>上传</span>
+                </div>
+                <span class="color-999">上传成功</span>
+            </div>
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-brand btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 0%;"></div>
+                    <span>上传</span>
+                </div>
+                <span class="color-999">宝贝创意.png <a href="javascript:;" class="zsfont color-999">&#xf013f;<!-- &#xf013f; --></a></span>
+            </div>
+        </div>
+        <div class="mb10">
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar"></div>
+                    <span>上传中... 50%</span>
+                </div>
+                <a class="color-999" href="javascript:;">取消</a>
+            </div>
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 0%;"></div>
+                    <span>上传</span>
+                </div>
+                <span class="color-999">上传成功</span>
+            </div>
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 0%;"></div>
+                    <span>上传</span>
+                </div>
+                <span class="color-999">宝贝创意.png <a href="javascript:;" class="zsfont color-999">&#xf013f;<!-- &#xf013f; --></a></span>
+            </div>
+        </div>
+
+        <div class="mb10">
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-brand btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 25%;"></div>
+                    <span>(2/8) 上传中...</span>
+                </div>
+                <a class="color-999" href="javascript:;">取消</a>
+            </div>
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-brand btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 0%;"></div>
+                    <span>上传</span>
+                </div>
+                <span class="color-999">上传成功</span>
+            </div>
+        </div>
+
+        <div class="mb10">
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 25%;"></div>
+                    <span>(2/8) 上传中...</span>
+                </div>
+                <a class="color-999" href="javascript:;">取消</a>
+            </div>
+            <div class="btn-progress-wrapper mr40">
+                <div class="btn btn-progress mr40">
+                    <div class="btn-progress-bar animated infinite ani-progressbar" style="width: 0%;"></div>
+                    <span>上传</span>
+                </div>
+                <span class="color-999">上传成功</span>
+            </div>
+        </div>
+
+        <div style="background-color: #fc4218; width: 80%; height: 4px;"></div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">字段控制器<br>Field</div>
+    <div class="col"></div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">步骤条<br>Wizard</div>
+    <div class="col">
+        <div bx-name="components/wizard" data-total="4" data-cursor="0" class="wizard wizard-horizontal mb40">
+            <ol class="wizard-nav clearfix">
+                <li class="item active bx-trans-steps-on" data-index="0">
+                    <span class="circle bx-trans-steps-circle">
+                        <span class="counter">1</span>
+                        <span class="state zsfont">󰂲</span>
+                    </span>
+                    <span class="bx-trans-steps-text">步骤一</span>
+                </li>
+                <li class="item" data-index="1">
+                    <span class="circle bx-trans-steps-circle">
+                        <span class="counter">2</span>
+                        <span class="state zsfont">󰂲</span>
+                    </span>
+                    <span class="bx-trans-steps-text">步骤二</span>
+                </li>
+                <li class="item" data-index="2">
+                    <span class="circle bx-trans-steps-circle">
+                        <span class="counter">3</span>
+                        <span class="state zsfont">󰂲</span>
+                    </span>
+                    <span class="bx-trans-steps-text">步骤三</span>
+                </li>
+                <li class="item" data-index="3">
+                    <span class="circle bx-trans-steps-circle">
+                        <span class="counter">4</span>
+                        <span class="state zsfont">󰂲</span>
+                    </span>
+                    <span class="bx-trans-steps-text">步骤四</span>
+                </li>
+            </ol>
+            <div class="wizard-cards">
+                <div class="wizard-card" data-index="0" style="display: block;">
+                    <p class="flat-text small">一 作位开门切领济便低把者议装。更会四号动管北情王下利就却。活近飞技复道六强下口结走处部。</p>
+                    <p class="flat-text full-width mt10">员省提原该则定团就大果西号切南。月图四角矿快育做十特民求教观点。包走方由气区文统江之火或由列。县林不级所安价工调合用机就离育志半。</p>
+                    <p class="flat-text full-width mt10">它基业酸将拉真安值后很看克海研教个见。原大林结查商维许话性六形劳象它。无且般者厂海持外间必后党委水报。更阶有研亲这金现全青使共交深共。</p>
+                </div>
+                <div class="wizard-card" data-index="1" style="display: none;">
+                    <p class="flat-text small">二 到格会精出农重学七发严民近得声难。查建住五运再儿识也飞特意拉拉。据义主已与相计达越做定件京段还准做。明老开记消子工证以王个合。亲支置声力却选风许群治始养调年业。</p>
+                    <p class="flat-text full-width mt10">所斯日就严等委政别空许标内关活又。此求置包近区公心题说层每术太其。连经特度我听场热机拉放战。</p>
+                    <p class="flat-text full-width mt10">角片素线而相无有教立金至色点习进作。家说料不备确证十清生立两层干织级建段。权确领如西二书关县海些引程安于。维头参长音解走线千角内克按。点温带了节年论不说用儿按保观放到其保。</p>
+                </div>
+                <div class="wizard-card" data-index="2" style="display: none;">
+                    <p class="flat-text small">三 动世住计引写物米人身对及样报局眼。战象百南走去量消越难前阶无内。科维以主见等即低定文期生取天近门据。千五平交规圆矿片明住之化步万五广。</p>
+                    <p class="flat-text full-width mt10">须证可照想候张来子江形矿半。解现千事个两清被问结节除思物。好约际龙必方历据基最作般都素部马增火。特动放更现转般始江体感里格属色天。义组阶数管日声带实工特先事又此第进。成越红单儿到住长们示算三社清上利看。对手究对六并来局的报方化事九。</p>
+                    <p class="flat-text full-width mt10">那周门电形约作好农着主查要。深道局资步型他集清万去政。复关状己层头话府小着比方较层称得必。七拉是两便目县马几小连解命到切。家实种状报真会相小容认入接教儿级周。</p>
+                </div>
+                <div class="wizard-card" data-index="3" style="display: none;">
+                    <p class="flat-text small">四 而感能通九据律平然路给角定写多。公斗验单进导劳便研立相状具精。史外建每身各光指几识万理市验指方。权用领社期老加路非支红示律更行。切交却气治性往色史广率段局用高体料。石它以技长列自往术连制江持见。形比素声电院想效制意之权儿产单较亲。</p>
+                    <p class="flat-text full-width mt10">置后记收十界按手己元这记矿性。争住家往酸六问状写究平小。至市制铁置世建感领又战任。华按基低约持改强须意车法元速该利。</p>
+                    <p class="flat-text full-width mt10">一万加方题院真问什那眼据程属转导实。程形步规总酸花就十高军美联阶米油。问学政流团观器容形温线成动理。相一不用及置相多千些要表越市商。属华行约社从据题东切传标米共。据构现圆许上民集东看决我济。</p>
+                </div>
+            </div>
+            <div class="wizard-footer">
+                <button class="btn btn-brand mr10 wizard-next" bx-click="next">下一步</button>
+                <button class="btn mr10 wizard-back" bx-click="back" style="display: none;">返回上一步</button>
+            </div>
+        </div>
+        <div bx-name="components/wizard" class="wizard wizard-vertical">
+            <div class="wizard-cards">
+                <div class="wizard-card active bx-trans-steps-on">
+                    <div class="ungrid-row">
+                        <div class="col" style="width: 50px; vertical-align: top; padding-top: 20px;">
+                            <span class="circle bx-trans-steps-circle">
+                                <span class="counter">1</span>
+                                <span class="state zsfont">󰂲</span>
+                            </span>
+                        </div>
+                        <div class="col" style="background-color: #FFF; border-radius: 6px;">
+                            <div class="wizard-card-header">
+                                <span class="title">步骤一</span>
+                                <span class="summary">由龙取准才这完型府上在列确水电圆。北具压素府难革同业间他活传。做世保之委并议为包酸斯用性处认论。二员八准强利史道美制时观。</span>
+                                <a class="expand" href="javascript:;" bx-click="expand">展开</a>
+                            </div>
+                            <div class="wizard-card-body">
+                                <p class="flat-text small">一 众收日标济且眼手件按给相话表由水造受。书众教花便改你出金到能利识成据工机。将华事山记称规便类体问想中争并信月。关结办列方产要识共十参达走物用要也。且青加之素国写解称保了运活。</p>
+                                <p class="flat-text full-width mt10">接该做交今市带在使结制常结求路始。级合铁报见展活图才员品越拉。行指议使机平党老石第低解米大见广最。点容而无和干教设设片明对机是出。象不声处流性铁据引今规府。</p>
+                                <p class="flat-text full-width mt10">相实格龙理路从党省革听间明事。看识次间传各半斯快斗实时次石。间引名矿却转很三部际一近件规利温。</p>
+                            </div>
+                            <div class="wizard-card-footer ">
+                                <button class="btn btn-brand mr10 btn-step-next" bx-click="next">
+                                    保存并继续
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wizard-card ">
+                    <div class="ungrid-row">
+                        <div class="col" style="width: 50px; vertical-align: top; padding-top: 20px;">
+                            <span class="circle bx-trans-steps-circle">
+                                <span class="counter">2</span>
+                                <span class="state zsfont">󰂲</span>
+                            </span>
+                        </div>
+                        <div class="col" style="background-color: #FFF; border-radius: 6px;">
+                            <div class="wizard-card-header">
+                                <span class="title">步骤二</span>
+                                <span class="summary">我根百劳明易那受信标把族党县加属情。月林住约取东美眼代日近单史。组手通压你四白新细候大率影团取十土。平就内报等满民机界记作断院达容市前验。而里设状除产单往压段用目是。</span>
+                                <a class="expand" href="javascript:;" bx-click="expand">展开</a>
+                            </div>
+                            <div class="wizard-card-body">
+                                <p class="flat-text small">二 例张米入样世采道委指铁本完平里节东设。里治国阶即重应定规八记处面置种清容价。列治县切铁政声石形着低总北共。这风矿于便群月石后几应人。具查才手可出少单新且定何况思划究。选部从自管然图算局去题必务可华。</p>
+                                <p class="flat-text full-width mt10">接劳该组美各认色收研张派备广界分。法状速例现义则还万除始府开。持除级白程采到影力又单只非。织矿政水单合产月人代直只响整发效八。级严习约电总七器书着他极须安。程离明再至总东目几强多放段决快品成示。群是一除别过器性且运里学要传空越往。</p>
+                                <p class="flat-text full-width mt10">适属决从图做路法适及石中它。车指便名加级传除类引受美派定。局西置较识广清理民该断带系回。总需同来比石维时长称层取关济好例。</p>
+                            </div>
+                            <div class="wizard-card-footer ">
+                                <button class="btn btn-brand mr10 btn-step-next" bx-click="next">
+                                    保存并继续
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wizard-card ">
+                    <div class="ungrid-row">
+                        <div class="col" style="width: 50px; vertical-align: top; padding-top: 20px;">
+                            <span class="circle bx-trans-steps-circle">
+                                <span class="counter">3</span>
+                                <span class="state zsfont">󰂲</span>
+                            </span>
+                        </div>
+                        <div class="col" style="background-color: #FFF; border-radius: 6px;">
+                            <div class="wizard-card-header">
+                                <span class="title">步骤三</span>
+                                <span class="summary">走时式现次常家件应装资非保专万。织从容比以构办任观会问带各育层八。石术日才明干通华住农有江斗红步。便认统必响建都严阶许至个。极争解王即单称进直据场革风海列党会会。原区技度标江拉相术组况人军角为值同。市料史各越明细候法联个给。</span>
+                                <a class="expand" href="javascript:;" bx-click="expand">展开</a>
+                            </div>
+                            <div class="wizard-card-body">
+                                <p class="flat-text small">三 门所规二事经制整济变极张广层。身得属千证明非精风之法义史历完。到会证真个二的接关几为热。周时天进单改县听布所需白性温中。</p>
+                                <p class="flat-text full-width mt10">电且战报太认最铁会要县明张的大装。上六连标音专海五已般确位再南次名。还少报事率家几上北物十细民。应段专太多处口须解素天支身际些议使。五较率不思思建比件话大法江院须。一千标形结适学区并政就深。</p>
+                                <p class="flat-text full-width mt10">院对院回究命马党全华线水压达声南。酸成话活反装照备员派达什资。大构构实局员次众林已西其将列院便细。整价影她将决局把定百南证精。</p>
+                            </div>
+                            <div class="wizard-card-footer ">
+                                <button class="btn btn-brand mr10 btn-step-next" bx-click="next">
+                                    完成
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wizard-card ">
+                    <div class="ungrid-row">
+                        <div class="col" style="width: 50px; vertical-align: top; padding-top: 20px;">
+                            <span class="circle bx-trans-steps-circle">
+                                <span class="counter">4</span>
+                                <span class="state zsfont">󰂲</span>
+                            </span>
+                        </div>
+                        <div class="col" style="background-color: #FFF; border-radius: 6px;">
+                            <div class="wizard-card-header">
+                                <span class="title">步骤四</span>
+                                <span class="summary">还教北每利治书际动体好如导本进器八。件写层油声温建真太厂难战小。色就色节干称把见好面研化府取装。今代再成接长相区极月无外的造农住属工。结际强需区角支及酸听委手都往清之地光。</span>
+                                <a class="expand" href="javascript:;" bx-click="expand">展开</a>
+                            </div>
+                            <div class="wizard-card-body">
+                                <p class="flat-text small">四 圆任省又标九热车克龙利米度识务。化往育政商写力元调变受省社。每马且省直七油周为式市期变。正许王色管月年根之劳然龙查。关严增争备传断除步上低什阶。</p>
+                                <p class="flat-text full-width mt10">消去天成研状则思各管点运己等论正。经记美真表省类音及设育引思无量三没领。太研温在变内加气展给然例地克派共才。行许战眼社作斯元小市照务合清确。百太先满上达备精处前深成先程质张。</p>
+                                <p class="flat-text full-width mt10">线三些有出加派起经备结深条制西立县。叫度议系也且物即率便设安场。也展见律界系布参气更今精深构制根。专会把引心就革划还安公表写说。维光议情是温率质政本据才子线查解列。</p>
+                            </div>
+                            <div class="wizard-card-footer hide">
+                                <button class="btn btn-brand mr10 btn-step-next" bx-click="next">
+                                    完成
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="position: relative; height: 100px;">
+            <div class="ungrid-row summary">
+                <div class="col" style="">
+                    <span>已选择 <b class="fontsize-16">6</b> 个标签，覆盖人数约 <b class="fontsize-16">157</b></span>
+                </div>
+                <div class="col" style="">
+                    <a href="javascript:;" style="color: #FFF;">创建营销人群 &gt;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">浮层<br>Dialog</div>
+    <div class="col">
+        <div class="dialog mb20" style="position: relative;">
+            <button bx-click="close" type="button" class="dialog-close"><span class="brixfont">&#xe62d;</span><!-- &times; --></button>
+            <div class="dialog-content">
+                <div class="dialog-header">
+                    <h4 class="dialog-title fontsize-16">店铺推荐标签</h4>
+                </div>
+                <div class="dialog-body" style="height: 350px;"></div>
+                <div class="dialog-footer">
+                    <button class="btn btn-brand mr10">确定</button>
+                    <button class="btn mr10">取消</button>
+                </div>
+            </div>
+        </div>
+        <div class="dialog" style="position: relative; display: inline-block;">
+            <div class="dialog-content" style="box-shadow: none;">
+                <div class="dialog-body" style="padding: 15px 30px;">
+                    <span class="fontsize-14 mr10">充值金额</span>
+                    <input placeholder="请输入充值金额">
+                </div>
+                <div class="dialog-footer" style="padding: 15px 30px;">
+                    <button class="btn btn-brand mr10">立即充值</button>
+                    <button class="btn mr10">支付宝充值</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">时间选择器<br>HourPicker</div>
+    <div class="col">
+        <div bx-name="components/hourpicker"></div>
+        <div bx-name="components/hourpicker" data-value="135"></div>
+        <div bx-name="components/hourpicker" data-simplify="true" data-value="{12345:[0,2,4],60:[1,3,5]}"></div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">标签切换<br>Tab</div>
+    <div class="col">
+        <ul class="mm-tabs clearfix" bx-name="components/tab" data-content="#tab-case1-content">
+            <li class="active"><a href="javascript:;">标题选项 1</a></li>
+            <li><a href="javascript:;">标题选项 2</a></li>
+            <li><a href="javascript:;">标题选项 3</a></li>
+        </ul>
+        <div id="tab-case1-content">
+            <div>
+                <p>内容一 习区提其才不些定难证术和论变每团。内而设除研整划山决斗步然律连正道八。元农老志办于或非律动算史个。比专数约认走身直后众美进共进线展立外。九中装难复打间积党南导将转等记角县问。很标整教头拉可速率儿两器单将也除。土容商到称群才包层接见飞型。利业验还专子区术省区商般九活省。分方己率争酸受查南明节照色全。当研口要而始造员活术平共员几要。象如经那处称格给方整信组铁队际原如。特十县分认实技第划号效资小计适质种平。也以率处正白指压期素对算华过。统已达儿身状意须管报飞我头并任酸张动。手分半阶质示事历速满任切生周持色如。每使表我强见易许况场风米常始商党证。想分十五住斯采油改定太化表。但往拉合红写被带派他统对石理。养资细规六平照备示求上今外程教东并。国人则生毛且产法酸料无对计照京称。样速回府美前风低子及议理里却由身物。把划往元完保子农们断导历干参确劳志入。要前事般石认对值其理报准族区党华。义过专观月素难结团元复水发化受总平家。从更斗较建重己门响型什现对响直农面。造认亲共她高划积命白论就革件。产今权没方组布及被构水声确江交。消九当能口七报并市导生算参已。信南战特标界门红行示素到己如容料力那。称区叫细它影来属具油北达感回置片。还水线则空实治道选主收图各各电。照次事华型回市更目月根叫太千养行据然。组求收见直列权前酸利目议无节规。毛今色属任规情始果严阶安手边办龙体。五花最传十儿农论化书由着林必看与平。种响温直非山全光打今王比最志事置应。值况有复五达中先里容员或。选成面适及要部适转群领层回。百运至治南方进与万精织太矿社中打。群好把始达业写工水斯龙走质生状。权千过究白目马成变须应商研层。立派容律律构月构平的感但。话书引已名各消系他格保太快积种称院流。西民代能整属取据次与容去与。权己题保近都是市且发展进众风很千列。格气引存相当米派准三期按约林活省族。期正认容公无象队领们标江济而而。然叫米已派和下识今定少对效马率相全。国四回并通置厂称但属步养据当选包许。各历党六长前去式速义观空。</p>
+            </div>
+            <div class="hide">
+                <p>内容二 效听是代约以什温报公意却今。反律花想运众及看如片并权你然文近社。向始来马那风青会把最金立感式在当。所例年适九就至构感习力自标。规劳才展里快放命按又计党。即成求多重济在思易民生报查。国斯记群期计想三结片取以才必。场完商现东科场用认青林思出口北着道意。明果称志很人为使证即现使。设节治属么建王史种较按他些造相龙带。想这门气知度已如单表接起内。经入连万适工统局消目验程龙原代。行实消除利产究回确育至学列。放头儿军达群你素理与达各除其自革性。特住县时量先二白务但发社族过。候老点化真红领林干美代将中体。传命已指明几确工度心到速车本。民道青新则状家劳华织派什展去变组。根始义响对分制热支水周格气青具干。别能能效造成青取极去米行证手话听证九。命里况细把图真几收列影起合京性名接外。节已器次者队西西儿报素布装八验。作力备你群山龙太也正对学九品局红。研组支易就影全成光资张头铁区之。观受家专音线过要化分属军反始酸。直质支起千象论将维成照土光声点点。全界速系识想行两研全空接半。观米都马多重看江以周变基样经。义分列消面阶养两共们天即知号你志数。就高风而感思你性便技速际再效。无后前无油化国照管路经时带把消同。前而容今七却准然装自么想东子导三。那志价目性也种却反把族难任外物。本区观方完无条进日林派七术况验组。论马管些放车决无更界步却油为。响把和及打四华非立非或其决算油解容联。江土利组快众世使也儿段做低。六局律县应党党教县入改形专。酸转保确持世每型增文本美清叫时。所县明候志石说金达研斯方须越备二。委许量热家她后之声文飞深打中一一示。很许信交变年斯平应阶广动连打想东却。转根积水样图权国得也切全展。今飞点该信率重证教究存除之象精。速起正明建门被照放全其京素参完想越。专当张活好带长政展几联路要状特学正力。况它料物白体象识义看九化要会劳行。照位直还看保代性组常面温红。始响公术角农战本况位联着式提查周又。现因深法反状后府指将到年生己。</p>
+            </div>
+            <div class="hide">
+                <p>内容三 且示西立元增图完除周并件院周。与眼许两所量到两究着马着金领。切历该那律验干西复标争路并别基。正院只些南直院党花响切别。里产地群办济则干张世原素只为。素线子质政南用可县来段各级。红件中受级代程议厂求就候。信压展积府记总万江情土须适真会长。快导习子米油到别交次指律消式。界打白质织意表备火向但处因内。问铁张指清放计老工队拉面增前调管里。世作保起领后精整方心制育装。利存府什理发思音属式来容值元需手。表力作对文话场消七选平第。分严道民油管学约会龙近常例结通七商。治度调率例新则革委必数查她维入。属人这队前里周地容究七近。各真观同产类光他省成务压各引定。没反家品农白米深么己公其级属矿。反头制选场人文阶或率及集亲。务使比科平油地平性求应方面率。我西品形见为万说查除等算江等治也计。社办管听手明设空支年着分过。政也而老员作之总里越办好维报间大。青存无列交清东正被斯劳信。主准角利带车按你克龙众华速动积可放。所北很节么管金始场识建要产及干会难。力市内权三百求因主装政名交规石间。义参向员大龙铁时为标以识传。非象装形放指感难色此被例定各回把。便无到系因类也做单目格解感。社明经最又铁并热受安和往新处国处。好合用时路业已除生权严日万会化。派步党值前边常府思标放意名较世。处便步开南事图从龙火强至广。认同住力速按解阶元且约后教斗义。作生几比价院图验农带积头矿江断。果任看历式手因二根众子分厂效题下。区民内社义海群位用千已何队建。光院社小分业工见律立应到确过报整流外。越或加次公起权音即类然命心没。群南间号群严情素石明太我则其将上。音放七质委律角离系今影但走空院眼每证。期这写或品采当务现代海反期系包须。眼任制维增如子积干放严全路。断元交程动将观水接示压论最话革。做通单而中精铁必王书着建。须场象些点万基质圆儿根型型他查生明。提历少中是红好织着属己走易记名。里不地速运安走农口把下器家设主那上。</p>
+            </div>
+        </div>
+        <ul class="mm-tabs clearfix" bx-name="components/tab" data-event="mouseenter" data-delay="300" data-content="#tab-case2-content">
+            <li class="active"><a href="javascript:;">悬停切换 1</a></li>
+            <li><a href="javascript:;">悬停切换 2</a></li>
+            <li><a href="javascript:;">悬停切换 3</a></li>
+        </ul>
+        <div id="tab-case2-content">
+            <div>
+                <p>内容一 习区提其才不些定难证术和论变每团。内而设除研整划山决斗步然律连正道八。元农老志办于或非律动算史个。比专数约认走身直后众美进共进线展立外。九中装难复打间积党南导将转等记角县问。很标整教头拉可速率儿两器单将也除。土容商到称群才包层接见飞型。利业验还专子区术省区商般九活省。分方己率争酸受查南明节照色全。当研口要而始造员活术平共员几要。象如经那处称格给方整信组铁队际原如。特十县分认实技第划号效资小计适质种平。也以率处正白指压期素对算华过。统已达儿身状意须管报飞我头并任酸张动。手分半阶质示事历速满任切生周持色如。每使表我强见易许况场风米常始商党证。想分十五住斯采油改定太化表。但往拉合红写被带派他统对石理。养资细规六平照备示求上今外程教东并。国人则生毛且产法酸料无对计照京称。样速回府美前风低子及议理里却由身物。把划往元完保子农们断导历干参确劳志入。要前事般石认对值其理报准族区党华。义过专观月素难结团元复水发化受总平家。从更斗较建重己门响型什现对响直农面。造认亲共她高划积命白论就革件。产今权没方组布及被构水声确江交。消九当能口七报并市导生算参已。信南战特标界门红行示素到己如容料力那。称区叫细它影来属具油北达感回置片。还水线则空实治道选主收图各各电。照次事华型回市更目月根叫太千养行据然。组求收见直列权前酸利目议无节规。毛今色属任规情始果严阶安手边办龙体。五花最传十儿农论化书由着林必看与平。种响温直非山全光打今王比最志事置应。值况有复五达中先里容员或。选成面适及要部适转群领层回。百运至治南方进与万精织太矿社中打。群好把始达业写工水斯龙走质生状。权千过究白目马成变须应商研层。立派容律律构月构平的感但。话书引已名各消系他格保太快积种称院流。西民代能整属取据次与容去与。权己题保近都是市且发展进众风很千列。格气引存相当米派准三期按约林活省族。期正认容公无象队领们标江济而而。然叫米已派和下识今定少对效马率相全。国四回并通置厂称但属步养据当选包许。各历党六长前去式速义观空。</p>
+            </div>
+            <div class="hide">
+                <p>内容二 效听是代约以什温报公意却今。反律花想运众及看如片并权你然文近社。向始来马那风青会把最金立感式在当。所例年适九就至构感习力自标。规劳才展里快放命按又计党。即成求多重济在思易民生报查。国斯记群期计想三结片取以才必。场完商现东科场用认青林思出口北着道意。明果称志很人为使证即现使。设节治属么建王史种较按他些造相龙带。想这门气知度已如单表接起内。经入连万适工统局消目验程龙原代。行实消除利产究回确育至学列。放头儿军达群你素理与达各除其自革性。特住县时量先二白务但发社族过。候老点化真红领林干美代将中体。传命已指明几确工度心到速车本。民道青新则状家劳华织派什展去变组。根始义响对分制热支水周格气青具干。别能能效造成青取极去米行证手话听证九。命里况细把图真几收列影起合京性名接外。节已器次者队西西儿报素布装八验。作力备你群山龙太也正对学九品局红。研组支易就影全成光资张头铁区之。观受家专音线过要化分属军反始酸。直质支起千象论将维成照土光声点点。全界速系识想行两研全空接半。观米都马多重看江以周变基样经。义分列消面阶养两共们天即知号你志数。就高风而感思你性便技速际再效。无后前无油化国照管路经时带把消同。前而容今七却准然装自么想东子导三。那志价目性也种却反把族难任外物。本区观方完无条进日林派七术况验组。论马管些放车决无更界步却油为。响把和及打四华非立非或其决算油解容联。江土利组快众世使也儿段做低。六局律县应党党教县入改形专。酸转保确持世每型增文本美清叫时。所县明候志石说金达研斯方须越备二。委许量热家她后之声文飞深打中一一示。很许信交变年斯平应阶广动连打想东却。转根积水样图权国得也切全展。今飞点该信率重证教究存除之象精。速起正明建门被照放全其京素参完想越。专当张活好带长政展几联路要状特学正力。况它料物白体象识义看九化要会劳行。照位直还看保代性组常面温红。始响公术角农战本况位联着式提查周又。现因深法反状后府指将到年生己。</p>
+            </div>
+            <div class="hide">
+                <p>内容三 且示西立元增图完除周并件院周。与眼许两所量到两究着马着金领。切历该那律验干西复标争路并别基。正院只些南直院党花响切别。里产地群办济则干张世原素只为。素线子质政南用可县来段各级。红件中受级代程议厂求就候。信压展积府记总万江情土须适真会长。快导习子米油到别交次指律消式。界打白质织意表备火向但处因内。问铁张指清放计老工队拉面增前调管里。世作保起领后精整方心制育装。利存府什理发思音属式来容值元需手。表力作对文话场消七选平第。分严道民油管学约会龙近常例结通七商。治度调率例新则革委必数查她维入。属人这队前里周地容究七近。各真观同产类光他省成务压各引定。没反家品农白米深么己公其级属矿。反头制选场人文阶或率及集亲。务使比科平油地平性求应方面率。我西品形见为万说查除等算江等治也计。社办管听手明设空支年着分过。政也而老员作之总里越办好维报间大。青存无列交清东正被斯劳信。主准角利带车按你克龙众华速动积可放。所北很节么管金始场识建要产及干会难。力市内权三百求因主装政名交规石间。义参向员大龙铁时为标以识传。非象装形放指感难色此被例定各回把。便无到系因类也做单目格解感。社明经最又铁并热受安和往新处国处。好合用时路业已除生权严日万会化。派步党值前边常府思标放意名较世。处便步开南事图从龙火强至广。认同住力速按解阶元且约后教斗义。作生几比价院图验农带积头矿江断。果任看历式手因二根众子分厂效题下。区民内社义海群位用千已何队建。光院社小分业工见律立应到确过报整流外。越或加次公起权音即类然命心没。群南间号群严情素石明太我则其将上。音放七质委律角离系今影但走空院眼每证。期这写或品采当务现代海反期系包须。眼任制维增如子积干放严全路。断元交程动将观水接示压论最话革。做通单而中精铁必王书着建。须场象些点万基质圆儿根型型他查生明。提历少中是红好织着属己走易记名。里不地速运安走农口把下器家设主那上。</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">滚动条<br>Scrollbar</div>
+    <div class="col"></div>
+</div>
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">加载<br>Loading</div>
+    <div class="col">
+        <div bx-name="components/spin"></div>
+    </div>
+</div>
+
+<div class="ungrid-row demo-row">
+    <div class="col demo-title">动效<br>Animation</div>
+    <div class="col">
+        <a href="http://groups.alidemo.cn/thx/brix-animation/docs/index.html">http://groups.alidemo.cn/thx/brix-animation/docs/index.html</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require(['brix/loader', 'brix/event'], function(Loader, EventManager) {
+        window.Loader = Loader
+        var $manager = new EventManager('on-')
+
+        Loader.boot(function(){
+            require(['components/table/linkage'], function(Linkage) {
+                Linkage(document.body)
+            })
+            require(['jquery', 'parsley'], function($, Parsley) {
+                require(['dependencies/parsleyjs/src/i18n/zh_cn'])
+                $('form').parsley()
+            })
+            require(['underscore', 'mock'], function(_, Mock){
+                var data = Mock.mock({
+                    'list|100': ['@NAME', '@NATURAL(1,1000000)', '@CWORD(5,10)']
+                }).list
+                var suggests = Loader.query('components/suggest')
+                _.each(suggests, function(item, index){
+                    item.on('change.suggest.input', function(event, value) {
+                        if (!$.trim(value)) {
+                            item.close()
+                            return
+                        }
+                        item.data(
+                            _.filter(data, function(item, index){
+                                return ('' + item).toLowerCase().indexOf(value.toLowerCase()) !== -1
+                            })
+                            .sort(function(a, b) {
+                                return ('' + a).toLowerCase().indexOf(value.toLowerCase()) - ('' + b).toLowerCase().indexOf(value.toLowerCase())
+                            })
+                        )
+                    })
+                })
+            })
+            $('.sub-toggle > .brixfont').on('click', function(event) {
+                $(event.currentTarget)
+                    .parents('td.sub-toggle').toggleClass('open')
+                    .parent('tr').next('tr.sub').toggle()
+            })
+
+            // TODO
+            $('thead').hover(function() {
+                $(this).parents('table').parent().find('.column-scroll-arrow').addClass('hover')
+            }, function() {
+                $(this).parents('table').parent().find('.column-scroll-arrow').removeClass('hover')
+            })
+            
+            // TODO
+            $('.btn-dropdown-toggle').on('click', function() {
+                var target = $(this).parents('.btn-dropdown')
+                $('.btn-dropdown').not(target).removeClass('open')
+                target.toggleClass('open')
+            })
+            var type = 'click.btn-dropdown'
+            $(document.body).off(type)
+                .on(type, function(event) {
+                    var target = $(event.target)
+                    if(target.parents('.btn-dropdown').length === 0) {
+                        $('.btn-dropdown').removeClass('open')
+                    }
+                })
+
+            $('#customDropdownWithSearchbox input').on('keyup', function(){
+                Loader.query($('#customDropdownWithSearchbox')).data(
+                    _.range(_.random(1,1000)).reverse()
+                )
+            })
+
+            
+
+            $manager.delegate(document.body, {
+                handle: function(){
+                    console.log(this, arguments)
+                }
+            })
+        })
+    })
+</script>
+
+</body>
+</html>
