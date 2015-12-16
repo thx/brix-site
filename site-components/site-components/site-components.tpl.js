@@ -5,7 +5,7 @@ define(function() {
     <div class="fontsize-20 mb40">组件库</div>
     <div class="row">
         <% for (var i = 0; i < components.length; i++) { %>
-        <div class="col-sm-4">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <div class="panel panel-default site-panel">
                 <div class="panel-heading">
                     <a href="readme.html?name=<%= components[i].name %>" class="name"><%= components[i].name %></a>
