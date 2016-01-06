@@ -536,8 +536,29 @@
 <div class="ungrid-row demo-row">
     <div class="col demo-title">翻页器<br>Pagination</div>
     <div class="col">
-        <div bx-name="components/pagination" data-total="100" data-cursor="1" data-limit="9" data-simplify="true" class="mb10"></div>
-        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" bx-options="{ step: 4 }"></div>
+        <b>on-change:</b>
+        <div bx-name="components/pagination" data-total="100" data-cursor="1" data-limit="9" data-simplify="true" class="mb10" on-change="handle"></div>
+        
+        <b>on-change:</b>
+        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" 
+            on-change="handle"></div>
+        
+        <b>on-change.dropdown:</b>
+        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" 
+            on-change.dropdown="handle"></div>
+        
+        <b>on-change.pagination:</b>
+        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" bx-options="{ step: 4 }"  
+            on-change.pagination="handle"></div>
+        
+        <b>on-change.dropdown + on-change.pagination:</b>
+        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" 
+            on-change.dropdown="handle" 
+            on-change.pagination="handle"></div>
+
+        <b>on-change.dropdown.pagination</b>
+        <div bx-name="components/pagination" data-total="1000" data-cursor="1" data-limit="10" 
+            on-change.dropdown.pagination="handle"></div>
     </div>
 </div>
 <div class="ungrid-row demo-row">
