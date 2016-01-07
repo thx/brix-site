@@ -30,11 +30,11 @@
     "highlightjs": "*"
   },
   "homepage": "https://github.com/nuysoft/brix-spa",
-  "_release": "d3887e05b5",
+  "_release": "83d41d4f1a",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "d3887e05b56373499f84a7e6b4b65819334da596"
+    "commit": "83d41d4f1a95970cdd79b84fda1e5d112eb91af3"
   },
   "_source": "git://github.com/nuysoft/brix-spa.git",
   "_target": "master",

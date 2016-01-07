@@ -20,11 +20,11 @@
   ],
   "dependencies": {},
   "devDependencies": {},
-  "_release": "f65736246c",
+  "_release": "45d0d76294",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "f65736246c4fc99dda2afaa4db45d7d0a1cd6bfb"
+    "commit": "45d0d7629488e7ad023d082ec3992f12a48795d6"
   },
   "_source": "git://github.com/thx/brix-loader.git",
   "_target": "master",

@@ -1,3 +1,4 @@
+
 /* global define */
 /* jshint multistr:true */
 /*
@@ -13,7 +14,7 @@
     * 联想到了 生死簿、阎王、牛头马面、黑白无常、鬼魂
  */
 define(
-    [],
+    'brix/doom',[],
     function() {
         return {
             // 备选方法名 doom|ava
@@ -41,4 +42,4 @@ define(
             }
         }
     }
-)
+);

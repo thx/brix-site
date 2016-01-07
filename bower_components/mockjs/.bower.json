@@ -1,7 +1,7 @@
 {
   "name": "mockjs",
   "title": "Mock.js",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "homepage": "http://mockjs.com/",
   "authors": [
     "nuysoft <nuysoft@gmail.com>"
@@ -25,11 +25,11 @@
     "seajs": "*",
     "js-beautify": "~1.5.1"
   },
-  "_release": "0.1.10",
+  "_release": "0.1.11",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.10",
-    "commit": "d411c0b7c4cfb6448573381d9591570d18abe8a1"
+    "tag": "0.1.11",
+    "commit": "d08e487201ecfd4cac64a4d1907f7e2b8e1dfd8b"
   },
   "_source": "git://github.com/nuysoft/Mock.git",
   "_target": "~0.1.10",
