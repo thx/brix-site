@@ -145,8 +145,6 @@
   }
 }
 
-/* /ctree/ctree.css */
-
 /* /datepicker/datepicker.css */
 .datepicker-container {
   background-color: white;
@@ -309,6 +307,8 @@
 .datepicker-container .picker-footer {
   text-align: center;
 }
+
+/* /ctree/ctree.css */
 
 /* /datepickerwrapper/datepickerwrapper.css */
 .datepickerwrapper {
@@ -965,7 +965,7 @@
 .bs-example pre {
   margin: 0;
   border: none;
-  border-radius: 0;
+  border-radius: 0 0 4px 4px;
   border-top: 1px solid #ddd;
 }
 .hljs {

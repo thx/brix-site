@@ -54,6 +54,7 @@
 // 字体
 // ----------------------------------------
 
+// http://iconfont.cn/users/project?pid=12401
 @font-face {
     font-family: 'brixfont';
     src: url('//at.alicdn.com/t/font_1430140325_0320485.eot'); /* IE9*/
@@ -250,6 +251,8 @@
 // 字体
 // ----------------------------------------
 
+@font-family: "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Georgia, "Times New Roman", Arial, sans-serif;
+
 .fontsize- {
     .for(12 14 16 18 20 22 24 26 28 30 32); .-each(@px) {
         &@{px} {
@@ -260,7 +263,7 @@
 
 body {
     font-size: 12px;
-    font-family: "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Georgia, "Times New Roman", Arial, sans-serif;
+    font-family: @font-family;
     background-color: #fff;
     color: #333;
     -webkit-font-smoothing: antialiased;
@@ -660,6 +663,7 @@ ul.checklist-linear {
             border-color: #CCC;
         }
         .dropdown-toggle-label {
+            float: left;
             display: inline-block;
             text-align: left;
         }
@@ -813,7 +817,7 @@ textarea, .textarea,
     .border-radius(4px);
     .box-sizing(border-box);
     .box-shadow(none);
-    .transition(none);
+    // .transition(none);
 
     &:hover {
         border-color: #ccc;
@@ -905,6 +909,7 @@ button.error, button.input-error, button.parsley-error {
 // ----------------------------------------
 
 .popover {
+    font-family: @font-family;
     border-color: #EBEBEB;
     border-radius: 4px;
     padding: 0;
@@ -927,6 +932,31 @@ button.error, button.input-error, button.parsley-error {
 // ----------------------------------------
 // 日历 Calendar
 // ----------------------------------------
+
+[bx-name="components/datepickerwrapper"] {
+    .brixfont {
+        margin-left: 5px;
+        font-size: 100%;
+        &.up {
+            display: none;
+        }
+        &.down {
+            display: inline-block;
+        }
+        &.datepickerwrapper-open {
+            .brixfont {
+                &.up {
+                    display: inline-block;
+                }
+                &.down {
+                    display: none;
+                }
+            }
+        }
+
+    }
+}
+
 
 .datepickerwrapper-trigger {
     cursor: pointer;
@@ -952,7 +982,7 @@ button.error, button.input-error, button.parsley-error {
     &.datepickerwrapper-open {
         border-color: #CCC;
         color: #333;
-        .brixfont{
+        .brixfont {
             &.up {
                 display: block;
             }
@@ -1436,6 +1466,28 @@ table {
     .glyph {
         margin-right: 15px;
     }
+    &.bg-info {
+        a {
+            border-bottom: 1px solid @brand;
+            &:hover {
+                border-bottom: 1px solid @brand-hover;
+            }
+        }
+    }
+    &.bg-warning, &.bg-danger, &.bg-success, &.bg-fail {
+        span {
+            opacity: .8;
+        }
+        a {
+            color: white;
+            opacity: .8;
+            border-bottom: 1px solid white;
+            &:hover {
+                color: white;
+                opacity: 1;
+            }
+        }
+    }
 }
 
 .contextual-message-sticky {
@@ -1890,7 +1942,7 @@ table {
         border-bottom-color: transparent;
         transition: border .2s ease-in-out;
         cursor: pointer;
-        &.active, &:hover {
+        &:hover, &.active {
             border-bottom-color: @brand;
         }
         a {
@@ -1901,7 +1953,12 @@ table {
             margin: 0;
             transition: color .1s ease-in-out;
         }
-        &.active, &:hover {
+        &:hover {
+            a {
+                color: #333;
+            }
+        }
+        &.active {
             a {
                 color: @brand;
             }
