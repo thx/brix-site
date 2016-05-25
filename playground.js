@@ -3,7 +3,7 @@ require(
 	['jquery', 'mock', 'brix/loader', 'brix/event', 'brix/bisheng'],
 	function($, Mock, Loader, EventManager, BiSheng) {
 		BiSheng.auto(true)
-		require(['css!css-tool/mm.css'])
+		// require(['css!css-tool/mm.css'])
 
 		var $container = $('.container')
 		var tpl = $('#brix-event-in-view').html()

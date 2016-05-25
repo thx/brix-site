@@ -95,11 +95,12 @@ define(
         */
 
         var NAMESPACE = '.dropdown'
+        var compiledTemplate = _.template(template)
 
         function Dropdown(options) {
             if (options && options.element) {
                 if ('select' !== options.element.nodeName.toLowerCase()) {
-                    return new CustomDropdown()
+                    return new CustomDropdown(options)
                 }
             }
         }
@@ -111,6 +112,10 @@ define(
                 value: undefined,
                 data: [],
                 disabled: undefined,
+
+                width: undefined, // data-width="100" data-width="100px" data-width="100%"
+                className: undefined, // { data-class | data-className | className: ''}
+                justify: false, // 两端对齐 data-justify="true|false"
 
                 searchbox: false, // false | true | keyup | enter
                 placeholder: '搜索关键词',
@@ -166,16 +171,38 @@ define(
                         options.popover = true
                     }
                 }
+
+                // data-class => data-className
+                if (this.options.class) this.options.className = this.options.class
             },
             render: function() {
                 this.$relatedElement = $(
-                    _.template(template)(this.options)
+                    compiledTemplate(this.options)
                 ).insertBefore(this.$element)
+
+                var width = this.options.width
+                if (width) {
+                    if (parseInt(width) == width) width += 'px'
+                    this.$relatedElement.css({
+                        width: width,
+                        'min-width': width
+                    })
+                }
+
+                // 类样式 data-className
+                if (this.options.className) {
+                    this.$relatedElement.addClass(this.options.className)
+                }
+
+                // 两端对齐 data-justify
+                if (this.options.justify) {
+                    this.$relatedElement.addClass('dropdown-justify')
+                }
 
                 this.$manager.delegate(this.$element, this)
                 this.$manager.delegate(this.$relatedElement, this)
 
-                Loader.boot(this.$relatedElement)
+                if (this.options.popover) Loader.boot(this.$relatedElement)
 
                 // this._responsive()
                 this._autoHide()
@@ -213,8 +240,15 @@ define(
                 var data /* { label: '', value: '', selected: true|false } */
                 if (_.isObject(value)) data = value
                 else _.each(this.options.data, function(item /*, index*/ ) {
-                    if (item.value == value) data = item
-                    item.selected = item.value == value
+                    if (item.children) {
+                        _.each(item.children, function(childItem /*, index*/ ) {
+                            if (childItem.value == value) data = childItem
+                            childItem.selected = childItem.value == value
+                        })
+                    } else {
+                        if (item.value == value) data = item
+                        item.selected = item.value == value
+                    }
                 })
 
                 // 未知值
@@ -239,7 +273,15 @@ define(
                 // 将 data.value 转换为字符串，是为了避免检测 `1 === '1'` 失败（旧值 oldValue 总是字符串）
                 if (('' + data.value) === oldValue) return this
 
-                this.trigger('change' + NAMESPACE, data)
+                // TODO #19 支持 event.preventDefault()
+                // 应该先触发 change.dropdown 事件，然后检测事件的默认行为是否被阻止，然后才是改变样式！
+
+                var event = $.Event('change' + NAMESPACE)
+                this.trigger(event, {
+                    name: this.options.name,
+                    label: data.label,
+                    value: data.value
+                })
 
                 this.$element
                     .triggerHandler('change')
@@ -256,14 +298,14 @@ define(
 
                 var $menu = this.$relatedElement.find('ul.dropdown-menu')
                 var $newMenu = $(
-                    _.template(template)(this.options)
+                    compiledTemplate(this.options)
                 ).find('ul.dropdown-menu')
 
                 $menu.replaceWith($newMenu)
 
                 this.$manager.delegate(this.$relatedElement, this)
 
-                Loader.boot(this.$relatedElement)
+                if (this.options.popover) Loader.boot(this.$relatedElement)
 
                 return this
             },
@@ -271,16 +313,12 @@ define(
                 var $target = $(event.currentTarget)
                 var value = $target.attr('value')
                 var label = $.trim($target.text())
-                var data = {
-                    name: this.options.name,
-                    label: label,
-                    value: value !== undefined ? value : label
-                }
-                this.val(data)
+                this.val(value !== undefined ? value : label)
                 this.toggle()
 
-                $target.closest('li').addClass('active')
-                    .siblings().removeClass('active')
+                // #8 如果在 change.dropdown 中再次改变值，则会和下面的代码冲突
+                // $target.closest('li').addClass('active')
+                //     .siblings().removeClass('active')
             },
             search: function(event) {
                 if (event.type === 'keyup') {
@@ -507,7 +545,7 @@ define(
 
                 var $menu = this.$relatedElement.find('ul.dropdown-menu')
                 var $newMenu = $(
-                    _.template(template)(this.options)
+                    compiledTemplate(this.options)
                 ).find('ul.dropdown-menu')
 
                 $menu.replaceWith($newMenu)

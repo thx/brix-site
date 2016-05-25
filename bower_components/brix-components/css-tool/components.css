@@ -145,6 +145,8 @@
   }
 }
 
+/* /ctree/ctree.css */
+
 /* /datepicker/datepicker.css */
 .datepicker-container {
   background-color: white;
@@ -160,13 +162,6 @@
   border-top: 1px solid #DDD;
   padding: 15px 0 13px 0;
   margin-top: -2px;
-}
-.datepicker-container .picker-group.first-group {
-  border-top: none;
-  padding-top: 0;
-}
-.datepicker-container .picker-group.last-group {
-  padding-bottom: 0;
 }
 .datepicker-container .picker-group .picker-header {
   text-align: center;
@@ -307,8 +302,6 @@
 .datepicker-container .picker-footer {
   text-align: center;
 }
-
-/* /ctree/ctree.css */
 
 /* /datepickerwrapper/datepickerwrapper.css */
 .datepickerwrapper {
@@ -503,6 +496,9 @@
 /* /dialogview/dialogview.css */
 
 /* /dropdown/dropdown.css */
+select[bx-name="components/dropdown"] {
+  visibility: hidden;
+}
 .dropdown {
   display: inline-block;
 }
@@ -706,9 +702,9 @@
 
 /* /footer/footer.css */
 
-/* /hello/hello.css */
-
 /* /hello-extra/hello-extra.css */
+
+/* /hello/hello.css */
 
 /* /hourpicker/hourpicker.css */
 .hourpicker {
@@ -1756,12 +1752,89 @@ ul.sidebar-2 a.sidebar-link-3 > i {
 }
 
 /* /switch/switch.css */
+input[bx-name="components/switch"] {
+  visibility: hidden;
+}
+.switch {
+  background-color: #fff;
+  border: 1px solid #dfdfdf;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  height: 30px;
+  position: relative;
+  vertical-align: middle;
+  width: 50px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-background-clip: content-box;
+  background-clip: content-box;
+  transition: border 0.4s, box-shadow 0.4s, background-color 0.4s;
+  /* Switch sizes. */
+}
+.switch > small {
+  background: white;
+  border-radius: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  height: 30px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  transition: background-color 0.4s, left 0.2s;
+}
+.switch.switch-checked {
+  border-color: #428BCA;
+  background-color: #428BCA;
+}
+.switch.switch-checked > small {
+  left: 20px;
+}
+.switch.switch-disabled {
+  cursor: not-allowed;
+}
+.switch.switch-small {
+  border-radius: 20px;
+  height: 20px;
+  width: 33px;
+}
+.switch.switch-small > small {
+  height: 20px;
+  width: 20px;
+}
+.switch.switch-small.switch-checked > small {
+  left: 13px;
+}
+.switch.switch-large {
+  border-radius: 40px;
+  height: 40px;
+  width: 66px;
+}
+.switch.switch-large > small {
+  height: 40px;
+  width: 40px;
+}
+.switch.switch-large.switch-checked > small {
+  left: 26px;
+}
 
 /* /tab/tab.css */
 
 /* /table/table.css */
 .table-fixed {
   table-layout: fixed;
+}
+.table-column-priority-trigger {
+  cursor: pointer;
+  padding: 2px 6px;
+  border: 1px solid #E6E6E6;
+  border-radius: 4px;
 }
 .table .more {
   position: relative;

@@ -41,6 +41,9 @@ define(
                 公共事件：ready destroyed
                 
         */
+
+        var PAGINATION_LIMITS = [10, 20, 30, 40, 50]
+
         function Pagination() {}
 
         _.extend(Pagination.prototype, Brix.prototype, {
@@ -51,9 +54,13 @@ define(
                 total: 0,
                 cursor: 1,
                 limit: 10,
-                limits: [10, 20, 30, 40, 50]
+                limits: undefined
             },
             init: function() {
+                this.options.limits = this.options.limits && this.options.limits.length ?
+                    _.unique(this.options.limits) :
+                    [].concat(PAGINATION_LIMITS)
+
                 this._state = new PurePagination(
                     this.options.total,
                     this.options.cursor,
@@ -79,6 +86,8 @@ define(
 
                     /* jshint unused:false */
                     that.dropdown.on('change.dropdown', function(event, data) {
+                        event.stopPropagation()
+                        that._state.setCursor(1)
                         that._state.setLimit(data.value)
                         that.trigger('change.pagination', that._state)
                         that._update()

@@ -40,7 +40,7 @@ define(
         DatePicker.typeMap = function(type) {
             if (_.indexOf(['all', '', undefined], type) !== -1) type = TYPES
             var result = {}
-            _.each(type.split(' '), function(item /*, index*/ ) {
+            _.each(type.split(/\s+/), function(item /*, index*/ ) {
                 result[item] = true
             })
 
@@ -53,11 +53,13 @@ define(
                 date: moment(), // date dateShadow
                 type: 'all',
                 range: [],
+                excluded: [],
                 unlimit: false
             },
             init: function() {
                 // 修正选项 range，转换成一维数组
                 this.options.range = _.flatten(this.options.range)
+                this.options.excluded = _.flatten(this.options.excluded)
 
                 // 支持不限
                 if (this.options.unlimit) this.options.unlimit = moment(
@@ -108,7 +110,8 @@ define(
                     )
 
                     var same = this.data.date.toDate().getTime() === milliseconds
-                    this.trigger((same ? 'unchange' : 'change') + NAMESPACE, moment(this.data.date))
+                    var changeEvent = $.Event((same ? 'unchange' : 'change') + NAMESPACE)
+                    this.trigger(changeEvent, moment(this.data.date))
 
                     if (!same) this._renderYearPicker()._renderMonthPicker()._renderDatePicker()._renderTimePicker()
 
@@ -124,6 +127,14 @@ define(
                     return this
                 }
                 return this.options.range
+            },
+            excluded: function(value) {
+                if (value) {
+                    this.options.excluded = _.flatten(value)
+                    this._renderDatePicker()
+                    return this
+                }
+                return this.options.excluded
             },
             // 在 .yearpicker .monthpicker .datepicker 之间切换（滑动效果）
             _slide: function(event, from, to) {
@@ -155,7 +166,8 @@ define(
                 date.add(dir, unit)
 
                 var same = date.toDate().getTime() === milliseconds
-                this.trigger((same ? 'unchange' : 'change') + NAMESPACE, [moment(date), unit])
+                var changeEvent = $.Event((same ? 'unchange' : 'change') + NAMESPACE)
+                this.trigger(changeEvent, [moment(date), unit])
 
                 if (!same) this._renderYearPicker()._renderMonthPicker()._renderDatePicker()
             },
@@ -175,7 +187,8 @@ define(
                 date.set(unit, +$target.attr('data-value'))
 
                 var same = date.toDate().getTime() === milliseconds
-                this.trigger((same ? 'unchange' : 'change') + NAMESPACE, [moment(date), unit])
+                var changeEvent = $.Event((same ? 'unchange' : 'change') + NAMESPACE)
+                this.trigger(changeEvent, [moment(date), unit])
 
                 if (!same) this._renderYearPicker()._renderMonthPicker()._renderDatePicker()
 
@@ -202,7 +215,8 @@ define(
 
                 // submit
                 if (extra === undefined && unit === undefined && units === undefined) {
-                    this.trigger('change' + NAMESPACE, [moment(date), 'time'])
+                    var submitEvent = $.Event('change' + NAMESPACE)
+                    this.trigger(submitEvent, [moment(date), 'time'])
                     return
                 }
 
@@ -222,7 +236,8 @@ define(
                 event.stopPropagation()
 
                 var same = date.toDate().getTime() === milliseconds
-                this.trigger((same ? 'unchange' : 'change') + NAMESPACE, [moment(date), unit])
+                var changeEvent = $.Event((same ? 'unchange' : 'change') + NAMESPACE)
+                this.trigger(changeEvent, [moment(date), unit])
 
                 if (!same) this._renderTimePicker()._renderYearPicker()._renderMonthPicker()._renderDatePicker()
             },
@@ -305,6 +320,7 @@ define(
                 var days = date.daysInMonth()
                 var startDay = moment(date).date(1).day()
                 var range = this.options.range
+                var excluded = this.options.excluded
 
                 var $title = this.$element.find('.datepicker .picker-header h4')
                 var $body = this.$element.find('.datepicker .picker-body .datepicker-body-value')
@@ -318,14 +334,14 @@ define(
                 for (var ii = 1; ii <= days; ii++) {
                     $('<span>').text(ii).attr('data-value', ii)
                         .addClass(!unlimitMode && date.date() === ii ? 'active' : '')
-                        .addClass(disabled(ii) ? 'disabled' : '')
+                        .addClass(!inRange(ii) || inExcluded(ii) ? 'disabled' : '')
                         .attr('bx-click', '_active("date")')
                         .appendTo($body)
                 }
                 return this
 
-                function disabled(ii) {
-                    if (!range.length) return false
+                function inRange(ii) {
+                    if (!range.length) return true
                     var cur = moment(date).startOf('day').set('date', ii)
                     var min, max
                     for (var i = 0; i < range.length; i += 2) {
@@ -343,12 +359,39 @@ define(
                             min = tmpMin
                             max = tmpMax
                         }
-                        if (min && max && cur.diff(min, 'days') >= 0 && cur.diff(max, 'days') <= 0) return false
-                        if (min && !max && cur.diff(min, 'days') >= 0) return false
-                        if (!min && max && cur.diff(max, 'days') <= 0) return false
-                        if (!min && !max) return false
+                        if (min && max && cur.diff(min, 'days') >= 0 && cur.diff(max, 'days') <= 0) return true
+                        if (min && !max && cur.diff(min, 'days') >= 0) return true
+                        if (!min && max && cur.diff(max, 'days') <= 0) return true
+                        if (!min && !max) return true
                     }
-                    return true
+                    return false
+                }
+
+                function inExcluded(ii) {
+                    if (!excluded.length) return false
+                    var cur = moment(date).startOf('day').set('date', ii)
+                    var min, max
+                    for (var i = 0; i < excluded.length; i += 2) {
+                        min = excluded[i] && moment(
+                            excluded[i],
+                            _.isString(excluded[i]) && DATE_TIME_PATTERN
+                        ).startOf('day')
+                        max = excluded[i + 1] && moment(
+                            excluded[i + 1],
+                            _.isString(excluded[i + 1]) && DATE_TIME_PATTERN
+                        ).startOf('day')
+                        if (min && max) {
+                            var tmpMin = moment.min(min, max)
+                            var tmpMax = moment.max(min, max)
+                            min = tmpMin
+                            max = tmpMax
+                        }
+                        if (min && max && cur.diff(min, 'days') >= 0 && cur.diff(max, 'days') <= 0) return true
+                        if (min && !max && cur.diff(min, 'days') >= 0) return true
+                        if (!min && max && cur.diff(max, 'days') <= 0) return true
+                        if (!min && !max) return true
+                    }
+                    return false
                 }
             },
             _renderTimePicker: function() {
@@ -366,7 +409,8 @@ define(
                 this.__unlimit = unlimit
 
                 var same = unlimit.isSame(this.data.date)
-                this.trigger((same ? 'unchange' : 'change') + NAMESPACE, [unlimit, 'date'])
+                var changeEvent = $.Event((same ? 'unchange' : 'change') + NAMESPACE)
+                this.trigger(changeEvent, [unlimit, 'date'])
 
                 this._renderYearPicker()._renderMonthPicker()._renderDatePicker()
             },

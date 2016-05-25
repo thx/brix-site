@@ -20,11 +20,11 @@
   },
   "devDependencies": {},
   "homepage": "https://github.com/nuysoft/brix-event",
-  "_release": "0d9c97bc3c",
+  "_release": "9dbb3c8812",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "0d9c97bc3c1f6dc0ba66380aa46bfe902cd21a68"
+    "commit": "9dbb3c8812b663289b4da87a081a2de020854f3c"
   },
   "_source": "git://github.com/nuysoft/brix-event.git",
   "_target": "master",

@@ -1370,13 +1370,55 @@ ul.checklist-linear {
 ul.checklist-linear > li {
   float: left;
 }
+.switch {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-background-clip: content-box;
+  background-clip: content-box;
+  -webkit-transition: border 0.4s, box-shadow 0.4s, background-color 0.4s;
+  -moz-transition: border 0.4s, box-shadow 0.4s, background-color 0.4s;
+  -ms-transition: border 0.4s, box-shadow 0.4s, background-color 0.4s;
+  -o-transition: border 0.4s, box-shadow 0.4s, background-color 0.4s;
+  transition: border 0.4s, box-shadow 0.4s, background-color 0.4s;
+}
+.switch > small {
+  -webkit-transition: background-color 0.4s, left 0.2s;
+  -moz-transition: background-color 0.4s, left 0.2s;
+  -ms-transition: background-color 0.4s, left 0.2s;
+  -o-transition: background-color 0.4s, left 0.2s;
+  transition: background-color 0.4s, left 0.2s;
+}
+.switch.switch-checked {
+  background-color: #ff6600;
+  border-color: #ff6600;
+}
+.switch.switch-checked > small {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.switch.switch-disabled {
+  background-color: #f0f0f0;
+  border-color: #e6e6e6;
+}
+.switch.switch-disabled > small {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
 .dropdown {
   min-width: 190px;
 }
 .dropdown .dropdown-toggle {
   width: 100%;
   height: 32px;
-  padding: 6px 12px;
+  padding: 6px 30px 6px 12px;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
   color: #999;
@@ -1390,10 +1432,16 @@ ul.checklist-linear > li {
   float: left;
   display: inline-block;
   text-align: left;
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .dropdown .dropdown-toggle .caret_brixfont {
   float: right;
   margin-left: 10px;
+  position: absolute;
+  right: 12px;
 }
 .dropdown.open .dropdown-toggle.btn-default {
   border-color: #CCC;
@@ -1493,12 +1541,15 @@ ul.checklist-linear > li {
   position: absolute;
   right: 12px;
 }
+.dropdown.dropdown-justify .dropdown-menu-wrapper,
 .dropdown.dropdown-ellipsis .dropdown-menu-wrapper {
   width: 100%;
 }
+.dropdown.dropdown-justify .dropdown-menu-wrapper ul.dropdown-menu,
 .dropdown.dropdown-ellipsis .dropdown-menu-wrapper ul.dropdown-menu {
   width: 100%;
 }
+.dropdown.dropdown-justify .dropdown-menu-wrapper ul.dropdown-menu > li > a,
 .dropdown.dropdown-ellipsis .dropdown-menu-wrapper ul.dropdown-menu > li > a {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -1846,6 +1897,11 @@ button.parsley-error {
 .datepicker-container > .picker-group .picker-body .datepicker-body-value span.active {
   color: white;
   background-color: #ff6600;
+}
+.datepicker-container > .picker-group.yearpicker .picker-body,
+.datepicker-container > .picker-group.monthpicker .picker-body {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .datepicker-container > .picker-group.timepicker {
   width: 100%;

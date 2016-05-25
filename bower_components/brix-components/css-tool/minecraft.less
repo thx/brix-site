@@ -43,6 +43,21 @@
           box-sizing: @sizing;
 }
 
+// User Select
+.user-select(@value) {
+  -webkit-user-select: @value;
+   -khtml-user-select: @value;
+     -moz-user-select: @value;
+      -ms-user-select: @value;
+          user-select: @value;
+}
+
+// Background Clip
+.background-clip(@value) {
+  -webkit-background-clip: @value;
+          background-clip: @value;    
+}
+
 
 // Opacity
 .opacity(@opacity) {
@@ -643,6 +658,33 @@ ul.checklist-linear {
     }
 }
 
+// ----------------------------------------
+// 开关按钮 switch
+// ----------------------------------------
+
+.switch {
+    .user-select(none);
+    .box-sizing(content-box);
+    .background-clip(content-box);
+    .transition(~"border 0.4s, box-shadow 0.4s, background-color 0.4s");
+    > small {
+        .transition(~"background-color 0.4s, left 0.2s");
+    }
+    &.switch-checked {
+        background-color: @brand;
+        border-color: @brand;
+        > small {
+            .box-shadow(none);
+        }
+    }
+    &.switch-disabled {
+        background-color: @bg;
+        border-color: @border;
+        > small {
+            .box-shadow(none);
+        }
+    }
+}
 
 // ----------------------------------------
 // 下拉框 Dropdown
@@ -653,7 +695,7 @@ ul.checklist-linear {
     .dropdown-toggle {
         width: 100%;
         height: 32px;
-        padding: 6px 12px;
+        padding: 6px 30px 6px 12px;
         border: 1px solid @border;
         border-radius: 4px;
         color: #999;
@@ -666,10 +708,16 @@ ul.checklist-linear {
             float: left;
             display: inline-block;
             text-align: left;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
         .caret_brixfont {
             float: right;
             margin-left: 10px;
+            position: absolute;
+            right: 12px;
         }
     }
     &.open .dropdown-toggle {
@@ -779,6 +827,7 @@ ul.checklist-linear {
             }
         }
     }
+    &.dropdown-justify,
     &.dropdown-ellipsis {
         .dropdown-menu-wrapper {
             width: 100%;
@@ -1123,6 +1172,13 @@ button.error, button.input-error, button.parsley-error {
                     color: white;
                     background-color: @brand;
                 }
+            }
+        }
+        &.yearpicker,
+        &.monthpicker {
+            .picker-body {
+                padding-left: 10px;
+                padding-right: 10px;
             }
         }
         &.timepicker {

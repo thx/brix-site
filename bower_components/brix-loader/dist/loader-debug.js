@@ -182,6 +182,55 @@ define('brix/loader/util',[],function() {
         return obj
     }
 
+    // overwrite
+    // http://api.jquery.com/jQuery.extend/
+    _.extend = function() {
+        var target = arguments[0]
+        var index = 1
+        var length = arguments.length
+        var deep = false
+        var options, name, src, copy, clone
+
+        if (typeof target === "boolean") {
+            deep = target
+            target = arguments[index] || {}
+            index++
+        }
+
+        if (typeof target !== "object" && typeof target !== "function") {
+            target = {}
+        }
+
+        if (length === 1) {
+            target = this
+            index = 0
+        }
+
+        for (; index < length; index++) {
+            options = arguments[index]
+            if (!options) continue
+
+            for (name in options) {
+                src = target[name]
+                copy = options[name]
+
+                if (target === copy) continue
+                if (copy === undefined) continue
+
+                if (deep && (_.isArray(copy) || _.isPlainObject(copy))) {
+                    if (_.isArray(copy)) clone = src && _.isArray(src) ? src : []
+                    if (_.isPlainObject(copy)) clone = src && _.isPlainObject(src) ? src : {}
+
+                    target[name] = _.extend(deep, clone, copy)
+                } else {
+                    target[name] = copy
+                }
+            }
+        }
+
+        return target
+    }
+
     // Retrieve the names of an object's properties.
     // Delegates to **ECMAScript 5**'s native `Object.keys`
     _.keys = function(obj) {
@@ -216,6 +265,41 @@ define('brix/loader/util',[],function() {
             return toString.call(obj) == '[object ' + name + ']'
         }
     })
+
+    // http://api.jquery.com/jQuery.isPlainObject/
+    _.isPlainObject = function(obj) {
+        // Must be an Object.
+        // Because of IE, we also have to check the presence of the constructor property.
+        // Make sure that DOM nodes and window objects don't pass through, as well
+        if (!obj || !_.isObject(obj) || obj.nodeType || _.isWindow(obj)) {
+            return false
+        }
+
+        try {
+            // Not own constructor property must be Object
+            if (obj.constructor &&
+                !hasOwnProperty.call(obj, 'constructor') &&
+                !hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf')) {
+                return false;
+            }
+        } catch (e) {
+            // IE8,9 Will throw exceptions on certain host objects #9897
+            return false
+        }
+
+        // Own properties are enumerated firstly, so to speed up,
+        // if last one is own, then all properties are own.
+
+        var key
+        for (key in obj) {}
+
+        return key === undefined || hasOwnProperty.call(obj, key)
+    }
+
+    // http://api.jquery.com/jQuery.isWindow/
+    _.isWindow = function(obj) {
+        return obj && obj === obj.window
+    }
 
     // Is a given object a finite number?
     _.isFinite = function(obj) {
@@ -852,6 +936,7 @@ define(
             queue
                 .queue(function(next) {
                     // 2. 加载组件模块
+                    // load module file
                     /* jshint unused:false */
                     require([options.moduleId], function(module) {
                         BrixImpl = module
@@ -865,10 +950,13 @@ define(
                 .queue(function(next) {
                     try {
                         // 3. 创建组件实例（按需传入参数 options）
+                        // create a new module instance
                         instance = BrixImpl.length ? new BrixImpl(options) : new BrixImpl()
-                            // 设置属性 options
-                        instance.options = Util.extend({}, instance.options, options)
-                            // 设置其他公共属性
+
+                        // 设置实例属性 options
+                        instance.options = Util.extend(true, {}, instance.options, options)
+
+                        // 设置其他公共属性
                         Util.extend(instance, Util.pick(options, Constant.OPTIONS))
 
                         next()
@@ -879,6 +967,7 @@ define(
                 })
                 .queue(function(next) {
                     // 拦截销毁方法
+                    // intercept destroy method of the module instance
                     instance._destroy = instance.destroy
                     instance.destroy = function() {
                         destroy(false, instance)
@@ -887,11 +976,13 @@ define(
                 })
                 .queue(function(next) {
                     // 缓存起来，关联父组件
+                    // cache the module instance
                     cache(instance)
                     next()
                 })
                 .queue(function(next) {
                     // 4. 执行初始化
+                    // exec module instance initialize
                     if (!instance.init) {
                         next()
                         return
@@ -918,6 +1009,7 @@ define(
                 })
                 .queue(function(next) {
                     // 拦截渲染方法
+                    // intercept render method of the module instance
                     if (instance._render) {
                         next()
                         return
@@ -990,6 +1082,7 @@ define(
                 })
                 .queue(function(next) {
                     // 5. 执行渲染（不存在怎么办？必须有！）
+                    // exec render method of the module instance
                     try {
                         var result = instance.render(function(error /*, instance*/ ) {
                             if (error) {}
@@ -1015,6 +1108,7 @@ define(
                 })
                 .queue(function(next) {
                     // 绑定测试事件
+                    // bind lifecycle event of the module instance
                     if (DEBUG && instance.on) {
                         Util.each(Constant.EVENTS, function(type) {
                             instance.on(type + Constant.LOADER_NAMESPACE, function(event) {
@@ -1024,43 +1118,6 @@ define(
                     }
                     next()
                         // .delay(100) // 每个组件之间的渲染间隔 100ms，方便观察
-                })
-                .queue(function(next) {
-                    next()
-                    return
-
-                    // 暂停支持
-                    // 6. 绑定事件
-                    // 从初始的关联元素上解析事件配置项 bx-type，然后逐个绑定到最终的关联元素上。
-                    // 以 Dropdown 为例，初试的关联元素是 <select>，最终的关联元素却是 <div class="dropdown">
-                    // 这是用户关注的事件。
-                    if (instance.on && options.events) {
-                        Util.each(options.events, function(item /*, index*/ ) {
-                            // item: { target type handler fn params }
-                            instance.on(item.type + Constant.LOADER_NAMESPACE, function(event, extraParameters) {
-                                if (item.fn in instance) {
-                                    instance[item.fn].apply(
-                                        instance, (extraParameters ? [extraParameters] : [event]).concat(item.params)
-                                    )
-                                } else {
-                                    /* jshint evil:true */
-                                    eval(item.handler)
-                                }
-                            })
-                        })
-                    }
-                    // 从最终的关联元素上解析事件配置项 bx-type，然后逐个绑定。
-                    if (instance.delegateBxTypeEvents) {
-                        if (instance.element) {
-                            instance.undelegateBxTypeEvents(instance.element)
-                            instance.delegateBxTypeEvents(instance.element)
-                        }
-                        if (instance.relatedElement) {
-                            instance.undelegateBxTypeEvents(instance.relatedElement)
-                            instance.delegateBxTypeEvents(instance.relatedElement)
-                        }
-                    }
-                    next()
                 })
                 .queue(function(next) {
                     // 检测是否有后代组件
@@ -1075,6 +1132,7 @@ define(
                     })
 
                     // 7. 如果有后代组件，则递归加载
+                    // boot descendants recursively
                     if (hasBrixElement) {
                         boot(instance, function() {
                             next()
@@ -1086,6 +1144,7 @@ define(
                 })
                 .queue(function( /*next*/ ) {
                     // 8. 当前组件和后代组件的渲染都完成后，触发 ready 事件
+                    // trigger ready event after current module instance and it's descendants are rendered
                     if (instance.triggerHandler) {
                         instance.triggerHandler(Constant.EVENTS.ready)
                     }
@@ -1299,12 +1358,6 @@ define(
             // 在移除关联的节点后，无法再继续利用浏览器事件模型来传播和触发事件，所以在移除前先触发 destroy 事件。
             if (instance.triggerHandler) instance.triggerHandler(Constant.EVENTS.destroy)
 
-            // 在当前组件关联的元素上，移除所有由 Loader 绑定的事件监听函数。
-            if (instance.off) {
-                Util.each(instance.options.events, function(item /*, index*/ ) {
-                    instance.off(item.type + Constant.LOADER_NAMESPACE)
-                })
-            }
             // 从 DOM 树中移除当前组件关联的元素。
             if (instance.element) {
                 instance.element.clientId = undefined
@@ -1374,6 +1427,7 @@ define(
                         results.push(CACHE[element.clientId])
                     }
                 })
+
             } else {
                 // 1. 根据 moduleId 查找组件实例
                 // query( moduleId )
@@ -1654,7 +1708,7 @@ define(
                         console.group(label)
                         console.time(label)
                         console.log('context:', context)
-                        console.log('takks.list:', tasks.list.length)
+                        console.log('tasks.list:', tasks.list.length)
                     }
 
                     Loader.booting = caller

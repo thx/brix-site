@@ -1,4 +1,4 @@
-define(function() {
+define( function() {
 	return function( elem ) {
 
 		// Support: IE<=11+, Firefox<=30+ (#15098, #14150)
@@ -6,10 +6,10 @@ define(function() {
 		// FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
 		var view = elem.ownerDocument.defaultView;
 
-		if ( !view.opener ) {
+		if ( !view || !view.opener ) {
 			view = window;
 		}
 
 		return view.getComputedStyle( elem );
 	};
-});
+} );
