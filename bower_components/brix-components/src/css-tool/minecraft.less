@@ -1,0 +1,2258 @@
+/*
+    替代 mm.less, tool.less
+ */
+
+// ----------------------------------------
+// https://github.com/seven-phases-max/less.curious
+.for(@i, @n) {.-each(@i)}
+.for(@n)     when (isnumber(@n)) {.for(1, @n)}
+.for(@i, @n) when not (@i = @n)  {
+    .for((@i + (@n - @i) / abs(@n - @i)), @n);
+}
+.for(@array)   when (default()) {.for-impl_(length(@array))}
+.for-impl_(@i) when (@i > 1)    {.for-impl_((@i - 1))}
+.for-impl_(@i) when (@i > 0)    {.-each(extract(@array, @i))}
+
+// Border Radius
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+
+// Drop shadows
+.box-shadow(@shadow) {
+  -webkit-box-shadow: @shadow;
+     -moz-box-shadow: @shadow;
+          box-shadow: @shadow;
+}
+
+// Transitions
+.transition(@transition) {
+  -webkit-transition: @transition;
+     -moz-transition: @transition;
+      -ms-transition: @transition;
+       -o-transition: @transition;
+          transition: @transition;
+}
+
+// Box-Sizeing
+.box-sizing(@sizing) {
+  -webkit-box-sizing: @sizing;
+     -moz-box-sizing: @sizing;
+          box-sizing: @sizing;
+}
+
+// User Select
+.user-select(@value) {
+  -webkit-user-select: @value;
+   -khtml-user-select: @value;
+     -moz-user-select: @value;
+      -ms-user-select: @value;
+          user-select: @value;
+}
+
+// Background Clip
+.background-clip(@value) {
+  -webkit-background-clip: @value;
+          background-clip: @value;    
+}
+
+
+// Opacity
+.opacity(@opacity) {
+    opacity: @opacity / 100;
+    filter: ~"alpha(opacity=@{opacity})";
+}
+
+// ----------------------------------------
+// 字体
+// ----------------------------------------
+
+// brix2
+@font-face {
+  font-family: "uxiconfont";
+  src: url("http://t.tbcdn.cn/apps/e/brix/fonts/uxiconfont.eot");
+  src: url("http://t.tbcdn.cn/apps/e/brix/fonts/uxiconfont.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+   url("http://t.tbcdn.cn/apps/e/brix/fonts/uxiconfont.woff") format("woff"), /* chrome、firefox */
+   url("http://t.tbcdn.cn/apps/e/brix/fonts/uxiconfont.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+   url("http://t.tbcdn.cn/apps/e/brix/fonts/uxiconfont.svg#svgFontName") format("svg");/* IE9*/
+  /* iOS 4.1- */
+}
+.uxicon {
+  font-family: "uxiconfont";
+  font-size: 16px;
+  font-style: normal;
+}
+
+// http://iconfont.cn/users/project?pid=12401
+@font-face {
+    font-family: 'brixfont';
+    src: url('//at.alicdn.com/t/font_1430140325_0320485.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1430140325_0320485.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('//at.alicdn.com/t/font_1430140325_0320485.woff') format('woff'), /* chrome、firefox */
+    url('//at.alicdn.com/t/font_1430140325_0320485.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/font_1430140325_0320485.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.brixfont {
+    font-family: "brixfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// http://iconfont.cn/users/project?pid=12401
+@font-face {
+    font-family: 'specfont';
+    src: url('//at.alicdn.com/t/font_1438244124_9732695.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1438244124_9732695.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('//at.alicdn.com/t/font_1438244124_9732695.woff') format('woff'), /* chrome、firefox */
+    url('//at.alicdn.com/t/font_1438244124_9732695.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/font_1438244124_9732695.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.specfont {
+    font-family: "specfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// http://iconfont.cn/users/project?pid=641
+@font-face {
+    font-family: 'zsfont';
+    src: url('//at.alicdn.com/t/font_1445825114_7257817.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1445825114_7257817.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('//at.alicdn.com/t/font_1445825114_7257817.woff') format('woff'), /* chrome、firefox */
+    url('//at.alicdn.com/t/font_1445825114_7257817.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/font_1445825114_7257817.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.zsfont {
+    font-family: "zsfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// http://iconfont.cn/users/project?pid=29536
+@font-face {
+    font-family: 'productfont';
+    src: url('//at.alicdn.com/t/font_1438848723_123487.eot'); /* IE9*/
+    src: url('//at.alicdn.com/t/font_1438848723_123487.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('//at.alicdn.com/t/font_1438848723_123487.woff') format('woff'), /* chrome、firefox */
+    url('//at.alicdn.com/t/font_1438848723_123487.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('//at.alicdn.com/t/font_1438848723_123487.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+.productfont {
+    font-family: "productfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+// ----------------------------------------
+// 颜色
+// ----------------------------------------
+
+// 文字灰度
+.color-3        { color: #333; }
+.color-9        { color: #999; }
+.color-c        { color: #CCC; }
+.color-f        { color: #FFF; }
+
+// 色块灰度
+.bg-c           { background-color: #CCCCCC; }
+.bg-e6          { background-color: #E6E6E6; }
+.bg-f0          { background-color: #F0F0F0; }
+.bg-f5          { background-color: #F5F5F5; }
+.bg-fa          { background-color: #FAFAFA; }
+.bg-f           { background-color: #FFFFFF; }
+
+// MineCraft
+@minecraft-brand            : #FF6600;
+@minecraft-brand-hover      : #FC4218;
+@minecraft-nav-bg           : #423F48;
+@minecraft-table-hover      : #FAF3EB;
+.minecraft-brand            { color: @minecraft-brand; }
+.minecraft-brand-hover      { color: @minecraft-brand-hover; }
+.minecraft-nav-bg           { background-color: @minecraft-nav-bg; }
+.minecraft-table-hover      { color: @minecraft-table-hover; }
+.bg-minecraft-brand         { background-color: @minecraft-brand; }
+.bg-minecraft-brand-hover   { background-color: @minecraft-brand-hover; }
+.bg-minecraft-nav           { background-color: @minecraft-nav-bg; }
+.bg-minecraft-table-hover   { background-color: @minecraft-table-hover; }
+
+// 淘宝联盟
+@pub-brand                  : #FA6419;
+@pub-brand-hover            : #E65C17;
+@pub-nav-bg                 : #443F3C;
+@pub-table-hover            : #FAF1ED;
+.pub-brand                  { color: @pub-brand; }
+.pub-brand-hover            { color: @pub-brand-hover; }
+.pub-nav-bg                 { background-color: @pub-nav-bg; }
+.pub-table-hover            { color: @pub-table-hover; }
+.bg-pub-brand               { background-color: @pub-brand; }
+.bg-pub-brand-hover         { background-color: @pub-brand-hover; }
+.bg-pub-nav                 { background-color: @pub-nav-bg; }
+.bg-pub-table-hover         { background-color: @pub-table-hover; }
+
+// 直通车
+@zhitongche-brand           : #F78400;
+@zhitongche-brand-hover     : #E37900;
+@zhitongche-nav-bg          : #42403C;
+@zhitongche-table-hover     : #FAF3EB;
+.zhitongche-brand           { color: @zhitongche-brand; }
+.zhitongche-brand-hover     { color: @zhitongche-brand-hover; }
+.zhitongche-nav-bg          { background-color: @zhitongche-nav-bg; }
+.zhitongche-table-hover     { color: @zhitongche-table-hover; }
+.bg-zhitongche-brand        { background-color: @zhitongche-brand; }
+.bg-zhitongche-brand-hover  { background-color: @zhitongche-brand-hover; }
+.bg-zhitongche-nav          { background-color: @zhitongche-nav-bg; }
+.bg-zhitongche-table-hover  { background-color: @zhitongche-table-hover; }
+
+// Tanx
+@tanx-brand                 : #50B347;
+@tanx-brand-hover           : #479E3F;
+@tanx-nav-bg                : #3C433C;
+@tanx-table-hover           : #F0F6EF;
+.tanx-brand                 { color: @tanx-brand; }
+.tanx-brand-hover           { color: @tanx-brand-hover; }
+.tanx-nav-bg                { background-color: @tanx-nav-bg; }
+.tanx-table-hover           { color: @tanx-table-hover; }
+.bg-tanx-brand              { background-color: @tanx-brand; }
+.bg-tanx-brand-hover        { background-color: @tanx-brand-hover; }
+.bg-tanx-nav                { background-color: @tanx-nav-bg; }
+.bg-tanx-table-hover        { background-color: @tanx-table-hover; }
+
+// 钻石展位
+@zuanshi-brand              : #4A7BF7;
+@zuanshi-brand-hover        : #4471E3;
+@zuanshi-nav-bg             : #3C404A;
+@zuanshi-table-hover        : #F0F3FA;
+.zuanshi-brand              { color: @zuanshi-brand; }
+.zuanshi-brand-hover        { color: @zuanshi-brand-hover; }
+.zuanshi-nav-bg             { background-color: @zuanshi-nav-bg; }
+.zuanshi-table-hover        { color: @zuanshi-table-hover; }
+.bg-zuanshi-brand           { background-color: @zuanshi-brand; }
+.bg-zuanshi-brand-hover     { background-color: @zuanshi-brand-hover; }
+.bg-zuanshi-nav             { background-color: @zuanshi-nav-bg; }
+.bg-zuanshi-table-hover     { background-color: @zuanshi-table-hover; }
+
+// 易传媒
+@adchina-brand              : #6363E6;
+@adchina-brand-hover        : #5A5AD1;
+@adchina-nav-bg             : #3F3F49;
+@adchina-table-hover        : #F1F1F9;
+.adchina-brand              { color: @adchina-brand; }
+.adchina-brand-hover        { color: @adchina-brand-hover; }
+.adchina-nav-bg             { background-color: @adchina-nav-bg; }
+.adchina-table-hover        { color: @adchina-table-hover; }
+.bg-adchina-brand           { background-color: @adchina-brand; }
+.bg-adchina-brand-hover     { background-color: @adchina-brand-hover; }
+.bg-adchina-nav             { background-color: @adchina-nav-bg; }
+.bg-adchina-table-hover     { background-color: @adchina-table-hover; }
+
+// DMP
+@dmp-brand                  : #895AC7;
+@dmp-brand-hover            : #7B50B3;
+@dmp-nav-bg                 : #47414E;
+@dmp-table-hover            : #F1EDF6;
+.dmp-brand                  { color: @dmp-brand; }
+.dmp-brand-hover            { color: @dmp-brand-hover; }
+.dmp-nav-bg                 { background-color: @dmp-nav-bg; }
+.dmp-table-hover            { color: @dmp-table-hover; }
+.bg-dmp-brand               { background-color: @dmp-brand; }
+.bg-dmp-brand-hover         { background-color: @dmp-brand-hover; }
+.bg-dmp-nav                 { background-color: @dmp-nav-bg; }
+.bg-dmp-table-hover         { background-color: @dmp-table-hover; }
+
+
+// ----------------------------------------
+// 字体
+// ----------------------------------------
+
+@font-family: "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Georgia, "Times New Roman", Arial, sans-serif;
+
+.fontsize- {
+    .for(12 14 16 18 20 22 24 26 28 30 32); .-each(@px) {
+        &@{px} {
+            font-size: @px * 1px;
+        }
+    }
+}
+
+body {
+    font-size: 12px;
+    font-family: @font-family;
+    background-color: #fff;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.font-tahoma,
+.font-number {
+    font-family: "Tahoma";
+}
+
+// ----------------------------------------
+// 行距 Line Height
+// ----------------------------------------
+
+.ml {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            margin-left: @px * 1px;
+        }
+    }
+}
+.mr {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            margin-right: @px * 1px;
+        }
+    }
+}
+.mt {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            margin-top: @px * 1px;
+        }
+    }
+}
+.mb {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            margin-bottom: @px * 1px;
+        }
+    }
+}
+// ----------------------------------------
+.pl {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            padding-left: @px * 1px;
+        }
+    }
+}
+.pr {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            padding-right: @px * 1px;
+        }
+    }
+}
+.pt {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            padding-top: @px * 1px;
+        }
+    }
+}
+.pb {
+    .for(0 5 7 10  15 20 25 30 32 35 40); .-each(@px) {
+        &@{px} {
+            padding-bottom: @px * 1px;
+        }
+    }
+}
+
+.w {
+    .for(100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300); .-each(@px) {
+        &@{px} {
+            width: @px * 1px;
+        }
+    }
+}
+
+// ----------------------------------------
+// 圆角 Border Radio
+// ----------------------------------------
+
+.border-radius- {
+    .for(0 4 6); .-each(@px) {
+        &@{px} {
+            border-radius: @px * 1px;
+        }
+    }
+}
+
+
+// ----------------------------------------
+// 栅格 @一丝
+// ----------------------------------------
+
+@mm-grid-columns: 64;
+.mm-row {
+    :after {
+        content: "\200B";
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    .col {
+        float: left;
+        position: relative;
+        min-height: 1px;
+    }
+
+    .col {
+        .for(@mm-grid-columns); .-each(@i) {
+            &-@{i} { 
+                width: (@i / @mm-grid-columns * 100%);
+            }
+        }
+    }
+    .offset {
+        .for(@mm-grid-columns); .-each(@i) {
+            &-@{i} { 
+                margin-left: (@i / @mm-grid-columns * 100%);
+            }
+        }
+    }
+}
+
+// ----------------------------------------
+// 栅格 https://github.com/chrisnager/ungrid
+// ----------------------------------------
+
+@media (min-width: 30em) {
+    .ungrid-row { 
+        width: 100%; 
+        display: table; 
+        table-layout: fixed; 
+
+        > .col {
+            display: table-cell; 
+        }
+    }
+}
+
+// ----------------------------------------
+// 动画 Animation
+// ----------------------------------------
+
+.animated {
+    -webkit-animation-duration: 1s;
+       -moz-animation-duration: 1s;
+            animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+       -moz-animation-fill-mode: both;
+            animation-fill-mode: both;
+}
+.animated.infinite {
+    -webkit-animation-iteration-count: infinite;
+       -moz-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+}
+
+
+// ----------------------------------------
+// 变量 TODO
+// ----------------------------------------
+
+// 默认品牌
+@brand            : @minecraft-brand;
+@brand-hover      : @minecraft-brand-hover;
+@nav-bg           : @minecraft-nav-bg;
+@table-hover      : @minecraft-table-hover;
+
+@bg:       #F0F0F0;
+@border:   #E6E6E6;
+@warning:  #FFB400;
+@danger:   #A62A22;
+@success:  #6CB12A;
+@fail:     #A62A22;
+
+.color-brand    { color: @brand;                }
+.color-help     { color: #999999;               }
+.color-info     { color: #999999;               }
+.color-border   { border-color: @border;        }
+.color-warning  { color: @warning;              }
+.color-danger   { color: @danger;               }
+.color-success  { color: @success;              }
+.color-fail     { color: @fail;                 }
+
+.bg-brand       { background-color: @brand;     }
+.bg-info        { background-color: @bg;        }
+.bg-warning     { background-color: @warning;   }
+.bg-danger      { background-color: @danger;    }
+.bg-success     { background-color: @success;   }
+.bg-fail        { background-color: @fail;      }
+
+
+// ----------------------------------------
+// 鼠标 Cursor
+// ----------------------------------------
+
+@cursors: auto, default, none, context-menu, help, pointer, progress, wait, cell, crosshair, text, vertical-text, alias, copy, move, no-drop, not-allowed, all-scroll, col-resize, row-resize, n-resize, e-resize, s-resize, w-resize, ne-resize, nw-resize, se-resize, sw-resize, ew-resize, ns-resize, nesw-resize, nwse-resize, zoom-in, zoom-out;
+.cursor- {
+    .for(@cursors); .-each(@value) {
+        &@{value} {
+            cursor: @value;
+        }
+    }
+}
+
+
+// ----------------------------------------
+// 按钮 Button
+// ----------------------------------------
+
+.btn {
+    color: #333;
+    height: 32px;
+    padding: 6px 20px;
+    border: 0;
+    border-radius: 4px;
+    background-color: @border;
+
+    &:hover {
+        background-color: #ccc;
+        border-color: @border;
+    }
+
+    &, 
+    &:focus, &.focus, 
+    &:active, &.active, 
+    &:active:focus {
+        font-size: 12px;
+        outline: none;
+        box-shadow: none;
+    }
+
+    &.btn-brand {
+        color: #fff;
+        border: 1px solid @brand;
+        background-color: @brand;
+        &:hover, &.hover, 
+        &:focus, &.focus, 
+        &:active, &.active {
+            color: #fff;
+            border: 1px solid @brand;
+            background-color: @brand-hover;
+        }
+
+        border: 0;
+        background-color: @brand;
+        &:hover, &.hover,
+        &:focus, &.focus,
+        &:active, &.active {
+            border: 0;
+            color: #fff;
+            background-color: @brand-hover;
+        }
+    }
+    &.btn-disabled {
+        background-color: @border;
+        border: 0;
+        cursor: not-allowed;
+        color: #CCC;
+    }
+    &.btn-progress {
+        position: relative;
+        .btn-progress-bar {
+            position: absolute;
+            height: 32px;
+            width: 50%;
+            top: 0px;
+            left: 0px;
+            border-radius: 4px 0px 0px 4px;
+            background-color: #CCC;
+        }
+        span {
+            position: relative;
+        }
+        &:hover {
+            background-color: @border;
+        }
+    }
+    &.btn-brand.btn-progress {
+        .btn-progress-bar {
+            background-color: @brand-hover;
+        }
+        &:hover {
+            background-color: @brand;
+        }
+    }
+
+    &.btn-bounce {
+        .one, .two, .three {
+            display: inline-block;
+            margin: auto 5px;
+            border-radius: 100%;
+            width: 5px;
+            height: 5px;
+            background-color: #FFF;
+        }
+    }
+}
+
+a {
+    color: @brand;
+    text-decoration: none;
+    &:hover, &:focus {
+        color: @brand-hover;
+    }
+    &, &:hover, &:focus, &:active, &:visited {
+        outline: 0;
+        text-decoration: none;
+    }
+}
+
+// ----------------------------------------
+// 单选按钮 Radio
+// 复选框 Checkbox
+// ----------------------------------------
+
+input[type="radio"], 
+input[type="checkbox"] {
+    margin-top: -2px;
+    outline: none;
+    &:focus {
+        outline: none;
+    }
+}
+
+label {
+    font-weight: normal;
+    margin-right: 40px;
+    margin-bottom: 0;
+    padding: 9px 0;
+    input[type="radio"],
+    input[type="checkbox"] {
+        margin-right: 10px;
+        &:checked:after {
+            background-color: @brand;
+        }
+        &[disabled]:after {
+            background-color: #ccc;
+        }
+        &[disabled]:hover {
+            border-color: @border;
+        }
+    }
+    p.desc {
+        color: #999;
+        padding-left: 25px;
+        margin-bottom: 0px;
+    }
+    &.disabled {
+        color: #999;
+        cursor: not-allowed;
+    }
+}
+
+ul.checklist {
+    list-style: none;
+    > li {
+        margin-bottom: 10px;
+    }
+    ul.checklist {
+        padding-left: 25px;
+    }
+}
+ul.checklist-linear {
+    list-style: none;
+    > li {
+        float: left;
+    }
+}
+
+// ----------------------------------------
+// 开关按钮 switch
+// ----------------------------------------
+
+.switch {
+    .user-select(none);
+    .box-sizing(content-box);
+    .background-clip(content-box);
+    .transition(~"border 0.4s, box-shadow 0.4s, background-color 0.4s");
+    > small {
+        .transition(~"background-color 0.4s, left 0.2s");
+    }
+    &.switch-checked {
+        background-color: @brand;
+        border-color: @brand;
+        > small {
+            .box-shadow(none);
+        }
+    }
+    &.switch-disabled {
+        background-color: @bg;
+        border-color: @border;
+        > small {
+            .box-shadow(none);
+        }
+    }
+}
+
+// ----------------------------------------
+// 下拉框 Dropdown
+// ----------------------------------------
+
+.dropdown {
+    min-width: 190px;
+    .dropdown-toggle {
+        width: 100%;
+        height: 32px;
+        padding: 6px 30px 6px 12px;
+        border: 1px solid @border;
+        border-radius: 4px;
+        color: #999;
+        text-align: left;
+        background-color: transparent;
+        &:hover {
+            border-color: #CCC;
+        }
+        .dropdown-toggle-label {
+            float: left;
+            display: inline-block;
+            text-align: left;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .caret_brixfont {
+            float: right;
+            margin-left: 10px;
+            position: absolute;
+            right: 12px;
+            top: 8px;
+        }
+    }
+    &.open .dropdown-toggle {
+        &.btn-default {
+            border-color: #CCC;
+            color: #333;        
+        }
+    }
+    .dropdown-menu {
+        min-width: 100%;
+        margin-top: 10px;
+        box-shadow: none;
+        border: 1px solid @border;
+        padding: 10px 10px 10px 0;
+        font-size: 12px;
+        max-height: 270px;
+        overflow: auto;
+        > li {
+            padding: 4px 10px;
+            > a {
+                position: relative;
+                padding: 4px 10px;
+                width: 100%;
+                &:hover {
+                    background-color: @bg;
+                    border-radius: 4px;
+                }
+            }
+            &.active {
+                a,
+                a:hover,
+                a:focus {
+                    border-radius: 4px;
+                    color: white;
+                    background-color: @brand;
+                }
+            }
+            &.divider {
+                padding: 0;
+            }
+            &.dropdown-header {
+                color: #999;
+                padding-left: 20px;
+                & + li {
+                    > a {
+                        padding-left: 20px;
+                    }
+                }
+            }
+        }
+    }
+    > .dropdown-menu-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border: 1px solid @border;
+        padding: 10px;
+        margin-top: 10px;
+        min-width: 100%;
+        border-radius: 4px;
+        background-color: white;
+        z-index: 1001;
+        display: none;
+        > .searchbox {
+            width: 100%;
+            label {
+                width: 100%;
+                margin-bottom: 10px;
+                padding: 0;
+                > input {
+                    width: 100%;
+                }
+            }
+        }
+        > ul.dropdown-menu {
+            display: block;
+            position: static;
+            margin-top: 0px;
+            padding-top: 0px;
+            border: none;
+            > li {
+                padding: 4px 10px 4px 0;
+                &.divider {
+                    padding: 0;
+                }
+            }
+        }
+    }
+    &.open {
+        > .dropdown-menu-wrapper {
+            display: block;
+        }
+    }
+
+    &.dropdown-popover {
+        width: 190px;
+        .dropdown-toggle {
+            padding-right: 25px;
+            .dropdown-toggle-label {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .caret_custom {
+                position: absolute;
+                right: 12px;
+                top: 8px;
+            }
+        }
+    }
+    &.dropdown-justify,
+    &.dropdown-ellipsis {
+        .dropdown-menu-wrapper {
+            width: 100%;
+            ul.dropdown-menu {
+                width: 100%;
+                > li {
+                    > a {
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+    &.disabled {
+        .dropdown-toggle {
+            cursor: not-allowed;
+            background-color: @border;
+            color: #CCC;
+            &:hover {
+                border-color: @border;
+            }
+        }
+    }
+}
+
+
+// ----------------------------------------
+// 输入框 Input
+// 文本框 Textarea
+// ----------------------------------------
+
+input, .input, 
+textarea, .textarea,
+.form-control {
+    display: inline-block;
+    height: 32px;
+    vertical-align: middle;
+    font-size: 12px;
+    padding: 6px 9px;
+    color: #333;
+    border: 1px solid @border;
+    background-color: white;
+
+    .border-radius(4px);
+    .box-sizing(border-box);
+    .box-shadow(none);
+    // .transition(none);
+
+    &:hover {
+        border-color: #ccc;
+        color: #333;
+    }
+    &:focus {
+        border-color: @brand;
+        color: #333;
+        outline: none;
+        .box-shadow(none);
+    }
+    &::-moz-placeholder,
+    &::-ms-input-placeholder,
+    &::-webkit-input-placeholder {
+        color: #999;
+    }
+
+    &[disabled], &[readonly] {
+        border-color: @border;
+        cursor: not-allowed;
+        background-color: #FAFAFA;
+        color: #ccc;
+    }
+}
+
+textarea, .textarea,
+textarea.form-control, .textarea.form-control {
+    height: auto;
+}
+
+.error {
+    input, input:focus, input:hover, 
+    textarea, textarea:focus, textarea:hover, 
+    button, button:focus, button:hover{
+        border-color: @fail;
+        .box-shadow(none);
+    }
+}
+
+input.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+    color: #333;
+    background-color: white;
+    border-color: @border;
+}
+
+input.error, input.input-error, input.parsley-error,
+textarea.error, textarea.input-error, textarea.parsley-error,
+button.error, button.input-error, button.parsley-error {
+    color: #333;
+    background-color: white;
+    border-color: @fail;
+    .box-shadow(none);
+}
+
+.parsley-errors-list {
+    color: @fail;
+}
+
+.parsley-errors-list {
+    list-style: none;
+    padding-left: 9px;
+    color: #999;
+    margin-top: 9px;
+    margin-bottom: 5px;
+}
+.parsley-errors-list + .parsley-errors-list {
+    margin-top: 5px;
+}
+
+.searchbox {
+    position: relative;
+    .brixfont {
+        position: absolute;
+        left: 8px;
+        top: 4px;
+        font-size: 18px;
+        color: #999;
+    }
+    input {
+        padding-left: 30px;
+    }
+}
+
+
+// ----------------------------------------
+// 提示 Popover
+// ----------------------------------------
+
+.popover {
+    font-family: @font-family;
+    border-color: #EBEBEB;
+    border-radius: 4px;
+    padding: 0;
+    -webkit-box-shadow: 0 6px 8px rgba(51, 51, 51, 0.08);
+       -moz-box-shadow: 0 6px 8px rgba(51, 51, 51, 0.08);
+            box-shadow: 0 6px 8px rgba(51, 51, 51, 0.08);
+    .arrow {
+        display: none;
+    }
+    .popover-title {
+        background-color: #FAFAFA;
+        border-radius: 4px 4px 0 0;
+    }
+    .popover-content {
+        font-size: 12px;
+        line-height: 22px;    
+    }
+}
+
+// ----------------------------------------
+// 日历 Calendar
+// ----------------------------------------
+
+[bx-name="components/datepickerwrapper"] {
+    .brixfont {
+        margin-left: 5px;
+        font-size: 100%;
+        &.up {
+            display: none;
+        }
+        &.down {
+            display: inline-block;
+        }
+        &.datepickerwrapper-open {
+            .brixfont {
+                &.up {
+                    display: inline-block;
+                }
+                &.down {
+                    display: none;
+                }
+            }
+        }
+
+    }
+}
+
+
+.datepickerwrapper-trigger {
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    vertical-align: middle;
+    padding: 6px 12px;
+    border: 1px solid @border;
+    border-radius: 4px;
+    color: #999;
+    font-size: 12px;
+    .brixfont {
+        float: right;
+        margin-left: 10px;
+        font-size: 14px;
+        &.up {
+            display: none;
+        }
+        &.down {
+            display: block;
+        }
+    }
+    &.datepickerwrapper-open {
+        border-color: #CCC;
+        color: #333;
+        .brixfont {
+            &.up {
+                display: block;
+            }
+            &.down {
+                display: none;
+            }
+        }
+    }
+}
+.datepickerwrapper {
+    &.multiple,
+    &.single {
+        margin-top: 10px;
+        border-radius: 4px;
+        box-shadow: none;
+    }
+    &.multiple {
+        padding: 15px 0px;
+        border: 1px solid @border;
+    }
+    &.single {
+        padding: 0px;
+        border: none;
+    }
+    .datepickerwrapper-shortcuts {
+        padding: 0 10px;
+        margin-bottom: 15px;
+        .datepickerwrapper-shortcuts-body {
+            width: 240px;
+            span.shortcut {
+                height: 24px;
+                border-radius: 4px;
+                margin: 0px 10px 10px 0px;
+                width: 70px;
+                padding: 4px;
+                &.active {
+                    background-color: @brand;
+                }
+            }
+        }
+    }
+    .datepickerwrapper-inputs {
+        padding: 0 10px;
+        margin-bottom: 15px;
+        .datepickerwrapper-inputs-body {
+            input {
+                background-color: @bg;
+                border: 0;
+                box-shadow: none;
+                font-size: 12px;
+                height: 24px;
+                width: 110px;
+                text-align: center;
+            }
+            &.time input {
+                width: 145px;
+            }
+        }
+    }
+    .datepickerwrapper-pickers {
+        margin-top: 10px;
+    }
+    .datepickerwrapper-footer {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 10px;
+        border-top: 1px solid @border;
+        .btn {
+            height: 24px;
+            font-size: 12px;
+            padding: 4px 14px;
+            font-weight: normal;
+            border: 0;
+            &.submit {
+                color: #FFF;
+                background-color: @brand;
+                &:hover {
+                    background-color: @brand-hover;
+                }
+            }
+            &.cancel {
+                background-color: @bg;
+                &:hover {
+                    background-color: @border;
+                }
+            }
+        }
+    }
+}
+
+.datepicker-container {
+    border: 1px solid @border;
+    border-radius: 4px;
+    box-shadow: none;
+    padding: 0px;
+    > .picker-group {
+        padding: 0px;
+        .picker-header {
+            font-size: 12px;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            padding: 0 15px;
+            border-bottom: 1px solid @border;
+            margin-bottom: 0px;
+            .minus, .plus {
+                padding: 8px 0px;
+                color: #999;
+                &:hover {
+                    color: @brand;
+                }
+                .brixfont {
+                    font-size: 12px;
+                }
+            }
+            h4 {
+                font-size: 12px;
+                padding: 5px 10px;
+                border-radius: 4px;
+                height: 22px;
+                margin: 4px 0;
+            }
+        }
+        .picker-body {
+            padding: 0 0 10px 0;
+            width: 258px;
+            .datepicker-body-description {
+                color: #999;
+                background-color: #FAFAFA;
+                padding: 0 10px;
+            }
+            .datepicker-body-value {
+                padding: 0 10px;
+            }
+
+            &, .datepicker-body-value {
+                span.active {
+                    color: white;
+                    background-color: @brand;
+                }
+            }
+        }
+        &.yearpicker,
+        &.monthpicker {
+            .picker-body {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+        &.timepicker {
+            width: 100%;
+            padding: 10px;
+            .timepicker-body {
+                .timepicker-group {
+                    input {
+
+                    }
+                    button.time-minus,
+                    button.time-plus {
+                        width: 28px;
+                    }
+                }
+                .timepicker-spliter {
+
+                }
+            }
+            .timepicker-footer {
+                .timepicker-handelr {
+                    .btn {
+                        &.submit {
+                            color: #FFF;
+                            background-color: @brand;
+                            &:hover {
+                                background-color: @brand-hover;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.picker-footer {
+            padding: 6px 0;
+        }
+    }
+}
+
+.datepicker-ancient-container {
+    border: 1px solid @border;
+    border-radius: 4px;
+    box-shadow: none;
+    padding: 0px;
+
+    /* 年月日 变量 */
+    .mixin-date-group() {
+        padding: 0px;
+    }
+    .mixin-date-group-header() {
+        font-size: 12px;
+        vertical-align: middle;
+        padding: 0 15px;
+        border-bottom: 1px solid @border;
+        margin-bottom: 0px;
+    }
+    .mixin-date-group-header-title() {
+        font-size: 12px;
+        line-height: 1;
+        padding: 5px 10px;
+        border-radius: 4px;
+        margin: 4px 0;
+    }
+    .mixin-date-group-header-prev() {
+        padding: 8px 0px;
+        color: #999;
+        &:hover {
+            color: @brand;
+        }
+        .brixfont {
+            font-size: 12px;
+        }
+    }
+    .mixin-date-group-header-next() {
+        .mixin-date-group-header-prev();
+    }
+    .mixin-date-group-body() {
+        padding: 0 0 10px 0;
+        width: 258px;
+    }
+    .mixin-date-group-body-desc() {
+        color: #999;
+        background-color: #FAFAFA;
+        padding: 0 10px;
+    }
+    .mixin-date-group-body-content() {
+        padding: 0 10px;
+    }
+    .mixin-date-group-body-item() {
+        &.active {
+            color: white;
+            background-color: @brand;
+        }
+    }
+    /* 年月日 */
+    .year-month-day-container {
+        .year-month-day {
+            .year {
+                .mixin-date-group();
+                .year-header {
+                    .mixin-date-group-header();
+                    .year-header-title { .mixin-date-group-header-title(); }
+                    .year-header-prev  { .mixin-date-group-header-prev(); }
+                    .year-header-next  { .mixin-date-group-header-next(); }
+                }
+                .year-body {
+                    .mixin-date-group-body();
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    .year-body-content {
+                        > span { .mixin-date-group-body-item(); }
+                    }
+                }
+            }
+            .month {
+                .mixin-date-group();
+                .month-header {
+                    .mixin-date-group-header();
+                    .month-header-title { .mixin-date-group-header-title(); }
+                    .month-header-prev { .mixin-date-group-header-prev(); }
+                    .month-header-next { .mixin-date-group-header-next(); }
+                }
+                .month-body {
+                    .mixin-date-group-body();
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    .month-body-content {
+                        > span { .mixin-date-group-body-item(); }
+                    }
+                }
+            }
+            .day {
+                .mixin-date-group();
+                .day-header {
+                    .mixin-date-group-header();
+                    .day-header-title { .mixin-date-group-header-title(); }
+                    .day-header-prev { .mixin-date-group-header-prev(); }
+                    .day-header-next { .mixin-date-group-header-next(); }
+                }
+                .day-body {
+                    .mixin-date-group-body();
+                    .day-body-desc {
+                        .mixin-date-group-body-desc();
+                        > span {}
+                    }
+                    .day-body-content {
+                        .mixin-date-group-body-content();
+                        height: 180px;
+                        > span {
+                            .mixin-date-group-body-item();
+                        }
+                    }
+                }
+            }
+            &.first .day {
+                .day-header {
+                    .day-header-prev {}
+                }
+            }
+            &.last .day {
+                .day-header {
+                    .day-header-next {}
+                }
+            }
+        }
+    }
+    /* 时分秒 */
+    .hour-minute-second-container {
+        .hour-minute-second {
+            .hour-minute-second-body {
+                .hour {
+                    input.form-control  {}
+                    button.hour-minus   {}
+                    button.hour-plus    {}
+                }
+                .minute {
+                    input.form-control  {}
+                    button.minute-minus {}
+                    button.minute-plus  {}
+                }
+                .second {
+                    input.form-control  {}
+                    button.second-minus {}
+                    button.second-plus  {}
+                }
+                .spliter {}
+            }
+            .hour-minute-second-footer {}
+        }
+    }
+    .unlimit-container {
+        padding: 6px 0;
+    }
+}
+
+// ----------------------------------------
+// 面包屑 Breadcrumb
+// ----------------------------------------
+
+ol.breadcrumb {
+    list-style: none;
+    padding: 0px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    > li {
+        > a {
+            color: #999;
+            &:hover {
+                color: @brand;
+            }
+        }
+        &.active {
+            > a {
+                color: #333;
+                &:hover {
+                    color: @brand;
+                }
+            }
+        }
+        & + li:before {
+            padding: 0 5px 0 3px;
+            color: #999;
+            content: ">";
+        }
+
+        .dropdown {
+            min-width: inherit;
+            .dropdown-toggle {
+                border-color: transparent;
+                &:hover {
+                    border-color: #CCC;
+                }
+            }
+        }
+    }
+}
+
+// ----------------------------------------
+// 翻页器 Pagination
+// ----------------------------------------
+
+.paginationwrapper {
+    background-color: #FAFAFA;
+    padding-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    > .col-md-6 {
+        width: inherit;
+        &:first-child {
+            float: left;
+        }
+        &:last-child {
+            float: right;
+        }
+    }
+    .pagination-statistics {
+        select {
+            display: none;
+        }
+        .dropdown {
+            min-width: inherit;
+        }
+    }
+    ul.pagination {
+        > li {
+            display: inline-block;
+            > a, > span {
+                color: #999;
+                min-width: 32px;
+                height: 32px;
+                padding-left: initial;
+                padding-right: initial;
+                text-align: center;
+                border: none;
+                border-radius: 4px;
+                background-color: transparent;
+            }
+            > a {
+                &:hover {
+                    background-color: @brand;
+                    color: white;
+                }
+            }
+            &.active {
+                > a, > span {
+                    background-color: @brand;
+                    color: white;
+                    &:hover {
+                        background-color: @brand;
+                        color: white;
+                    }
+                }
+            }
+            &.disabled {
+                > a, > span {
+                    color: #CCC;
+                    &:hover {
+                        background-color: transparent;
+                        color: #CCC;
+                    }
+                }
+            }
+            &.pagination-statistics-simplify {
+                > span {
+                    color: #333;
+                    letter-spacing: 3px;
+                    font-weight: bold;
+                    height: 32px;
+                    padding: 6px 10px;
+                    &:hover {
+                        color: #333;
+                    }
+                }
+            }
+            &:first-child, 
+            &:last-child {
+                > a {
+                    padding: 6px 10px;
+                }
+            }
+        }
+    }
+}
+
+table.table-pagination {
+    tfoot {
+        tr {
+            td {
+                padding: 0
+            }
+        }
+    }
+}
+
+// ----------------------------------------
+// 搜索框 SearchBox
+// ----------------------------------------
+
+.searchbox {
+    display: inline-block;
+    label {
+        font-weight: normal;
+        padding: 0;
+        margin: 0;
+    }
+    span.brixfont {
+        color: #CCC;
+    }
+    &.searchbox-simplify {
+        input {
+            padding-left: 22px;
+            width: 0;
+            &:focus {
+                padding-left: 30px;
+                width: auto;
+            }
+        }
+        &.open {
+            input {
+                padding-left: 30px;
+                width: auto;
+            }
+        }
+        // &:hover {
+        //     input {
+        //         padding-left: 30px;
+        //         width: auto;
+        //     }
+        // }
+    }
+}
+
+.dropdown.suggest {
+    min-width: 100%;
+    width: 100%;
+    ul.dropdown-menu {
+        width: 100%;
+        > li {
+            > a {
+                color: #333;
+                span.highlight {
+                    color: @brand;
+                    background-color: transparent;
+                    font-weight: normal;
+                }
+            }
+            &.active {
+                > a {
+                    color: #333;
+                    background-color: @bg;
+                }
+            }
+        }
+    }
+}
+
+.input-group-wrapper {
+    .input-group {
+        border: 1px solid @brand;
+        border-radius: 4px;
+        .input-group-btn {
+            > .btn {
+                border-width: 0;
+                &.bg-brand {
+                    border-radius: 0;
+                    background-color: @brand;
+                    color: #FFF;
+                }
+            }
+            .dropdown {
+                min-width: 90px;
+                .dropdown-toggle {
+                    border-radius: 4px 0 0 4px;
+                    border-width: 0;
+                    background-color: @bg;
+                }
+            }
+        }
+        .input-group-input {
+            position: relative;
+            display: table-cell;
+            input {
+                border-width: 0;
+            }
+        }
+        
+    }
+    .hots {
+        padding-left: 10px;
+        a {
+            margin-right: 10px;
+            color: #999;
+            &:hover {
+                color: @brand;
+            }
+        }
+    }
+}
+
+.input-group-tab {
+    padding-left: 10px;
+    .btn {
+        height: 24px;
+        line-height: 0;
+        border-radius: 4px 4px 0 0;
+        margin-right: 5px;
+        background-color: transparent;
+        &:hover {
+            background-color: @border;
+        }
+        &.active {
+            background-color: @brand;
+            color: #FFF;
+        }
+    }
+}
+
+
+// ----------------------------------------
+// 就地编辑 Editable
+// ----------------------------------------
+
+.suggestwrapper {
+    display: inline-block;
+    position: relative;
+    width: 190px;
+    input {
+        width: 100%;
+    }
+    .dropdown.suggest {
+        width: 100%;
+        .dropdown-menu {
+            width: 100%;
+        }
+    }
+}
+
+table {
+    tbody {
+        tr {
+            td {
+                .editable-content {
+                    overflow: hidden;
+                    display: inline-block;
+                    max-width: 80%;
+                    text-overflow: ellipsis;
+                }
+                .editable-toggle {
+                    position: absolute;
+                    margin-left: 3px;
+                    margin-top: -2px;
+                    display: none;
+                }
+            }
+            &:hover {
+                .editable-toggle {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
+
+// ----------------------------------------
+// 通用信息 Message
+// ----------------------------------------
+
+.contextual-message {
+    min-height: 32px;
+    padding: 5px 15px;
+    border-radius: 4px;
+    .glyph {
+        margin-right: 15px;
+    }
+    &.bg-info {
+        a {
+            border-bottom: 1px solid @brand;
+            &:hover {
+                border-bottom: 1px solid @brand-hover;
+            }
+        }
+    }
+    &.bg-warning, &.bg-danger, &.bg-success, &.bg-fail {
+        span {
+            opacity: .8;
+        }
+        a {
+            color: white;
+            opacity: .8;
+            border-bottom: 1px solid white;
+            &:hover {
+                color: white;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.contextual-message-sticky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+}
+
+.mm-message {
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid @brand;
+    background-color: #FFEFE6;
+    padding: 7px 14px;
+}
+
+.mm-message-overlay {
+    background-color: #FFEFE6;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 7px 40px;
+    color: @fail
+}
+.mm-message-top {
+    background-color: #FFEFE6;
+    width: 100%;
+    padding: 7px 40px;
+    color: @fail;
+    text-align: center;
+}
+
+
+// ----------------------------------------
+// 表格 Table
+// ----------------------------------------
+
+.table {
+    thead {
+        tr, tr.active {
+            th {
+                color: #999;
+                font-weight: normal;
+                height: 60px;
+                vertical-align: middle;
+                padding: 0 8px 0 14px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                background-color: #FAFAFA;
+                border: none;
+                &.stable {
+                    background-color: @bg;
+                }
+                &.start {}
+                &.end {
+                    padding-right: 40px;
+                }
+            }
+        }
+    }
+    tbody tr td {
+        color: #333;
+        height: 60px;
+        min-height: 60px;
+        max-height: 90px;
+        vertical-align: middle;
+        padding: 0 8px 0 14px;
+        border-top: none;
+        border-bottom: 1px solid @border;
+
+        .more {
+            .content {
+                border: 1px solid @border;
+                border-radius: 4px;
+                box-shadow: none;
+            }
+        }
+        .operation {
+            // visibility: visible;
+            .btn {
+                padding: 5px 11px;
+                height: 26px;
+            }
+            .btn-dropdown {
+                display: inline-block;
+                position: relative;
+                .btn-dropdown-toggle {
+                    .down {
+                        font-size: 12px;
+                        display: inline-block;
+                    }
+                    .up {
+                        font-size: 12px;
+                        display: none;
+                    }
+                    &:hover {
+                        background-color: @brand;
+                        color: white;
+                    }
+                }
+                .btn-dropdown-content {
+                    display: none;
+                    position: absolute;
+                    right: 0;
+                    top: 100%;
+                    border: 1px solid @border;
+                    border-radius: 4px;
+                    background-color: white;
+                    padding: 20px 10px 10px 10px;
+                    box-shadow: none;
+                    margin-top: 10px;
+                    z-index: 1;
+                }
+                &.open {
+                    .btn-dropdown-toggle {
+                        background-color: @brand;
+                        color: white;
+                    }
+                    .btn-dropdown-content {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    tbody tr.active td {
+        background-color: transparent;
+    }
+    tbody tr:hover {
+        background-color: @table-hover;
+    }
+    tbody tr.active:hover td {
+        background-color: @table-hover;
+    }
+    &.table-bordered {
+        thead tr th {
+            border: 1px solid @border;
+        }
+    }
+    tr:hover .operation {
+        visibility: hidden;
+    }
+    tr:hover > td > .operation {
+        visibility: visible;
+    }
+
+    tbody tr {
+        td.sub-toggle {
+            .brixfont {
+                cursor: pointer;
+                display: none;
+                &.plus {
+                    display: block;
+                }
+            }
+        }
+        td.sub-toggle.open {
+            .brixfont {
+                display: none;
+                &.minus {
+                    display: block;
+                }
+            }
+        }
+    }
+    tbody tr.sub {
+        display: none;
+        &, &:hover {
+            background-color: transparent;    
+        }
+
+        > td {
+            table.table {
+                margin-bottom: -1px;
+            }
+        }
+    }
+}
+
+
+
+.column-scroll-arrow {
+    background-color: #CCC;
+    transition: none;
+    &.hover,
+    &:hover {
+        background-color: @brand;
+    }
+}
+
+
+// ----------------------------------------
+// 页脚 Footer
+// ----------------------------------------
+
+
+// ----------------------------------------
+// 进度条 Progress
+// ----------------------------------------
+
+.btn-progress-wrapper {
+    display: inline-block;
+}
+
+// ----------------------------------------
+// 字段控制器 Field
+// ----------------------------------------
+
+.dialog.column-priority {
+    margin-top: 10px;
+    .dialog-content {
+        .dialog-header.row {
+            margin: 0;
+            .col-xs-8, .col-xs-4 {
+                padding: 0;
+                a {
+                    color: #999;
+                    &:hover {
+                        color: @brand;
+                    }
+                }
+            }
+            h4 {
+                margin: 0;
+                font-size: 16px;
+                color: #999;
+            }
+        }
+        .dialog-body.row {
+            margin: 0;
+            .col-xs-8, .col-xs-4 {
+                padding: 0;
+            }
+            .candidates.col-xs-8 {
+                .item {
+                    span {
+                        vertical-align: text-top;
+                    }
+                }
+            }
+            .queue.col-xs-4 {
+                padding-right: 20px;
+                .item {
+                    text-align: left;
+                    padding: 6px 10px 4px 10px;
+                    border-radius: 4px;
+                }
+            }
+        }
+        .dialog-footer {
+            .btn {
+                color: white;
+                background-color: @brand;
+                margin-right: 10px;
+            }
+            a {
+                color: #999;
+            }
+        }
+    }
+}
+
+// ----------------------------------------
+// 步骤条 Wizard
+// ----------------------------------------
+
+.circle-active() {
+    background-color: @brand;
+}
+
+.wizard.wizard-horizontal {
+    ol.wizard-nav {
+        li.item {
+            &.active {
+                span.circle {
+                    .circle-active();
+                }
+            }
+        }
+    }
+    .wizard-cards {}
+    .wizard-footer {}
+}
+.wizard.wizard-vertical {
+    .wizard-cards {
+        .wizard-card {
+            &.active {
+                span.circle {
+                    .circle-active();
+                }
+            }
+        }
+    }
+}
+.ungrid-row.summary {
+    width: inherit;
+    height: 80px;
+    position: absolute;
+    right: 40px;
+    bottom: 0px;
+    > .col:nth-child(1) {
+        background-color: rgb(77,63,56); 
+        padding: 0 40px;
+        vertical-align: middle; 
+        text-align: center;
+        color: #FFF; 
+        border-radius: 6px 0 0 0;
+    }
+    > .col:nth-child(2) {
+        background-color: rgb(252,101,41); 
+        padding: 0 20px;
+        vertical-align: middle;
+        text-align: center;
+        color: #FFF;
+        border-radius: 0 6px 0 0;
+    }
+}
+
+
+// ----------------------------------------
+// 浮层 Dialog
+// ----------------------------------------
+
+.dialog {
+    &.dialog-top { 
+        margin-bottom: 10px; 
+    }
+    &.dialog-bottom { 
+        margin-top: 10px; 
+    }
+    &.dialog-left { 
+        margin-right: 10px; 
+    }
+    &.dialog-right {
+        margin-left: 10px;
+    }
+
+    &.dialog-fullscreen {
+        &.dialog-top,
+        &.dialog-bottom,
+        &.dialog-left,
+        &.dialog-right {
+            margin: 0;
+        }
+    }
+
+    .dialog-close {
+        position: absolute;
+        top: 16px;
+        right: 10px;
+        margin: 0;
+        .brixfont {
+            font-size: 30px;
+            font-weight: normal;
+        }
+        &:hover, &:focus {}
+    }
+    .dialog-content {
+        border: 1px solid @border;
+        box-shadow: none;
+        // box-shadow: 0 0 10px rgba(0,0,0,.18);
+        .dialog-header, .dialog-body, .dialog-footer {
+            padding: 18px 40px;
+        }
+        .dialog-header {
+            border-bottom: 1px solid @border;
+            padding: 18px 45px 18px 40px;
+        }
+        .dialog-footer {
+            text-align: left;
+            border-top: 1px solid @border;
+        }
+    }
+}
+.dialog-backdrop {
+    // opacity: 1;
+    // background-color: #808080;
+}
+
+// ----------------------------------------
+// 时间选择器 HourPicker
+// ----------------------------------------
+
+.hourpicker {
+    div.shortcuts {
+        label {
+            font-weight: normal;
+            color: #333;
+            padding: 0;
+        }
+    }
+    div.apply-dialog {
+        .apply-dialog-body {
+            margin-bottom: 20px;
+            label {
+                margin-bottom: 10px;
+                font-weight: normal;
+            }
+        }
+        .apply-dialog-footer {
+            .btn.submit {
+                background-color: @brand;
+                color: white;
+            }
+        }
+    }
+    table.picker-days {
+        .picker-day {
+            .picker-hours {
+                .picker-hour {
+                    float: left;
+                    .picker-hour-duration {
+                        z-index: 1;
+                    }
+                    &.active .picker-hour-duration {
+                        background-color: @brand;
+                    }
+                    .picker-hour-start, .picker-hour-end {
+                        background-color: @brand;
+                        z-index: 2;
+                    }
+                    .bottom .picker-hour-arrow {
+                        top: -3px;
+                        border-bottom: 3px solid @brand;
+                        margin-left: -3px;
+                    }
+                    .top .picker-hour-arrow {
+                        bottom: -3px;
+                        border-top: 3px solid @brand;
+                        margin-left: -3px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// ----------------------------------------
+// 标签切换 Tab
+// ----------------------------------------
+
+.mm-tabs {
+    padding-left: 0;
+    list-style: none;
+    border-bottom: 1px solid @border;
+    li {
+        position: relative;
+        display: block;
+        float: left;
+        margin-bottom: -1px;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        border-bottom-color: transparent;
+        transition: border .2s ease-in-out;
+        cursor: pointer;
+        &:hover, &.active {
+            border-bottom-color: @brand;
+        }
+        a {
+            font-size: 16px;
+            color: #999;
+            display: block;
+            padding: 10px 20px 20px 20px;
+            margin: 0;
+            transition: color .1s ease-in-out;
+        }
+        &:hover {
+            a {
+                color: #333;
+            }
+        }
+        &.active {
+            a {
+                color: @brand;
+            }
+        }
+        &.active a {
+            cursor: default;
+        }
+        &.border-bottom-color-transparent {
+            border-bottom-color: transparent;
+        }
+    }
+}
+
+// ----------------------------------------
+// 滚动条 Scrollbar
+// ----------------------------------------
+
+
+// ----------------------------------------
+// 加载 Loading
+// ----------------------------------------
+
+
+.spin {
+    border-width: 0;
+}
+.rotating-plane, 
+.double-bounce1, .double-bounce2, 
+.rectangle-bounce div, 
+.cube1, .cube2, 
+.chasing-dots .dot1, .chasing-dots .dot2, 
+.pulse, 
+.three-bounce > div, 
+.container1 > div, .container2 > div, .container3 > div {
+    background-color: @brand;
+}

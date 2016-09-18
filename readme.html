@@ -6,24 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="bower_components/highlightjs/styles/github.css" rel="stylesheet">
-    <script src="//g.alicdn.com/thx/brix-release/0.1.8-beta1/require-config-css.js"></script>
-    <!-- <script src="//g.alicdn.com/thx/brix-release/0.1.8-beta1/require-config-css.js"></script> -->
+    <script type="text/javascript">
+        if (!window.console) window.console = {
+            log: function() {},
+            error: function() {}
+        }
+    </script>
+    <script type="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="//g.alicdn.com/thx/brix-release/0.1.8-beta9/require-config-css-debug.js"></script>
+    <!-- <script src="//mo.local:4242/bower_components/requirejs/require.js"></script> -->
+    <!-- <script src="//mo.local:4242/config.js"></script> -->
+    <!-- <script src="//mo.local:4242/css.js"></script> -->
+    <!-- <script src="//mo.local:4242/combo.js"></script> -->
     <!-- <script src="//mo.local:4242/require-config-css.js"></script> -->
+    <!-- <script src="//g-assets.daily.taobao.net/thx/brix-release/require-config-css.js"></script> -->
+    <!-- <script src="//g.alicdn.com/thx/brix-release/require-config-css.js"></script> -->
+    <!-- <script src="//g.alicdn.com/thx/brix-release/1.0.0-alpha.1/require-config-css-debug.js"></script> -->
     <script src="./config.js"></script>
     <link href="assets/site.css" rel="stylesheet">
+    <script type="text/javascript">
+        // require(['brix/loader', 'brix/base', 'brix/event', 'brix/animation', 'brix/spa'])
+        // require(['components/base', 'components/dropdown', 'components/pagination'])
+        // require(['components/switch', 'components/pagination', 'components/pagination/state', 'components/dialog', 'components/dialog/position', 'components/dialogview', 'components/table', 'components/table/linkage', 'components/datepicker', 'components/datepickerwrapper', 'components/datepicker/ancient', 'components/popover', 'components/uploader', 'components/nprogress', 'components/hourpicker', 'components/areapicker', 'components/tree', 'components/tree/tree.node.json.tpl', 'components/taginput', 'components/suggest', 'components/chartxwrapper', 'components/hello', 'components/hello-extra', 'components/colorpicker', 'components/modal', 'components/editor', 'components/editable', 'components/spin', 'components/countdown', 'components/sidebar', 'components/chart', 'components/imager', 'components/validation', 'components/validation/i18n', 'components/ellipsis', 'components/progressbarwrapper', 'components/errortips', 'components/sidenav', 'components/sitenav', 'components/footer', 'components/wizard', 'components/tab', 'components/ctree', 'components/sticky', 'components/nav', 'components/readme', 'components/css-layout-debugger', 'components/boilerplate'])
+    </script>
 </head>
 <body>
     <div bx-name="components/nprogress"></div>
     <div bx-name="site/header"></div>
     <div id="main" class="container"></div>
-    <div class="container">
+    <!-- <div class="container">
         <hr>
         <h2>
             Components Tree ( debug )
             <small class="glyphicon glyphicon-refresh" onclick="require('brix/loader').query('components/ctree').render()"></small>
         </h2>
         <div bx-name="components/ctree"></div>
-    </div>
+    </div> -->
     <div bx-name="site/footer"></div>
     <script type="text/javascript">
         require(['brix/loader'],function (Loader) {
@@ -39,7 +57,7 @@
             // 加载组件 components/readme
             var params = Loader.Util.unparam(location.search.slice(1))
             var name = params.name.toLowerCase()
-            var url = 'bower_components/' + (params.core ? '' : 'brix-components/') + name + '/README.md'
+            var url = 'bower_components/' + (params.core ? '' : 'brix-components/src/') + name + '/README.md'
             Loader.load(
                 document.getElementById('main'), 
                 'components/readme', 

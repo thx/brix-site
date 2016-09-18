@@ -582,7 +582,7 @@ define(
             if (!moduleId) return {}
 
             // 为组件关联的 DOM 节点分配唯一标识
-            clientId = Constant.UUID++
+            clientId = Constant.UUID++;
             if (element.clientId === undefined) element.clientId = clientId
 
             // 查找父节点
@@ -606,7 +606,7 @@ define(
             } catch (exception) {
                 options = {}
             }
-            
+
             options.element = element
             options.moduleId = moduleId
             options.clientId = clientId
@@ -873,8 +873,11 @@ define(
                     .queue(function(next) {
                         init(element, function(error, instance) {
                             completeArgs.push([error, instance, index, elements.length])
-                            if (error) console.error(error.stack)
+                            if (error) console.error(error.stack || error)
                             if (notify) notify(error, instance, index, elements.length)
+
+                            if (error && Loader.onerror) Loader.onerror(error) // 运行时异常收集
+
                             next()
                         }, extraOptions)
                     })
@@ -943,15 +946,26 @@ define(
                         next()
                     }, function(error) {
                         // http://requirejs.org/docs/api.html#errbacks
-                        if (callback) callback(error, instance)
-                        else console.error(error)
+                        if (callback) callback(new Error(error.message), instance)
+                        else console.error(error.stack || error)
+
+                        if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                     })
                 })
                 .queue(function(next) {
                     try {
+                        // 在组件模块上附加标记 __x_created_with，指示负责初始化的是 Brix Loader
+                        // Add a mark to component module, indicating the Brix Loader is response for the initializing.
+                        var __x_created_with = BrixImpl.__x_created_with
+                        BrixImpl.__x_created_with = 'Brix Loader'
+
                         // 3. 创建组件实例（按需传入参数 options）
-                        // create a new module instance
+                        // Create a new module instance
                         instance = BrixImpl.length ? new BrixImpl(options) : new BrixImpl()
+
+                        // 恢复标记
+                        // Recovery the mark
+                        BrixImpl.__x_created_with = __x_created_with
 
                         // 设置实例属性 options
                         instance.options = Util.extend(true, {}, instance.options, options)
@@ -962,7 +976,9 @@ define(
                         next()
                     } catch (error) {
                         if (callback) callback(error, instance)
-                        else console.error(error)
+                        else console.error(error.stack || error)
+
+                        if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                     }
                 })
                 .queue(function(next) {
@@ -989,8 +1005,9 @@ define(
                     }
 
                     try {
+                        if (DEBUG) console.time(label + ' call  init')
                         var result = instance.init()
-                        if (DEBUG) console.log(label, 'call  init')
+                        if (DEBUG) console.timeEnd(label + ' call  init')
 
                         // 如果返回了 Promise，则依赖 Promise 的状态
                         if (result && result.then) {
@@ -1005,6 +1022,8 @@ define(
                     } catch (error) {
                         if (callback) callback(error, instance)
                         else console.error(error)
+
+                        if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                     }
                 })
                 .queue(function(next) {
@@ -1031,7 +1050,7 @@ define(
                         // 调用组件的 .render()
                         var result
                         if (instance._render) result = instance._render.apply(instance, arguments)
-                        else console.warn(instance.clientId, instance.moduleId, '找不到方法 render() ')
+                        else console.warn(instance.clientId, instance.moduleId, 'render() is not defined')
 
                         // 如果返回了 Promise，则依赖 Promise 的状态
                         if (result && result.then) {
@@ -1084,10 +1103,11 @@ define(
                     // 5. 执行渲染（不存在怎么办？必须有！）
                     // exec render method of the module instance
                     try {
+                        if (DEBUG) console.time(label + ' call  render')
                         var result = instance.render(function(error /*, instance*/ ) {
                             if (error) {}
                         })
-                        if (DEBUG) console.log(label, 'call  render')
+                        if (DEBUG) console.timeEnd(label + ' call  render')
 
                         // deferred
                         if (result && result.then) {
@@ -1095,7 +1115,9 @@ define(
                                 next()
                             }, function(error) {
                                 if (callback) callback(error, instance)
-                                else console.error(error)
+                                else console.error(error.stack || error)
+
+                                if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                             })
                         } else {
                             next()
@@ -1103,7 +1125,9 @@ define(
                     } catch (error) {
                         // TODO 渲染时发生错误的组件是否应该自动销毁？
                         if (callback) callback(error, instance)
-                        else console.error(error)
+                        else console.error(error.stack || error)
+
+                        if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                     }
                 })
                 .queue(function(next) {
@@ -1341,7 +1365,9 @@ define(
                     instance._destroy()
                 } catch (error) {
                     if (complete) complete(error)
-                    else console.error(error)
+                    else console.error(error.stack || error)
+
+                    if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                 }
             }
 
@@ -1716,8 +1742,10 @@ define(
                         if (callback) {
                             try {
                                 callback(records)
-                            } catch (e) {
-                                console.error(e)
+                            } catch (error) {
+                                console.error(error.stack || error)
+
+                                if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
                             }
                         }
 
@@ -1735,7 +1763,16 @@ define(
                 if (!Loader.booting || force) tasks.dequeue()
                 return this
             },
-            destroy: destroy,
+            destroy: function() {
+                try {
+                    destroy.apply(this, arguments)
+                } catch (error) {
+                    console.error(error.stack || error)
+
+                    if (Loader.onerror) Loader.onerror(error) // 运行时异常收集
+                }
+                return this
+            },
             query: query,
             tree: tree,
 
@@ -1764,8 +1801,8 @@ define(
                         if (complete) {
                             try {
                                 complete(records)
-                            } catch (e) {
-                                console.error(e)
+                            } catch (error) {
+                                console.error(error.stack || error)
                             }
                         }
 

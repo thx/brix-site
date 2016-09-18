@@ -22,13 +22,14 @@
   },
   "devDependencies": {
     "requirejs": "~2.1.15",
-    "bootstrap": "~3.3.0"
+    "bootstrap": "~3.3.0",
+    "es5-shim": "~4.5.9"
   },
   "resolutions": {
     "brix-loader": "master",
     "brix-base": "master",
     "brix-event": "master",
-    "brix-components": "master",
+    "brix-components": "0.0.6",
     "brix-bisheng": "master",
     "brix-spa": "master"
   }

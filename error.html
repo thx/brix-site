@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test: Error </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <!-- <script src="../test/bower_components/requirejs/require.js"></script> -->
+    <!-- <script src="http://g-assets.daily.taobao.net/thx/brix-release/0.1.7/require-config-css.js"></script> -->
+    <!-- <script src="http://g.alicdn.com/thx/brix-release/0.1.8-beta6/require-config-css-debug.js"></script> -->
+    <script src="//mo.local:4242/bower_components/requirejs/require.js"></script>
+    <script src="//mo.local:4242/config.js"></script>
+    <script src="//mo.local:4242/css.js"></script>
+    <script type="text/javascript">
+        require.config({
+            paths: {
+                // 'brix/loader': '../dist/loader-debug',
+                // jquery: '../test/bower_components/jquery/dist/jquery',
+                // underscore: '../test/bower_components/underscore/underscore'
+            }
+        })
+    </script>
+
+    <div id="container" style="margin: 60px 50px;">
+        <div bx-name="brix/module/impl">
+            <div bx-name="brix/module/impl/1"></div>
+            <div bx-name="brix/module/impl/2"></div>
+            <div bx-name="brix/module/impl/3"></div>
+        </div>
+        <div bx-name="undefined_module"></div>
+        <div bx-name="missing_render"></div>
+        <div bx-name="error_occurred_in_constructor"></div>
+        <div bx-name="error_occurred_in_init"></div>
+        <div bx-name="error_occurred_in_init_with_promise"></div>
+        <div bx-name="error_occurred_in_render"></div>
+        <div bx-name="error_occurred_in_render_with_promise"></div>
+        <div bx-name="error_occurred_in_destroy"></div>
+    </div>
+
+    <script type="text/javascript">
+        require(['jquery', 'brix/loader'], function($, Loader){
+            window.Loader = Loader
+
+            define('brix/module/impl', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){}
+                return Impl
+            })
+            define('brix/module/impl/1', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){}
+                return Impl
+            })
+            define('brix/module/impl/2', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){}
+                return Impl
+            })
+            define('brix/module/impl/3', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){}
+                return Impl
+            })
+
+            Loader.boot($('[bx-name="brix/module/impl"]'))
+
+            define('missing_render', function () {
+                return function(){}
+            })
+            define('error_occurred_in_constructor', function() {
+                return function() {
+                    throw new Error('error_occurred_in_constructor ' +
+                        Math.random())
+                }
+            })
+            define('error_occurred_in_init', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){
+                    throw new Error(this.moduleId + ' ' + Math.random())
+                }
+                Impl.prototype.render = function(){}
+                return Impl
+            })
+            define('error_occurred_in_init_with_promise', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){
+                    var defer = $.Deferred()
+                    defer.reject(
+                        new Error(this.moduleId + ' ' + Math.random())
+                    )
+                    return defer.promise()
+                }
+                Impl.prototype.render = function(){}
+                return Impl
+            })
+            define('error_occurred_in_render', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){
+                    throw new Error(this.moduleId + ' ' + Math.random())
+                }
+                return Impl
+            })
+            define('error_occurred_in_render_with_promise', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){
+                    var defer = $.Deferred()
+                    defer.reject(
+                        new Error(this.moduleId + ' ' + Math.random())
+                    )
+                    return defer.promise()
+                }
+                return Impl
+            })
+            define('error_occurred_in_destroy', function () {
+                var Impl = function(){}
+                Impl.prototype.init = function(){}
+                Impl.prototype.render = function(){}
+                Impl.prototype.destroy = function(){
+                    throw new Error(this.moduleId + ' ' + Math.random())
+                }
+                return Impl
+            })
+            
+            Loader.boot(function(){
+                Loader.destroy(false, document.body, function(){
+                    throw new Error('Loader.destroy() complete ' + Math.random())    
+                })
+                throw new Error('Loader.boot() complete ' + Math.random())
+            })
+        })
+    </script>
+</body>
+</html>

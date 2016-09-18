@@ -1,8 +1,7 @@
 /* global require, console, window */
 require(
-	['jquery', 'mock', 'brix/loader', 'brix/event', 'brix/bisheng'],
-	function($, Mock, Loader, EventManager, BiSheng) {
-		BiSheng.auto(true)
+	['jquery', 'mock', 'brix/loader', 'brix/event'],
+	function($, Mock, Loader, EventManager) {
 		// require(['css!css-tool/mm.css'])
 
 		var $container = $('.container')
@@ -52,23 +51,12 @@ require(
 			}
 		}
 
-		var bisheng = BiSheng.bind(data, tpl, {
-			resolve: function(content) {
-				$container.append(content)
-			},
-			after: function( /*changes*/ ) {
-				// console.log('after ', changes)
-				manager.delegate($container, owner)
-			}
-		})
 		manager.delegate($container, owner)
 
 		boot()
 
-		window.BiSheng = BiSheng
 		window.Loader = Loader
 		window.data = data
-		window.bisheng = bisheng
 	}
 )
 
